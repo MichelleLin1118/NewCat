@@ -18,7 +18,7 @@ public class ActivityMain extends Activity implements View.OnClickListener{
 
     String TAG = "homework";
     ImageButton cat, info, home, adop, cal, search;
-
+//blablabla
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
