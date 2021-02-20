@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#434343ff</color>
+    <color name="purple_700">#190b08ff</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="red">#914244</color>
+    <color name="wine_red">#420d09</color>
+    <color name="button_orange">#fcbc94</color>
+    <color name="button_blue">#78909c</color>
+    <color name="heart_red">#db6d48</color>
+    <color name="fb_blue">#355c7d</color>
+    <color name="text_brown">#3e3833</color>
+    <color name="background_pink">#f8e7e1</color>
+    <color name="green_brown">#CED2C2</color>
+
+    <color name="morandi_bone">#E3D4C3</color>
+    <color name="morandi_Silk">#C5B2AC</color>
+    <color name="morandi_Parchment">#EFE5CD</color>
+    <color name="morandi_Soft_Amber">#CCC2B2</color>
+    <color name="morandi_Geyser">#D9E5E3</color>
+    <color name="morandi_Green_Mist">#cbd6b0</color>
+    <color name="morandi_Givry">#F8d8c0</color>
+    <color name="morandi_Hit_Gray">#9db2b3</color>
+    <color name="morandi_Donkey_Brown">#a1957e</color>
+    <color name="morandi_Monogoose">#b8a584</color>
+    <color name="morandi_My_Pink">#d19379</color>
+    <color name="morandi_Flax_Smoke">#7E8464</color>
+    <color name="morandi_Ferra">#784e56</color>
+    <color name="morandi_Beaver">#93685B</color>
+    <color name="morandi_Coffee">#786653</color>
+    <color name="morandi_Soya_Bean">#665f54</color>
+    <color name="morandi_Shuttle_Gray">#596A74</color>
+    <color name="morandi_Armadillo">#4f463c</color>
+
+
+    <color name="dark_grey">#434343</color>
+    <color name="grey">#616060</color>
+    <color name="light">#eeeeee</color>
+</resources>

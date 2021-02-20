@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">Cat+</string>
+
+    <string name="cat">Cat</string>
+    <string name="info">Information</string>
+    <string name="fav">My Favorite</string>
+    <string name="hospitals">Hospitals</string>
+    <string name="fb">Facebook</string>
+    <string name="calendar">Calendar</string>
+    <string name="adop">Adopter</string>
+
+    <string name="name">Name:</string>
+
+    <string name="id">Id:</string>
+    <string name="address">Address:</string>
+    <string name="contact">Contact:</string>
+    <string name="otherCats">Cat(s) at Home:</string>
+    <string name="family">Family Members:</string>
+    <string name="familyAgree">Does everyone in the house agree to adopt this cat?</string>
+    <string name="expense">Predicted Expense on Cat(s): (NTD)</string>
+    <string name="environment">Environment:</string>
+    <string name="adoptionContract">Adoption Contract</string>
+
+    <string name="sex">Sex:</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="unknown">Unknown</string>
+    <string name="others">Others:</string>
+    <string name="adoptionDate">Adoption Date:</string>
+
+    <string name="weight">Weight:</string>
+    <string name="color">Color:</string>
+    <string name="birth">Birth:</string>
+    <string name="about">About:</string>
+    <string name="ligation">Ligation</string>
+    <string name="vaccine">Vaccine</string>
+    <string name="vaccineName">Vaccine:</string>
+    <string name="blood_test">Blood Test</string>
+    <string name="deworm">Deworm</string>
+    <string name="cleanEar">Ears Cleaned</string>
+    <string name="cutNail">Nails Cutted</string>
+    <string name="antiparasite">Antiparasite</string>
+    <string name="mixed">Mixed</string>
+    <string name="all">All</string> //全選
+
+<!--    black, white, orange, calico, tuxedo, tabby-->
+    <string name="cat_black">Black (黑)</string>
+    <string name="cat_white">White (白)</string>
+    <string name="cat_orange">Orange (橘)</string>
+    <string name="cat_calico">Calico (三花)</string>
+    <string name="cat_tuxedo">Tuxedo (賓士)</string>
+    <string name="cat_tabby">Tabby (虎斑)</string>
+
+    <string name="example_cat">This cat is 3 months old.\nFemale.\nBlood test and Deworm:\n Done.</string>
+
+    <string name="intro">To take good care of cats, there are many notable information that we should know about.</string>
+    <string name="cat_disease">Cat Disease:\n Cats are like humans, they get sick and they need to be taken good care of.</string>
+    <string name="adj_period">Adjustment Period:\n If an owner already has a cat and plans on adopting a kitty, then there are a few things the owner should keep in mind in order to reach harmony in the house.</string>
+    <string name="cat_health">Cat Health:\n A healthy cat would save the owner a lot of trouble in its elderly ages.</string>
+    <string name="daily_care">Daily Care:\n Lock your windows, doors, and drawers. Careful not to put anything sharp or flammable where the cat is able to reach. And remember, do not by products that are too expensive, cause it might not last long. </string>
+    <string name="hospital">24hr Hospitals in Taiwan: </string>
+</resources>
