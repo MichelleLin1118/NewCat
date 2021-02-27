@@ -2,17 +2,21 @@ package com.example.newcat;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -30,13 +34,18 @@ public class ActivityCat extends Activity implements View.OnClickListener {
     ImageView catImg;
     ToggleButton sexuality;
     ViewPager pager;
-    EditText weight, birth, adoptionDate, color, vaccine, about,others;
+    EditText weight, birth, adoptionDate, vaccine, about,others, colorEdit;
+    Spinner color;
     //ArrayList<View> catDataArrayList = new ArrayList<>();
     ArrayList<View> catPageArrayList = new ArrayList<>();
     ArrayList<DataCat> data = new ArrayList<>();
     int index = 0;
-    CatFragmentAdapter mCatFragmentAdapter = new CatFragmentAdapter();
+    int location;
+    CatFragmentAdapter mCatFragmentAdapter = new CatFragmentAdapter(this);
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+
+
 
     private void initCatData() {
         data.add(new DataCat(true,
@@ -57,7 +66,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
                 R.drawable.cat13,
                 new Date(120,1,1),
                 new Date(88, 2,2),
-                3 , true));
+                3 , false));
         data.add(new DataCat(false, true, false,true,false,true,false,false, "brown", "don't know", "hi", true, "hi", R.drawable.cat21, R.drawable.cat22, R.drawable.b_cat_white, new Date(89,3,3), new Date(91, 4,4), 2, true));
         data.add(new DataCat(false,false,false,false,false,false,false,true,"orange", "don't know", "bye", true, "bye", R.drawable.or1, R.drawable.or2,R.drawable.or3, new Date(92, 5,5), new Date(93,6,6),3, true));
         data.add(new DataCat());
@@ -76,6 +85,24 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             catPageArrayList.add(LayoutInflater.from(this).inflate(R.layout.view_pager_cat, null));
         }
         pager.setAdapter(mCatFragmentAdapter);
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
+
+            @Override
+            public void onPageScrolled(int position,float positionOffSet,int posotionOffSetPixels){
+                Log.i(TAG, "onPageScrolled = " + position);
+            }
+            @Override
+            public void onPageSelected ( int position){
+                Log.i(TAG, "onPageSelected = " + position);
+                location = position;
+                Log.i(TAG, "location = " + location);
+                mCatFragmentAdapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onPageScrollStateChanged ( int state){
+
+            }
+        });
 
     }
 
@@ -83,50 +110,20 @@ public class ActivityCat extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         if (v == home){
             Intent homeIntent = new Intent();
-            ComponentName cn = new ComponentName("com.example.cat", "com.example.cat.MainActivity");
+            ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.MainActivity");
             homeIntent.setComponent(cn);
             startActivity(homeIntent);
         }
     }
 
-//    class CatCheckBoxListener implements CompoundButton.OnCheckedChangeListener {
-//
-//        @Override
-//        public void onCheckedChanged(CompoundButton v, boolean isChecked) {
-//            if (v == vac) {
-//                Log.i(TAG, "vac click");
-//                data.get(index).setVac(isChecked);
-//            }
-//            if (v == dew) {
-//                data.get(index).setDew(isChecked);
-//            }
-//            if (v == blood) {
-//                data.get(index).setBlood(isChecked);
-//            }
-//            if (v == lig) {
-//                data.get(index).setLig (isChecked);
-//            }
-//            if (v == antipara) {
-//                data.get(index).setAntiparasite (isChecked);
-//            }
-//            if (v == cutNail) {
-//                data.get(index).setCutNail (isChecked);
-//            }
-//            if (v == cleanEar) {
-//                data.get(index).setCleanEar (isChecked);
-//            }
-//            if (v == all) {
-//                data.get(index).setVac (isChecked);
-//                data.get(index).setDew(isChecked);
-//                data.get(index).setBlood(isChecked);
-//                data.get(index).setLig (isChecked);
-//                data.get(index).setAntiparasite (isChecked);
-//                data.get(index).setCutNail (isChecked);
-//                data.get(index).setCleanEar (isChecked);
-//            }
-//        }
-//    }
+
     class CatFragmentAdapter extends PagerAdapter implements View.OnClickListener {
+
+        Context context;
+
+        public CatFragmentAdapter(Context context){
+            this.context = context;
+        }
 
         @Override
         public int getCount() {
@@ -144,27 +141,45 @@ public class ActivityCat extends Activity implements View.OnClickListener {
         }
 
         @Override
+        public int getItemPosition(Object object){return POSITION_NONE;}
+
+        private AdapterView.OnItemSelectedListener mSpinSelectedListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.i(TAG, "page = " +location + " select spinner" + position);
+                //save the data into db
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        };
+
+        @Override
         public Object instantiateItem(ViewGroup container, int position) {
+            Log.i(TAG,"instantiateItem");
+            Log.i(TAG, "location = " + location);
             index = position;
             ((ViewPager) container).addView(catPageArrayList.get(position));
             vac = (CheckBox) catPageArrayList.get(position).findViewById(R.id.vaccine);
-            //vac.setOnCheckedChangeListener(mCatCheckBoxListener);
             dew = (CheckBox) catPageArrayList.get(position).findViewById(R.id.deworm);
-            //dew.setOnCheckedChangeListener(mCatCheckBoxListener);
             blood = (CheckBox) catPageArrayList.get(position).findViewById(R.id.blood_test);
-            //blood.setOnCheckedChangeListener(mCatCheckBoxListener);
             lig = (CheckBox) catPageArrayList.get(position).findViewById(R.id.ligation);
-            //lig.setOnCheckedChangeListener(mCatCheckBoxListener);
             antipara = (CheckBox) catPageArrayList.get(position).findViewById(R.id.antiparasite);
-            //antipara.setOnCheckedChangeListener(mCatCheckBoxListener);
             cleanEar = (CheckBox) catPageArrayList.get(position).findViewById(R.id.cleanEar);
-            //cleanEar.setOnCheckedChangeListener(mCatCheckBoxListener);
             cutNail = (CheckBox) catPageArrayList.get(position).findViewById(R.id.cutNails);
-            //cutNail.setOnCheckedChangeListener(mCatCheckBoxListener);
             all = (CheckBox) catPageArrayList.get(position).findViewById(R.id.all);
-            //all.setOnCheckedChangeListener(mCatCheckBoxListener);
             mixed = (CheckBox) catPageArrayList.get(position).findViewById(R.id.mixed);
-            //mixed.setOnCheckedChangeListener(mCatCheckBoxListener);
+
+            color = (Spinner) catPageArrayList.get(position).findViewById(R.id.spinner_color);
+            ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(context, R.array.color_array, android.R.layout.simple_spinner_item);
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+            color.setAdapter(arrayAdapter);
+            color.setSelection(0, false);
+            color.setOnItemSelectedListener(mSpinSelectedListener);
+
+            colorEdit = (EditText) catPageArrayList.get(position).findViewById(R.id.color_editText);
 
             weight = (EditText) catPageArrayList.get(position).findViewById(R.id.weight);
             weight.setText(Integer.toString(data.get(position).getWeight()));
@@ -172,8 +187,6 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             birth.setText(sdf.format(data.get(position).getBirth()));
             vaccine= (EditText) catPageArrayList.get(position).findViewById((R.id.vaccineName));
             vaccine.setText(data.get(position).getVaccineName());
-            color = (EditText) catPageArrayList.get(position).findViewById((R.id.colorKind));
-            color.setText(data.get(position).getColor());
             about= (EditText) catPageArrayList.get(position).findViewById((R.id.about));
             about.setText(data.get(position).getAbout());
             others= (EditText) catPageArrayList.get(position).findViewById((R.id.others_cat));
@@ -195,10 +208,29 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             cleanEar.setOnClickListener(this);
             cutNail.setChecked(data.get(position).getCutNail());
             cutNail.setOnClickListener(this);
-            all.setChecked(data.get(position).getAll());
-            all.setOnClickListener(this);
-            mixed.setChecked(data.get(position).getMixed());
+            //all.setChecked(data.get(position).getAll());
+            //all.setOnClickListener(this);
+
+            //mixed.setChecked(data.get(position).getMixed());
             mixed.setOnClickListener(this);
+            mixed.setTag("ActivityCat" + location + "mixed");
+            if (data.get(location).getMixed() == true) {
+                colorEdit.setVisibility(View.GONE);
+                color.setVisibility(View.VISIBLE);
+            } else {
+                colorEdit.setVisibility(View.VISIBLE);
+                color.setVisibility(View.GONE);
+            }
+
+            color.setTag("ActivityCat" +location +"color");
+            colorEdit.setTag("ActivityCat" +location + "colorEdit");
+
+            all.setTag("ActivityCat" +location + "all");
+            all.setOnClickListener(this);
+
+            mixed.setTag("ActivityCat" +location + "mixed");
+            vac.setTag("ActivityCat" +location + "vac");
+            dew.setTag("ActivityCat" +location + "dew");
 
             catImg = (ImageView) catPageArrayList.get(position).findViewById(R.id.cat1);
             catImg.setImageResource(data.get(position).getCat());
@@ -208,68 +240,25 @@ public class ActivityCat extends Activity implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            DataCat dataCat = new DataCat();
-            if (all.isChecked())   {
-                Log.i(TAG, "all is checked");
-            }
-            if (v == all)  {
-                Log.i(TAG, "all check box click");
-                boolean checked = all.isChecked();
-                if (checked) {
+            Log.i(TAG, "onClick");
+            Log.i(TAG, "v.getTag() = " + v.getTag());
+            if (v == pager.findViewWithTag("ActivityCat" +location + "all")) {
+                Log.i(TAG, "all checked");
+                ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "mixed")).setChecked(true);
+                ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "vac")).setChecked(true);
+                ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "dew")).setChecked(true);
 
-                    dataCat.setMixed(true);
-                    dataCat.setVac(true);
-                    dataCat.setDew(true);
-                    mixed.setChecked(true);
-                    vac.setChecked(true);
-                    dew.setChecked(true);
+            }
+            if(v == pager.findViewWithTag("ActivityCat" + location + "mixed")) {
+                Log.i(TAG, "mixed checked");
+                Log.i(TAG, "mixed = " + ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "mixed")).isChecked());
+                if (((CheckBox) pager.findViewWithTag("ActivityCat" + location + "mixed")).isChecked() == true) {
+                    pager.findViewWithTag("ActivityCat" + location +"colorEdit").setVisibility(View.GONE);
+                    pager.findViewWithTag("ActivityCat" + location + "color").setVisibility(View.VISIBLE);
                 } else {
-
+                    pager.findViewWithTag("ActivityCat" + location +"colorEdit").setVisibility(View.VISIBLE);
+                    pager.findViewWithTag("ActivityCat" + location +"color").setVisibility(View.GONE);
                 }
-            }
-//            if (all.isChecked()) {
-//                Log.i(TAG, "all check");
-//                dataCat.setMixed(true);
-//                dataCat.setVac(true);
-//                dataCat.setDew(true);
-//                dataCat.setBlood(true);
-//                dataCat.setLig(true);
-//                dataCat.setAntiparasite(true);
-//                dataCat.setCleanEar(true);
-//                dataCat.setCutNail(true);
-//                dataCat.setAll(true);
-//            }
-            if (vac.isChecked()) {
-                Log.i(TAG, "vac check");
-                dataCat.setVac(true);
-            }
-            if (dew.isChecked()) {
-                Log.i(TAG, "dew check");
-                dataCat.setDew(true);
-            }
-            if (blood.isChecked()) {
-                Log.i(TAG, "blood check");
-                dataCat.setBlood(true);
-            }
-            if (lig.isChecked()) {
-                Log.i(TAG, "lig check");
-                dataCat.setLig(true);
-            }
-            if (antipara.isChecked()) {
-                Log.i(TAG, "antipara check");
-                dataCat.setAntiparasite(true);
-            }
-            if (cleanEar.isChecked()) {
-                Log.i(TAG, "cleanEar check");
-                dataCat.setCleanEar(true);
-            }
-            if (cutNail.isChecked()) {
-                Log.i(TAG, "cutNail check");
-                dataCat.setCutNail(true);
-            }
-
-            if (mixed.isChecked()) {
-                dataCat.setMixed(true);
             }
 
         }

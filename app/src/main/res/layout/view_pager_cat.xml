@@ -26,8 +26,8 @@
                     android:layout_gravity="center_vertical" />
                 <ImageButton
                     android:id="@+id/home_button"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:background="@drawable/a_home_button"/>
@@ -49,7 +49,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="200dp"
                         android:layout_weight="1"
-                        android:background="@drawable/b_cat"
+                        android:src="@drawable/b_cat"
                         android:layout_gravity="center"/>
                 </LinearLayout>
             </LinearLayout>
@@ -81,19 +81,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/birth"
-                    android:layout_weight="1"/>
-                <EditText
-                    android:id="@+id/birth"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="date"
-                    android:layout_weight="1"/>
-
             </LinearLayout>
+
+
             <CheckBox
                 android:id="@+id/all"
                 android:layout_width="match_parent"
@@ -162,24 +152,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-            <TextView
-                android:id="@+id/color"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/color"/>
-            <EditText
-                android:id="@+id/colorKind"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"/>
                 <CheckBox
                     android:id="@+id/mixed"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/mixed"/>
+                <EditText
+                    android:id="@+id/color_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"/>
+                <Spinner
+                    android:id="@+id/spinner_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+
+
             </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/birth"
+                android:layout_weight="1"/>
+            <EditText
+                android:id="@+id/birth"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="date"
+                android:layout_weight="1"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

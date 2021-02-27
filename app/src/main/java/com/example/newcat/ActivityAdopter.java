@@ -64,7 +64,7 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         if (v == home){
             Intent homeIntent = new Intent();
-            ComponentName cn = new ComponentName("com.example.cat", "com.example.cat.MainActivity");
+            ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.MainActivity");
             homeIntent.setComponent(cn);
             startActivity(homeIntent);
         }

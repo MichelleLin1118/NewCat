@@ -44,12 +44,16 @@
     <string name="all">All</string> //全選
 
 <!--    black, white, orange, calico, tuxedo, tabby-->
-    <string name="cat_black">Black (黑)</string>
-    <string name="cat_white">White (白)</string>
-    <string name="cat_orange">Orange (橘)</string>
-    <string name="cat_calico">Calico (三花)</string>
-    <string name="cat_tuxedo">Tuxedo (賓士)</string>
-    <string name="cat_tabby">Tabby (虎斑)</string>
+    <string-array name="color_array">
+        <item>select a color</item>
+        <item>Black (黑)</item>
+        <item>White (白)</item>
+        <item>Orange (橘)</item>
+        <item>Calico (三花)</item>
+        <item>Tuxedo (賓士)</item>
+        <item>Tabby (虎斑)</item>
+        <item>others</item>
+    </string-array>
 
     <string name="example_cat">This cat is 3 months old.\nFemale.\nBlood test and Deworm:\n Done.</string>
 
