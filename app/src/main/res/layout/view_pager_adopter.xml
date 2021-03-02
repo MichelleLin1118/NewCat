@@ -42,6 +42,7 @@
                 android:layout_weight="1"
                 android:text="@string/name"/>
             <EditText
+                android:id="@+id/adopter_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="textPersonName"
@@ -62,6 +63,7 @@
                 android:text="@string/birth"
                 android:layout_weight="1"/>
             <EditText
+                android:id="@+id/adopter_birthday"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="date"
@@ -69,57 +71,58 @@
 
         </LinearLayout>
         <TextView
-            android:id="@+id/adopterId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/id"
             android:textColor="@color/morandi_Armadillo"/>
         <EditText
+            android:id="@+id/adopter_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/morandi_Armadillo"/>
         <TextView
-            android:id="@+id/adopterAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/address"
             android:textColor="@color/morandi_Armadillo"/>
         <EditText
+            android:id="@+id/adopter_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/morandi_Armadillo"/>
         <TextView
-            android:id="@+id/adopterContact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/contact"
             android:textColor="@color/morandi_Armadillo"/>
         <EditText
+            android:id="@+id/adopter_contact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/morandi_Armadillo"/>
 
             <TextView
-                android:id="@+id/otherCats"
+                android:id="@+id/adopter_otherCats"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/otherCats"
                 android:textColor="@color/morandi_Armadillo"/>
             <EditText
+                android:id="@+id/adopter_catsAtHome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:inputType="number"
                 android:textColor="@color/morandi_Armadillo"/>
             <TextView
-                android:id="@+id/expense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/expense"
                 android:textColor="@color/morandi_Armadillo"/>
             <EditText
+                android:id="@+id/adopter_predictedExpense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -127,29 +130,39 @@
                 android:textColor="@color/morandi_Armadillo"/>
 
         <TextView
-            android:id="@+id/adopterFamily"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/family"
             android:textColor="@color/morandi_Armadillo"/>
         <EditText
+            android:id="@+id/adopter_familyMembers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/morandi_Armadillo"/>
         <CheckBox
-            android:id="@+id/familyAgree"
+            android:id="@+id/adopter_familyAgree"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/familyAgree"
             android:textColor="@color/morandi_Armadillo"/>
 
         <TextView
-            android:id="@+id/environment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/environment"
             android:textColor="@color/morandi_Armadillo"/>
         <EditText
+            android:id="@+id/adopter_environment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/morandi_Armadillo"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/adoptionDate"
+            android:textColor="@color/morandi_Armadillo"/>
+        <EditText
+            android:id="@+id/adopter_adoptionDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/morandi_Armadillo"/>
@@ -159,6 +172,7 @@
             android:text="@string/others"
             android:textColor="@color/morandi_Armadillo"/>
         <EditText
+            android:id="@+id/adopter_others"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/morandi_Armadillo"/>

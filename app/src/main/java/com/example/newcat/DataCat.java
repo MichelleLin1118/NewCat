@@ -68,8 +68,8 @@ public class DataCat {
         this.cat = R.drawable.b_cat_white;
         this.cat2 = R.drawable.b_cat_white;
         this.cat3 = R.drawable.b_cat_white;
-        this.birth = new Date(1,1,1);
-        this.adoption = new Date(1, 1, 1);
+        this.birth = new Date(1,0,1);
+        this.adoption = new Date(1, 0, 1);
         this.weight = 0;
     }
 

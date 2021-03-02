@@ -2,6 +2,7 @@ package com.example.newcat;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ToggleButton;
@@ -20,30 +22,31 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class ActivityAdopter extends Activity implements View.OnClickListener {
     String TAG = "homework";
     ImageButton messenger, fb, home;
-    String name, addr, familyBackground, environment, id;
-    Date birthday, adoptDate;
-    int phone, expenseOnCat, otherCats;
+    EditText name, address, familyMembers, environment, id, birthday, adoptDate, contactNumber, predictedExpense, catsAtHome;
     CheckBox familyAgree;
     ToggleButton sexuality;
     ViewPager pager;
-
+    
     ArrayList<View> adopterPageArrayList = new ArrayList<>();
     ArrayList<DataAdopter> data = new ArrayList<>();
     int index = 0;
+    int location;
     AdopterCheckBoxListener mAdopterCheckBoxListener = new AdopterCheckBoxListener();
-    AdopterFragmentAdapter mAdopterFragmentAdapter = new AdopterFragmentAdapter();
+    AdopterActivityAdapter mAdopterActivityAdapter = new AdopterActivityAdapter(this);
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 
     private void initAdopterData() {
         data.add(new DataAdopter());
     }
-
+    
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -52,11 +55,28 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
 
 
         pager= (ViewPager) findViewById(R.id.view_pager_adopter);
-        //catDataArrayList.add(LayoutInflater.from(getActivity()).inflate(R.layout.view_pager_adopter, null));
         for (int i = 0; i < 3 ; i++) {
             adopterPageArrayList.add(LayoutInflater.from(this).inflate(R.layout.view_pager_adopter, null));
         }
-        pager.setAdapter(mAdopterFragmentAdapter);
+        pager.setAdapter(mAdopterActivityAdapter);
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
+
+            @Override
+            public void onPageScrolled(int position,float positionOffSet,int posotionOffSetPixels){
+                Log.i(TAG, "onPageScrolled = " + position);
+            }
+            @Override
+            public void onPageSelected ( int position){
+                Log.i(TAG, "onPageSelected = " + position);
+                location = position;
+                Log.i(TAG, "location = " + location);
+                mAdopterActivityAdapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onPageScrollStateChanged ( int state){
+
+            }
+        });
 
     }
 
@@ -88,7 +108,12 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
         }
     }
 
-    class AdopterFragmentAdapter extends PagerAdapter implements View.OnClickListener {
+    class AdopterActivityAdapter extends PagerAdapter implements View.OnClickListener {
+        
+        Context context;
+        public AdopterActivityAdapter(Context context){
+            this.context = context;
+        }
 
         @Override
         public int getCount() {
@@ -113,7 +138,6 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
             messenger = (ImageButton) findViewById(R.id.adopter_messenger_button);
             messenger.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             messenger.setOnClickListener(this);
-
             fb = (ImageButton) findViewById((R.id.adopter_fb_button));
             fb.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             fb.setOnClickListener(this);
@@ -123,14 +147,41 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
             sexuality.setTextOff("male");
             sexuality.setTextOn("female");
 
+            familyAgree = (CheckBox) adopterPageArrayList.get(position).findViewById(R.id.adopter_familyAgree);
+            familyAgree.setChecked(data.get(position).getFamilyAgree());
+            familyAgree.setOnClickListener(this);
+            familyAgree.setTag("ActivityAdopter" +location + "familyAgree");
+
+            name = (EditText) adopterPageArrayList.get(position).findViewById((R.id.adopter_name));
+            name.setText(data.get(position).getName());
+            address = (EditText) adopterPageArrayList.get(position).findViewById((R.id.adopter_address));
+            address.setText(data.get(position).getName());
+            familyMembers = (EditText) adopterPageArrayList.get(position).findViewById((R.id.adopter_familyMembers));
+            familyMembers.setText(data.get(position).getfamilyMembers());
+            environment = (EditText) adopterPageArrayList.get(position).findViewById((R.id.adopter_environment));
+            environment.setText(data.get(position).getEnvironment());
+            id = (EditText) adopterPageArrayList.get(position).findViewById((R.id.adopter_id));
+            id.setText(data.get(position).getId());
+            birthday = (EditText) adopterPageArrayList.get(position).findViewById((R.id.adopter_birthday));
+            birthday.setText(sdf.format(data.get(position).getBirthday()));
+            adoptDate = (EditText) adopterPageArrayList.get(position).findViewById((R.id.adopter_adoptionDate));
+            adoptDate.setText(sdf.format(data.get(position).getAdoptDate()));
+            contactNumber = (EditText) adopterPageArrayList.get(position).findViewById(R.id.adopter_contact);
+            contactNumber.setText(Integer.toString(data.get(position).getContactNumber()));
+            predictedExpense = (EditText) adopterPageArrayList.get(position).findViewById(R.id.adopter_predictedExpense);
+            predictedExpense.setText(Integer.toString(data.get(position).getPredictedExpense()));
+            catsAtHome = (EditText) adopterPageArrayList.get(position).findViewById(R.id.adopter_catsAtHome);
+            catsAtHome.setText(data.get(position).getCatsAtHome());
+
+
             return adopterPageArrayList.get(position);
         }
         @Override
         public void onClick(View v) {
-            DataAdopter dataAdopter = new DataAdopter();
-            if (familyAgree.isChecked()) {
-                Log.i(TAG, "vac check");
-                dataAdopter.setFamilyAgree(true);
+            if (v ==  pager.findViewWithTag("ActivityAdopter" +location + "familyAgree")) {
+                Log.i(TAG, "familyAgree check");
+                ((CheckBox)pager.findViewWithTag("ActivityAdopter" +location + "familyAgree")).setChecked(true);
+
             }
         }
     }

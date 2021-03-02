@@ -17,7 +17,7 @@ import android.widget.ImageView;
 public class ActivityMain extends Activity implements View.OnClickListener{
 
     String TAG = "homework";
-    ImageButton cat, info, home, adop, cal, search;
+    ImageButton cat, information, home, adopter, calendar, search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,17 +29,17 @@ public class ActivityMain extends Activity implements View.OnClickListener{
         cat.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         cat.setOnClickListener(this);
 
-        cal = (ImageButton) findViewById((R.id.calendar_button));
-        cal.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        cal.setOnClickListener(this);
+        calendar= (ImageButton) findViewById((R.id.calendar_button));
+        calendar.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        calendar.setOnClickListener(this);
 
-        info = (ImageButton) findViewById(R.id.info_button);
-        info.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        info.setOnClickListener(this);
+        information = (ImageButton) findViewById(R.id.info_button);
+        information.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        information.setOnClickListener(this);
 
-        adop = (ImageButton) findViewById(R.id.adopter_button);
-        adop.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        adop.setOnClickListener(this);
+        adopter = (ImageButton) findViewById(R.id.adopter_button);
+        adopter.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        adopter.setOnClickListener(this);
 
 
         home = (ImageButton) findViewById((R.id.home_button));
@@ -76,21 +76,21 @@ public class ActivityMain extends Activity implements View.OnClickListener{
             catIntent.setComponent(cn);
             startActivity(catIntent);
         }
-        if (v == info){
-            Intent infoIntent = new Intent();
-            ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityInfo");
-            infoIntent.setComponent(cn);
-            startActivity(infoIntent);
+        if (v == information){
+            Intent informationIntent = new Intent();
+            ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.Activityinformation");
+            informationIntent.setComponent(cn);
+            startActivity(informationIntent);
         }
 
-        if (v == adop){
-            Intent adopIntent = new Intent();
-            ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityAdopter");
-            adopIntent.setComponent(cn);
-            startActivity(adopIntent);
+        if (v == adopter){
+            Intent adopterIntent = new Intent();
+            ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.Activityadopterter");
+            adopterIntent.setComponent(cn);
+            startActivity(adopterIntent);
         }
 
-        if (v == cal){
+        if (v == calendar){
             Intent calIntent = new Intent();
             ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityCalendar");
             calIntent.setComponent(cn);

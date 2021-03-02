@@ -6,18 +6,18 @@ import java.util.Date;
 public class DataAdopter {
 
 
-    public DataAdopter(String name, String addr, String familyBackground, String environment, String id, Date birthday, Date adoptDate, URL fb, int phone, int expenseOnCat, int otherCats, boolean familyAgree, boolean sexuality) {
+    public DataAdopter(String name, String addr, String familyMembers, String environment, String id, Date birthday, Date adoptDate, URL fb, int contactNumber, int predictedExpense, int catsAtHome, boolean familyAgree, boolean sexuality) {
         this.name = name;
         this.addr = addr;
-        this.familyBackground = familyBackground;
+        this.familyMembers = familyMembers;
         this.environment = environment;
         this.id = id;
         this.birthday = birthday;
         this.adoptDate = adoptDate;
         this.fb = fb;
-        this.phone = phone;
-        this.expenseOnCat = expenseOnCat;
-        this.otherCats = otherCats;
+        this.contactNumber = contactNumber;
+        this.predictedExpense = predictedExpense;
+        this.catsAtHome = catsAtHome;
         this.familyAgree = familyAgree;
         this.sexuality = sexuality;
     }
@@ -25,15 +25,15 @@ public class DataAdopter {
     public DataAdopter(String name, boolean sexuality) {
         this.name = name;
         this.addr = null;
-        this.familyBackground = null;
+        this.familyMembers = null;
         this.environment = null;
         this.id = "A000000000";
         this.birthday = new Date();
         this.adoptDate = new Date();
         this.fb = null;
-        this.phone = 0000000000;
-        this.expenseOnCat = 0;
-        this.otherCats = 0;
+        this.contactNumber = 0000000000;
+        this.predictedExpense = 0;
+        this.catsAtHome = 0;
         this.familyAgree = false;
         this.sexuality = sexuality;
     }
@@ -41,15 +41,15 @@ public class DataAdopter {
     public DataAdopter(String name, Date adoptDate, URL fb, boolean familyAgree, boolean sexuality) {
         this.name = name;
         this.addr = null;
-        this.familyBackground = null;
+        this.familyMembers = null;
         this.environment = null;
         this.id = "A000000000";
         this.birthday = new Date();
         this.adoptDate = adoptDate;
         this.fb = fb;
-        this.phone = 0000000000;
-        this.expenseOnCat = 0;
-        this.otherCats = 0;
+        this.contactNumber = 0000000000;
+        this.predictedExpense = 0;
+        this.catsAtHome = 0;
         this.familyAgree = familyAgree;
         this.sexuality = sexuality;
     }
@@ -57,7 +57,7 @@ public class DataAdopter {
     public DataAdopter() {
         this.name = null;
         this.addr = null;
-        this.familyBackground = null;
+        this.familyMembers = null;
         this.environment = null;
         this.id = "A000000000";
 
@@ -68,10 +68,22 @@ public class DataAdopter {
         this.adoptDate = new Date();
         this.fb = null;
 
-        this.phone = 0000000000;
-        this.expenseOnCat = 0;
-        this.otherCats = 0;
+        this.contactNumber = 0000000000;
+        this.predictedExpense = 0;
+        this.catsAtHome = 0;
     }
+
+
+    private String name, addr, familyMembers, environment, id;
+    private Date birthday, adoptDate;
+    private URL fb;
+    private int contactNumber, predictedExpense, catsAtHome;
+    private boolean familyAgree, sexuality;
+
+
+
+
+
 
     public String getName() {
         return name;
@@ -89,12 +101,12 @@ public class DataAdopter {
         this.addr = addr;
     }
 
-    public String getFamilyBackground() {
-        return familyBackground;
+    public String getfamilyMembers() {
+        return familyMembers;
     }
 
-    public void setFamilyBackground(String familyBackground) {
-        this.familyBackground = familyBackground;
+    public void setfamilyMembers(String familyMembers) {
+        this.familyMembers = familyMembers;
     }
 
     public String getEnvironment() {
@@ -137,28 +149,28 @@ public class DataAdopter {
         this.fb = fb;
     }
 
-    public int getPhone() {
-        return phone;
+    public int getContactNumber() {
+        return contactNumber;
     }
 
-    public void setPhone(int phone) {
-        this.phone = phone;
+    public void setContactNumber(int contactNumber) {
+        this.contactNumber = contactNumber;
     }
 
-    public int getExpenseOnCat() {
-        return expenseOnCat;
+    public int getPredictedExpense() {
+        return predictedExpense;
     }
 
-    public void setExpenseOnCat(int expenseOnCat) {
-        this.expenseOnCat = expenseOnCat;
+    public void setPredictedExpense(int predictedExpense) {
+        this.predictedExpense = predictedExpense;
     }
 
-    public int getOtherCats() {
-        return otherCats;
+    public int getCatsAtHome() {
+        return catsAtHome;
     }
 
-    public void setOtherCats(int otherCats) {
-        this.otherCats = otherCats;
+    public void setCatsAtHome(int catsAtHome) {
+        this.catsAtHome = catsAtHome;
     }
 
     public boolean getFamilyAgree() {
@@ -179,10 +191,6 @@ public class DataAdopter {
 
 
 
-    private String name, addr, familyBackground, environment, id;
-    private Date birthday, adoptDate;
-    private URL fb;
-    private int phone, expenseOnCat, otherCats;
-    private boolean familyAgree, sexuality;
+
 
 }
