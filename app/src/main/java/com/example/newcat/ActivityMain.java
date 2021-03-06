@@ -6,7 +6,9 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -60,6 +62,21 @@ public class ActivityMain extends Activity implements View.OnClickListener{
 //        cat_layout.height = im.getDisplayWidth() / 3;
 //        cat.setLayoutParams(cat_layout);
 //        cat.setOnClickListener(this);
+
+        //Access db
+        ContentValues values = new ContentValues();
+        //values.put(DataBaseCat._ID, 1);
+        values.put(DataBaseCat.WEIGHT, "3");
+        values.put(DataBaseCat.ALL, true);
+        getContentResolver().insert(DataBaseCat.CONTENT_URI_CAT, values);
+
+        Cursor cursor = getContentResolver().query(DataBaseCat.CONTENT_URI_CAT, null, null, null, null );
+        while (cursor.moveToNext()) {
+            Log.i(TAG, "db" + cursor.getString(0));
+            Log.i(TAG, "db" + cursor.getString(1));
+            Log.i(TAG, "db" + cursor.getString(2));
+
+        }
 
     }
     @Override

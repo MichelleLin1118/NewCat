@@ -1,10 +1,11 @@
 package com.example.newcat;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class DataCat {
 
-    public DataCat (boolean vac, boolean lig, boolean blood, boolean dew, boolean cleanEar, boolean cutNail, boolean antiparasite, boolean all, String color, String vaccineName, String about, boolean sex, String other, int cat, int cat2, int cat3, Date birth, Date adoption, int weight, boolean mixed) {
+    public DataCat (boolean vac, boolean lig, boolean blood, boolean dew, boolean cleanEar, boolean cutNail, boolean antiparasite, boolean all, String color, String vaccineName, String about, boolean sex, String other, ArrayList<Integer> catPic, Date birth, Date adoption, int weight, boolean mixed) {
         this.mixed = mixed;
         this.vac = vac;
         this.lig = lig;
@@ -19,9 +20,10 @@ public class DataCat {
         this.about = about;
         this.sex = sex;
         this.other = other;
-        this.cat = cat;
-        this.cat2 = cat2;
-        this.cat3 = cat3;
+        this.catPic = catPic;
+//        this.cat = cat;
+//        this.cat2 = cat2;
+//        this.cat3 = cat3;
         this.birth = birth;
         this.adoption = adoption;
         this.weight = weight;
@@ -42,9 +44,10 @@ public class DataCat {
         this.about = "";
         this.sex = sex;
         this.other = "";
-        this.cat = R.drawable.b_cat_white;
-        this.cat2 = R.drawable.b_cat_white;
-        this.cat3 = R.drawable.b_cat_white;
+        // catPic = no picture
+//        this.cat = R.drawable.b_cat_white;
+//        this.cat2 = R.drawable.b_cat_white;
+//        this.cat3 = R.drawable.b_cat_white;
         this.birth = new Date(1,1,1);
         this.adoption = new Date(1, 1, 1);
         this.weight = 0;
@@ -65,9 +68,11 @@ public class DataCat {
         this.about = "";
         this.sex = false;
         this.other = "";
-        this.cat = R.drawable.b_cat_white;
-        this.cat2 = R.drawable.b_cat_white;
-        this.cat3 = R.drawable.b_cat_white;
+        this.catPic = initDefaultCatPicture();
+        // catPic = no picture
+//        this.cat = R.drawable.b_cat_white;
+//        this.cat2 = R.drawable.b_cat_white;
+//        this.cat3 = R.drawable.b_cat_white;
         this.birth = new Date(1,0,1);
         this.adoption = new Date(1, 0, 1);
         this.weight = 0;
@@ -79,11 +84,18 @@ public class DataCat {
     private String about;
     private boolean sex;
     private String other;
-    private int cat;
-    private int cat2;
-    private int cat3;
+    private ArrayList<Integer> catPic;
+//    private int cat;
+//    private int cat2;
+//    private int cat3;
     private Date birth, adoption;
     private int weight;
+
+    public ArrayList<Integer> initDefaultCatPicture() {
+        ArrayList<Integer> initDefaultCatPicture = new ArrayList<Integer>();
+        initDefaultCatPicture.add(R.drawable.b_cat_white);
+        return initDefaultCatPicture;
+    }
 
     public String getVaccineName() {
         return vaccineName;
@@ -195,30 +207,34 @@ public class DataCat {
         this.sex = sex;
     }
 
+    public void setCatPic (ArrayList<Integer> catPic) {this.catPic = catPic;}
 
-    public int getCat() {
-        return cat;
-    }
+    public ArrayList<Integer> getCatPic() {return catPic;}
 
-    public void setCat(int cat) {
-        this.cat = cat;
-    }
 
-    public int getCat2() {
-        return cat2;
-    }
-
-    public void setCat2(int cat2) {
-        this.cat2 = cat2;
-    }
-
-    public int getCat3() {
-        return cat3;
-    }
-
-    public void setCat3(int cat3) {
-        this.cat3 = cat3;
-    }
+//    public int getCat() {
+//        return cat;
+//    }
+//
+//    public void setCat(int cat) {
+//        this.cat = cat;
+//    }
+//
+//    public int getCat2() {
+//        return cat2;
+//    }
+//
+//    public void setCat2(int cat2) {
+//        this.cat2 = cat2;
+//    }
+//
+//    public int getCat3() {
+//        return cat3;
+//    }
+//
+//    public void setCat3(int cat3) {
+//        this.cat3 = cat3;
+//    }
 
     public Date getBirth() {
         return birth;

@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -45,7 +44,13 @@ public class ActivityCat extends Activity implements View.OnClickListener {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 
-
+    public ArrayList<Integer> InitCatPicture(int cat1, int cat2, int cat3) {
+        ArrayList<Integer> catPic = new ArrayList<>();
+        catPic.add(cat1);
+        catPic.add(cat2);
+        catPic.add(cat3);
+        return catPic;
+    }
 
     private void initCatData() {
         data.add(new DataCat(true,
@@ -61,14 +66,12 @@ public class ActivityCat extends Activity implements View.OnClickListener {
                 "hello",
                 true,
                 "hello",
-                R.drawable.cat1,
-                R.drawable.cat12,
-                R.drawable.cat13,
+                InitCatPicture(R.drawable.cat1, R.drawable.cat2, R.drawable.cat3),
                 new Date(120,1,1),
                 new Date(88, 2,2),
                 3 , false));
-        data.add(new DataCat(false, true, false,true,false,true,false,false, "brown", "don't know", "hi", true, "hi", R.drawable.cat21, R.drawable.cat22, R.drawable.b_cat_white, new Date(89,3,3), new Date(91, 4,4), 2, true));
-        data.add(new DataCat(false,false,false,false,false,false,false,true,"orange", "don't know", "bye", true, "bye", R.drawable.or1, R.drawable.or2,R.drawable.or3, new Date(92, 5,5), new Date(93,6,6),3, true));
+//        data.add(new DataCat(false, true, false,true,false,true,false,false, "brown", "don't know", "hi", true, "hi", R.drawable.cat21, R.drawable.cat22, R.drawable.b_cat_white, new Date(89,3,3), new Date(91, 4,4), 2, true));
+//        data.add(new DataCat(false,false,false,false,false,false,false,true,"orange", "don't know", "bye", true, "bye", R.drawable.or1, R.drawable.or2,R.drawable.or3, new Date(92, 5,5), new Date(93,6,6),3, true));
         data.add(new DataCat());
 
     }
@@ -120,6 +123,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
     class CatActivityAdapter extends PagerAdapter implements View.OnClickListener {
 
         Context context;
+        int pictureIndex;
 
         public CatActivityAdapter(Context context){
             this.context = context;
@@ -195,10 +199,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             antiparasite.setTag("ActivityCat" +location + "antiparasite");
             earsCleaned.setTag("ActivityCat" +location + "earsCleaned");
             nailsCutted.setTag("ActivityCat" +location + "nailsCutted");
-            color.setTag("ActivityCat" +location +"color");
-            colorEdit.setTag("ActivityCat" +location + "colorEdit");
             all.setTag("ActivityCat" +location + "all");
-            mixed.setTag("ActivityCat" +location + "mixed");
 
             weight = (EditText) catPageArrayList.get(position).findViewById(R.id.weight);
             weight.setText(Integer.toString(data.get(position).getWeight()));
@@ -214,7 +215,10 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             adoptionDate.setText(sdf.format(data.get(position).getAdoption()));
 
             catImg = (ImageView) catPageArrayList.get(position).findViewById(R.id.cat1);
-            catImg.setImageResource(data.get(position).getCat());
+            catImg.setImageResource(data.get(position).getCatPic().get(0));
+            pictureIndex = 0;
+            catImg.setTag("ActivityCat" + location + "catImg");
+            pager.findViewWithTag("ActivityCat" +location + "catImg").setOnClickListener(this);
 
             sexuality = (ToggleButton) findViewById(R.id.sexuality_button);
             sexuality.setText("unknown");
@@ -227,26 +231,43 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             color.setAdapter(arrayAdapter);
             color.setSelection(0, false);
             color.setOnItemSelectedListener(mSpinSelectedListener);
+            color.setTag("ActivityCat" +location +"color");
             colorEdit = (EditText) catPageArrayList.get(position).findViewById(R.id.color_editText);
+            colorEdit.setTag("ActivityCat" +location + "colorEdit");
+
 
             mixed = (CheckBox) catPageArrayList.get(position).findViewById(R.id.mixed);
             mixed.setOnClickListener(this);
             mixed.setTag("ActivityCat" + location + "mixed");
-            if (data.get(location).getMixed() == true) {
-                colorEdit.setVisibility(View.GONE);
-                color.setVisibility(View.VISIBLE);
-            } else {
-                colorEdit.setVisibility(View.VISIBLE);
-                color.setVisibility(View.GONE);
-            }
+            mixedClick(data.get(position).getMixed());
 
             return catPageArrayList.get(position);
+        }
+
+        public void mixedClick(boolean mixedCalled) {
+            if (mixedCalled == true) {
+                ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "mixed")).setChecked(true);
+                ((EditText)pager.findViewWithTag("ActivityCat" +location + "colorEdit")).setVisibility(View.GONE);
+                ((Spinner)pager.findViewWithTag("ActivityCat" +location +"color")).setVisibility(View.VISIBLE);
+            } else {
+                ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "mixed")).setChecked(true);
+                ((EditText)pager.findViewWithTag("ActivityCat" +location + "colorEdit")).setVisibility(View.VISIBLE);
+                ((Spinner)pager.findViewWithTag("ActivityCat" +location +"color")).setVisibility(View.GONE);
+            }
         }
 
         @Override
         public void onClick(View v) {
             Log.i(TAG, "onClick");
             Log.i(TAG, "v.getTag() = " + v.getTag());
+            if (v == pager.findViewWithTag("ActivityCat" +location + "catImg")){
+                Log.i(TAG, "pic index = " + pictureIndex);
+                Log.i(TAG, "index" + data.get(location).getCatPic().get((pictureIndex+1)%3));
+                catImg.setImageResource(data.get(location).getCatPic().get((pictureIndex+1)%3));
+                pictureIndex = pictureIndex + 1;
+                mCatActivityAdapter.notifyDataSetChanged();
+
+            }
             if (v == pager.findViewWithTag("ActivityCat" +location + "all")) {
                 Log.i(TAG, "all checked");
                 ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "mixed")).setChecked(true);
@@ -257,6 +278,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
                 ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "antiparasite")).setChecked(true);
                 ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "earsCleaned")).setChecked(true);
                 ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "nailsCutted")).setChecked(true);
+                mixedClick(true);
             }
             
             if (v == pager.findViewWithTag("ActivityCat" +location + "vaccine")) { ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "vaccine")).setChecked(true); }
@@ -268,8 +290,6 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             if(v == pager.findViewWithTag("ActivityCat" +location + "nailsCutted")) {((CheckBox)pager.findViewWithTag("ActivityCat" +location + "nailsCutted")).setChecked(true);}
 
             if(v == pager.findViewWithTag("ActivityCat" + location + "mixed")) {
-                Log.i(TAG, "mixed checked");
-                Log.i(TAG, "mixed = " + ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "mixed")).isChecked());
                 if (((CheckBox) pager.findViewWithTag("ActivityCat" + location + "mixed")).isChecked() == true) {
                     pager.findViewWithTag("ActivityCat" + location +"colorEdit").setVisibility(View.GONE);
                     pager.findViewWithTag("ActivityCat" + location + "color").setVisibility(View.VISIBLE);
