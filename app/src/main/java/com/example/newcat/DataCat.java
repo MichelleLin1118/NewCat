@@ -5,14 +5,14 @@ import java.util.Date;
 
 public class DataCat {
 
-    public DataCat (boolean vac, boolean lig, boolean blood, boolean dew, boolean cleanEar, boolean cutNail, boolean antiparasite, boolean all, String color, String vaccineName, String about, boolean sex, String other, ArrayList<Integer> catPic, Date birth, Date adoption, int weight, boolean mixed) {
+    public DataCat (boolean vac, boolean lig, boolean blood, boolean dew, boolean earsCleaned, boolean nailsCutted, boolean antiparasite, boolean all, String color, String vaccineName, String about, boolean sex, String other, ArrayList<Integer> catPic, Date birth, Date adoption, int weight, boolean mixed) {
         this.mixed = mixed;
         this.vac = vac;
         this.lig = lig;
         this.blood = blood;
         this.dew = dew;
-        this.cleanEar = cleanEar;
-        this.cutNail = cutNail;
+        this.earsCleaned = earsCleaned;
+        this.nailsCutted = nailsCutted;
         this.antiparasite = antiparasite;
         this.all = all;
         this.color = color;
@@ -35,8 +35,8 @@ public class DataCat {
         this.lig = lig;
         this.blood = blood;
         this.dew = dew;
-        this.cleanEar = false;
-        this.cutNail = false;
+        this.earsCleaned = false;
+        this.nailsCutted = false;
         this.antiparasite = false;
         this.all = false;
         this.color = color;
@@ -59,8 +59,8 @@ public class DataCat {
         this.lig = false;
         this.blood = false;
         this.dew = false;
-        this.cleanEar = false;
-        this.cutNail = false;
+        this.earsCleaned = false;
+        this.nailsCutted = false;
         this.antiparasite = false;
         this.all = false;
         this.color = "";
@@ -78,7 +78,7 @@ public class DataCat {
         this.weight = 0;
     }
 
-    private boolean vac, lig, blood, dew, cleanEar, cutNail, antiparasite, all, mixed;
+    private boolean vac, lig, blood, dew, earsCleaned, nailsCutted, antiparasite, all, mixed;
     private String color;
     private String vaccineName;
     private String about;
@@ -144,20 +144,20 @@ public class DataCat {
         this.dew = dew;
     }
 
-    public boolean getCleanEar() {
-        return cleanEar;
+    public boolean getearsCleaned() {
+        return earsCleaned;
     }
 
-    public void setCleanEar(boolean cleanEar) {
-        this.cleanEar = cleanEar;
+    public void setearsCleaned(boolean earsCleaned) {
+        this.earsCleaned = earsCleaned;
     }
 
-    public boolean getCutNail() {
-        return cutNail;
+    public boolean getnailsCutted() {
+        return nailsCutted;
     }
 
-    public void setCutNail(boolean cutNail) {
-        this.cutNail = cutNail;
+    public void setnailsCutted(boolean nailsCutted) {
+        this.nailsCutted = nailsCutted;
     }
 
     public boolean getAntiparasite() {

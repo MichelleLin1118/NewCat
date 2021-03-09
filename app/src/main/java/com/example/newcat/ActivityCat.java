@@ -270,18 +270,30 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             }
             if (v == pager.findViewWithTag("ActivityCat" +location + "all")) {
                 Log.i(TAG, "all checked");
-                ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "mixed")).setChecked(true);
-                ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "vaccine")).setChecked(true);
-                ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "deworm")).setChecked(true);
-                ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "bloodTest")).setChecked(true);
-                ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "ligation")).setChecked(true);
-                ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "antiparasite")).setChecked(true);
-                ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "earsCleaned")).setChecked(true);
-                ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "nailsCutted")).setChecked(true);
-                mixedClick(true);
+                if (((CheckBox) pager.findViewWithTag("ActivityCat" + location + "all")).isChecked() == false) {
+                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "mixed")).setChecked(true);
+                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "vaccine")).setChecked(true);
+                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "deworm")).setChecked(true);
+                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "bloodTest")).setChecked(true);
+                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "ligation")).setChecked(true);
+                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "antiparasite")).setChecked(true);
+                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "earsCleaned")).setChecked(true);
+                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "nailsCutted")).setChecked(true);
+                    mixedClick(true);
+                } else {
+                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "mixed")).setChecked(false);
+                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "vaccine")).setChecked(false);
+                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "deworm")).setChecked(false);
+                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "bloodTest")).setChecked(false);
+                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "ligation")).setChecked(false);
+                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "antiparasite")).setChecked(false);
+                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "earsCleaned")).setChecked(false);
+                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "nailsCutted")).setChecked(false);
+                    mixedClick(false);
+                }
             }
             
-            if (v == pager.findViewWithTag("ActivityCat" +location + "vaccine")) { ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "vaccine")).setChecked(true); }
+            if(v == pager.findViewWithTag("ActivityCat" +location + "vaccine")) { ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "vaccine")).setChecked(true); }
             if(v == pager.findViewWithTag("ActivityCat" +location + "deworm")) {((CheckBox)pager.findViewWithTag("ActivityCat" +location + "deworm")).setChecked(true);}
             if(v == pager.findViewWithTag("ActivityCat" +location + "bloodTest")) {((CheckBox)pager.findViewWithTag("ActivityCat" +location + "bloodTest")).setChecked(true);}
             if(v == pager.findViewWithTag("ActivityCat" +location + "ligation")) {((CheckBox)pager.findViewWithTag("ActivityCat" +location + "ligation")).setChecked(true);}

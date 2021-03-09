@@ -13,21 +13,21 @@ import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class ContentProviderCat extends ContentProvider {
+public class ContentProviderAdopter extends ContentProvider {
 
-    public static String DATABASE_NAME_CAT = "cat.db";
+    public static String DATABASE_NAME_ADOPTER = "adopter.db";
     private static UriMatcher matcher;
-    private static final int MATCH_CAT = 100;
+    private static final int MATCH_ADOPTER = 100;
 
     static {
         matcher = new UriMatcher(UriMatcher.NO_MATCH);
-        matcher.addURI(DataBaseCat.AUTHORITY, DataBaseCat.TABLE_CAT, MATCH_CAT);
+        matcher.addURI(DataBaseAdopter.AUTHORITY, DataBaseAdopter.TABLE_ADOPTER, MATCH_ADOPTER);
     }
-    private SQLiteDatabase catDb;
+    private SQLiteDatabase adpDb;
 
     private void InitDb() {
-        CatDataHelper catDataHelper = new CatDataHelper(getContext());
-        catDb = catDataHelper.getWritableDatabase();
+        AdopterDataHelper adpDataHelper = new AdopterDataHelper(getContext());
+        adpDb = adpDataHelper.getWritableDatabase();
     }
 
 
@@ -40,11 +40,11 @@ public class ContentProviderCat extends ContentProvider {
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
         Cursor cursor = null;
-        if (catDb == null) {
+        if (adpDb == null) {
             InitDb();
         }
 
-        cursor = catDb.query(DataBaseCat.TABLE_CAT, projection, selection, selectionArgs, null, null, sortOrder, null);
+        cursor = adpDb.query(DataBaseAdopter.TABLE_ADOPTER, projection, selection, selectionArgs, null, null, sortOrder, null);
         return cursor;
     }
 
@@ -58,44 +58,44 @@ public class ContentProviderCat extends ContentProvider {
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
         long rowID = 0;
-        if (catDb == null) {InitDb();}
+        if (adpDb == null) {InitDb();}
         Uri mUri = null;
-        rowID = catDb.insert(DataBaseCat.TABLE_CAT, null, values);
+        rowID = adpDb.insert(DataBaseAdopter.TABLE_ADOPTER, null, values);
         if (rowID > 0) {
-            mUri = ContentUris.withAppendedId(DataBaseCat.CONTENT_URI_CAT, rowID);
+            mUri = ContentUris.withAppendedId(DataBaseAdopter.CONTENT_URI_ADOPTER, rowID);
         }
         return mUri;
     }
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
-        if (catDb == null) {InitDb();}
-        int count = catDb.delete(DataBaseCat.TABLE_CAT, selection, selectionArgs);
+        if (adpDb == null) {InitDb();}
+        int count = adpDb.delete(DataBaseAdopter.TABLE_ADOPTER, selection, selectionArgs);
 
         return count;
     }
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        if (catDb == null) {InitDb();}
-        int count = catDb.update(DataBaseCat.TABLE_CAT, values, selection, selectionArgs);
+        if (adpDb == null) {InitDb();}
+        int count = adpDb.update(DataBaseAdopter.TABLE_ADOPTER, values, selection, selectionArgs);
 
         return count;
     }
 
-    class CatDataHelper extends SQLiteOpenHelper {
+    class AdopterDataHelper extends SQLiteOpenHelper {
 
-        public CatDataHelper(Context context) {
-            super(context, DATABASE_NAME_CAT, null, 1);
+        public AdopterDataHelper(Context context) {
+            super(context, DATABASE_NAME_ADOPTER, null, 1);
         }
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL("CREATE TABLE " + DataBaseCat.TABLE_CAT + "(" +
-                    DataBaseCat._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    DataBaseCat.WEIGHT + " TEXT NOT NULL, " +
-                    DataBaseCat.ALL + "boolean DEFAULT 0, " +
-                    "UNIQUE(" + DataBaseCat._ID + ")" + ");" );
+            db.execSQL("CREATE TABLE " + DataBaseAdopter.TABLE_ADOPTER + "(" +
+                    DataBaseAdopter._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    DataBaseAdopter.NAME + " TEXT NOT NULL, " +
+                    DataBaseAdopter.FAMILY_AGREE + "boolean DEFAULT 0, " +
+                    "UNIQUE(" + DataBaseAdopter._ID + ")" + ");" );
         }
 
         @Override
