@@ -2,8 +2,10 @@ package com.example.newcat;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -107,6 +109,21 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             }
         });
 
+        //Access db
+        ContentValues values = new ContentValues();
+        values.put(DataBaseCat._ID, 1);
+        values.put(DataBaseCat.WEIGHT, "3");
+        values.put(DataBaseCat.ALL, true);
+        getContentResolver().insert(DataBaseCat.CONTENT_URI_CAT, values);
+
+        Cursor cursor = getContentResolver().query(DataBaseCat.CONTENT_URI_CAT, null, null, null, null );
+        while (cursor.moveToNext()) {
+            Log.i(TAG, "db" + cursor.getString(0));
+            Log.i(TAG, "db" + cursor.getString(1));
+            Log.i(TAG, "db" + cursor.getString(2));
+
+        }
+
     }
 
     @Override
@@ -186,9 +203,9 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             ligation.setOnClickListener(this);
             antiparasite.setChecked(data.get(position).getAntiparasite());
             antiparasite.setOnClickListener(this);
-            earsCleaned.setChecked(data.get(position).getCleanEar());
+            earsCleaned.setChecked(data.get(position).getearsCleaned());
             earsCleaned.setOnClickListener(this);
-            nailsCutted.setChecked(data.get(position).getCutNail());
+            nailsCutted.setChecked(data.get(position).getnailsCutted());
             nailsCutted.setOnClickListener(this);
             all.setOnClickListener(this);
 

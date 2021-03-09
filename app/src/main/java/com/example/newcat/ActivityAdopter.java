@@ -2,8 +2,10 @@ package com.example.newcat;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -77,6 +79,21 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
 
             }
         });
+
+        //Access db
+        ContentValues values = new ContentValues();
+        values.put(DataBaseAdopter._ID, 1);
+        values.put(DataBaseAdopter.NAME, "James");
+        values.put(DataBaseAdopter.FAMILY_AGREE, true);
+        getContentResolver().insert(DataBaseAdopter.CONTENT_URI_ADOPTER, values);
+
+        Cursor cursor = getContentResolver().query(DataBaseAdopter.CONTENT_URI_ADOPTER, null, null, null, null );
+        while (cursor.moveToNext()) {
+            Log.i(TAG, "db" + cursor.getString(0));
+            Log.i(TAG, "db" + cursor.getString(1));
+            Log.i(TAG, "db" + cursor.getString(2));
+
+        }
 
     }
 
