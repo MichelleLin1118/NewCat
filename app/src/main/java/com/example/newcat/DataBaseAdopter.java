@@ -4,6 +4,9 @@ import android.net.Uri;
 import android.renderscript.Double2;
 import android.widget.ImageView;
 
+import java.net.URL;
+import java.util.Date;
+
 public class DataBaseAdopter {
     public static String TABLE_ADOPTER = "adopter";
     public static String TABLE_ADOPTER_ID = "adopter/#";
@@ -25,7 +28,7 @@ public class DataBaseAdopter {
     public static final String AUTHORITY = "com.example.newcat";
     public static final Uri CONTENT_URI_ADOPTER = Uri.parse("content://" + AUTHORITY + "/" + TABLE_ADOPTER);
 
-    private long id;
+    private Long id;
     private String name, addr, familyMembers, environment, adopterId, birthday, adoptDate, contactNumber, predictedExpense, catsAtHome;
     private boolean familyAgree, sexuality;
 
@@ -45,6 +48,55 @@ public class DataBaseAdopter {
         this.sexuality = sexuality;
     }
 
+    public DataBaseAdopter(String name, String adoptDate, boolean familyAgree, boolean sexuality) {
+        this.name = name;
+        this.addr = null;
+        this.familyMembers = null;
+        this.environment = null;
+        this.adopterId = "A000000000";
+        this.birthday = "";
+        this.adoptDate = adoptDate;
+        this.contactNumber = "";
+        this.predictedExpense = "";
+        this.catsAtHome = "";
+        this.familyAgree = familyAgree;
+        this.sexuality = sexuality;
+    }
+
+    public DataBaseAdopter(String name, boolean sexuality) {
+        this.name = name;
+        this.addr = null;
+        this.familyMembers = null;
+        this.environment = null;
+        this.adopterId = "A000000000";
+        this.birthday = "";
+        this.adoptDate = "";
+        this.contactNumber = "";
+        this.predictedExpense = "";
+        this.catsAtHome = "";
+        this.familyAgree = false;
+        this.sexuality = sexuality;
+    }
+
+    public DataBaseAdopter() {
+        this.name = null;
+        this.addr = null;
+        this.familyMembers = null;
+        this.environment = null;
+        this.adopterId = "";
+
+        this.familyAgree = false;
+        this.sexuality = false;
+
+        this.birthday = "";
+        this.adoptDate = "";
+
+        this.contactNumber = "";
+        this.predictedExpense = "";
+        this.catsAtHome = "";
+    }
+
+
     @Override
     public String toString() {
         return "DataBaseAdopter id = " + id +
@@ -61,4 +113,110 @@ public class DataBaseAdopter {
                 "DataBaseAdopter familyAgree = " + familyAgree +
                 "DataBaseAdopter sexuality = " + sexuality ;
     }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddr() {
+        return addr;
+    }
+
+    public void setAddr(String addr) {
+        this.addr = addr;
+    }
+
+    public String getFamilyMembers() {
+        return familyMembers;
+    }
+
+    public void setFamilyMembers(String familyMembers) {
+        this.familyMembers = familyMembers;
+    }
+
+    public String getEnvironment() {
+        return environment;
+    }
+
+    public void setEnvironment(String environment) {
+        this.environment = environment;
+    }
+
+    public String getAdopterId() {
+        return adopterId;
+    }
+
+    public void setAdopterId(String adopterId) {
+        this.adopterId = adopterId;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getAdoptDate() {
+        return adoptDate;
+    }
+
+    public void setAdoptDate(String adoptDate) {
+        this.adoptDate = adoptDate;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
+    public String getPredictedExpense() {
+        return predictedExpense;
+    }
+
+    public void setPredictedExpense(String predictedExpense) {
+        this.predictedExpense = predictedExpense;
+    }
+
+    public String getCatsAtHome() {
+        return catsAtHome;
+    }
+
+    public void setCatsAtHome(String catsAtHome) {
+        this.catsAtHome = catsAtHome;
+    }
+
+    public boolean getFamilyAgree() {
+        return familyAgree;
+    }
+
+    public void setFamilyAgree(boolean familyAgree) {
+        this.familyAgree = familyAgree;
+    }
+
+    public boolean getSexuality() {
+        return sexuality;
+    }
+
+    public void setSexuality(boolean sexuality) {
+        this.sexuality = sexuality;
+    }
+
 }

@@ -31,13 +31,13 @@ import java.util.Date;
 public class ActivityAdopter extends Activity implements View.OnClickListener {
     String TAG = "homework";
     ImageButton messenger, fb, home;
-    EditText name, address, familyMembers, environment, id, birthday, adoptDate, contactNumber, predictedExpense, catsAtHome;
+    EditText name, address, familyMembers, environment, adopterId, birthday, adoptDate, contactNumber, predictedExpense, catsAtHome;
     CheckBox familyAgree;
     ToggleButton sexuality;
     ViewPager pager;
     
     ArrayList<View> adopterPageArrayList = new ArrayList<>();
-    ArrayList<DataAdopter> data = new ArrayList<>();
+    ArrayList<DataBaseAdopter> data = new ArrayList<>();
     int index = 0;
     int location;
     AdopterCheckBoxListener mAdopterCheckBoxListener = new AdopterCheckBoxListener();
@@ -46,7 +46,7 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
 
 
     private void initAdopterData() {
-        data.add(new DataAdopter());
+        data.add(new DataBaseAdopter());
     }
     
     @Override
@@ -84,14 +84,34 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
         ContentValues values = new ContentValues();
         values.put(DataBaseAdopter._ID, 1);
         values.put(DataBaseAdopter.NAME, "James");
+        values.put(DataBaseAdopter.ADDRESS, "hsinchu");
+        values.put(DataBaseAdopter.FAMILY_MEMBERS, "Father, Mother");
+        values.put(DataBaseAdopter.ENVIRONMENT, "clean");
+        values.put(DataBaseAdopter.ADOPTER_ID, "A000000000");
+        values.put(DataBaseAdopter.ADOPTER_BIRTHDAY, "19980101");
+        values.put(DataBaseAdopter.ADOPTION_DATE, "20201220");
+        values.put(DataBaseAdopter.CONTACT_NUMBER, "0999999999");
+        values.put(DataBaseAdopter.PREDICTED_EXPENSE, "2000/month");
+        values.put(DataBaseAdopter.CATS_AT_HOME, "no");
         values.put(DataBaseAdopter.FAMILY_AGREE, true);
+        values.put(DataBaseAdopter.ADOPTER_SEXUALITY,true);
         getContentResolver().insert(DataBaseAdopter.CONTENT_URI_ADOPTER, values);
 
         Cursor cursor = getContentResolver().query(DataBaseAdopter.CONTENT_URI_ADOPTER, null, null, null, null );
         while (cursor.moveToNext()) {
-            Log.i(TAG, "db" + cursor.getString(0));
+            Log.i(TAG, "db " + cursor.getString(0));
             Log.i(TAG, "db" + cursor.getString(1));
             Log.i(TAG, "db" + cursor.getString(2));
+            Log.i(TAG, "db" + cursor.getString(3));
+            Log.i(TAG, "db" + cursor.getString(4));
+            Log.i(TAG, "db" + cursor.getString(5));
+            Log.i(TAG, "db" + cursor.getString(6));
+            Log.i(TAG, "db" + cursor.getString(7));
+            Log.i(TAG, "db" + cursor.getString(8));
+            Log.i(TAG, "db" + cursor.getString(9));
+            Log.i(TAG, "adop" + cursor.getString(10));
+            Log.i(TAG, "agree" + cursor.getString(11));
+            Log.i(TAG, "sexuality" + cursor.getString(12));
 
         }
 
@@ -174,19 +194,19 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
             address = (EditText) adopterPageArrayList.get(position).findViewById((R.id.adopter_address));
             address.setText(data.get(position).getName());
             familyMembers = (EditText) adopterPageArrayList.get(position).findViewById((R.id.adopter_familyMembers));
-            familyMembers.setText(data.get(position).getfamilyMembers());
+            familyMembers.setText(data.get(position).getFamilyMembers());
             environment = (EditText) adopterPageArrayList.get(position).findViewById((R.id.adopter_environment));
             environment.setText(data.get(position).getEnvironment());
-            id = (EditText) adopterPageArrayList.get(position).findViewById((R.id.adopter_id));
-            id.setText(data.get(position).getId());
+            adopterId = (EditText) adopterPageArrayList.get(position).findViewById((R.id.adopter_id));
+            adopterId.setText(data.get(position).getAdopterId());
             birthday = (EditText) adopterPageArrayList.get(position).findViewById((R.id.adopter_birthday));
             birthday.setText(sdf.format(data.get(position).getBirthday()));
             adoptDate = (EditText) adopterPageArrayList.get(position).findViewById((R.id.adopter_adoptionDate));
             adoptDate.setText(sdf.format(data.get(position).getAdoptDate()));
             contactNumber = (EditText) adopterPageArrayList.get(position).findViewById(R.id.adopter_contact);
-            contactNumber.setText(Integer.toString(data.get(position).getContactNumber()));
+            contactNumber.setText(data.get(position).getContactNumber());
             predictedExpense = (EditText) adopterPageArrayList.get(position).findViewById(R.id.adopter_predictedExpense);
-            predictedExpense.setText(Integer.toString(data.get(position).getPredictedExpense()));
+            predictedExpense.setText(data.get(position).getPredictedExpense());
             catsAtHome = (EditText) adopterPageArrayList.get(position).findViewById(R.id.adopter_catsAtHome);
             catsAtHome.setText(data.get(position).getCatsAtHome());
 

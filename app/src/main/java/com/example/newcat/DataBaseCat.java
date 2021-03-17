@@ -2,6 +2,9 @@ package com.example.newcat;
 
 import android.net.Uri;
 
+import java.util.ArrayList;
+
+
 public class DataBaseCat {
     public static String TABLE_CAT = "cat";
     public static String TABLE_CAT_ID = "cat/#";
@@ -18,10 +21,12 @@ public class DataBaseCat {
     public static String VACCINE = "vaccine";
     public static String LIGATION = "ligation";
     public static String DEWORM = "deworm";
+    public static String BLOOD_TEST = "blood_test";
     public static String EARS_CLEANED = "ears_cleaned";
     public static String NAILS_CUTTED = "nails_cutted";
+    public static String ANTIPARASITE = "antiparasite";
     public static String MIXED = "mixed";
-    public static String ALL = "all";
+    public static String ALL_CHECK = "all_check";
     public static String SEXUALITY = "sexuality";
 
     public static final String AUTHORITY = "com.example.newcat";
@@ -29,9 +34,10 @@ public class DataBaseCat {
 
     private long id;
     private String weight, birth, adoption, color, vaccineName, about, other;
-    private boolean vac, lig, blood, dew, earsCleaned, nailsCutted, antiparasite, all, mixed, sex;
+    private boolean vac, lig, blood, dew, earsCleaned, nailsCutted, antiparasite, allCheck, mixed, sex;
+    private ArrayList<Integer> catPic;
 
-    public DataBaseCat(long id, String weight, String birth, String adoption, String color, String vaccineName, String about, String other, boolean vac, boolean lig, boolean blood, boolean dew, boolean earsCleaned, boolean nailsCutted, boolean antiparasite, boolean all, boolean mixed, boolean sex) {
+    public DataBaseCat(long id, String weight, String birth, String adoption, String color, String vaccineName, String about, String other, boolean vac, boolean lig, boolean blood, boolean dew, boolean earsCleaned, boolean nailsCutted, boolean antiparasite, boolean allCheck, boolean mixed, boolean sex) {
         this.id = id;
         this.weight = weight;
         this.birth = birth;
@@ -47,11 +53,205 @@ public class DataBaseCat {
         this.earsCleaned = earsCleaned;
         this.nailsCutted = nailsCutted;
         this.antiparasite = antiparasite;
-        this.all = all;
+        this.allCheck = allCheck;
         this.mixed = mixed;
         this.sex = sex;
     }
 
+
+    public DataBaseCat(boolean vac, boolean lig, boolean blood, boolean dew, String color, boolean sex, boolean mixed) {
+        this.mixed = mixed;
+        this.vac = vac;
+        this.lig = lig;
+        this.blood = blood;
+        this.dew = dew;
+        this.earsCleaned = false;
+        this.nailsCutted = false;
+        this.antiparasite = false;
+        this.allCheck = false;
+        this.color = color;
+        this.vaccineName = "";
+        this.about = "";
+        this.sex = sex;
+        this.other = "";
+        // catPic = no picture
+//        this.cat = R.drawable.b_cat_white;
+//        this.cat2 = R.drawable.b_cat_white;
+//        this.cat3 = R.drawable.b_cat_white;
+        this.birth = "151515";
+        this.adoption = "151515";
+        this.weight = "0";
+    }
+
+    public DataBaseCat() {
+        this.mixed = false;
+        this.vac = false;
+        this.lig = false;
+        this.blood = false;
+        this.dew = false;
+        this.earsCleaned = false;
+        this.nailsCutted = false;
+        this.antiparasite = false;
+        this.allCheck = false;
+        this.color = "";
+        this.vaccineName = "";
+        this.about = "";
+        this.sex = false;
+        this.other = "";
+        this.catPic = initDefaultCatPicture();
+        // catPic = no picture
+//        this.cat = R.drawable.b_cat_white;
+//        this.cat2 = R.drawable.b_cat_white;
+//        this.cat3 = R.drawable.b_cat_white;
+        this.birth = "141414";
+        this.adoption = "151515";
+        this.weight = "0";
+    }
+    
+    public ArrayList<Integer> initDefaultCatPicture() {
+        ArrayList<Integer> initDefaultCatPicture = new ArrayList<Integer>();
+        initDefaultCatPicture.add(R.drawable.b_cat_white);
+        return initDefaultCatPicture;
+    }
+
+    public String getVaccineName() {
+        return vaccineName;
+    }
+
+    public void setVaccineName(String vaccineName) {
+        this.vaccineName = vaccineName;
+    }
+    public boolean getMixed() {
+        return mixed;
+    }
+
+    public void setMixed(boolean mixed) {
+        this.mixed = mixed;
+    }
+
+    public boolean getVac() {
+        return vac;
+    }
+
+    public void setVac(boolean vac) {
+        this.vac = vac;
+    }
+
+    public boolean getLig() {
+        return lig;
+    }
+
+    public void setLig(boolean lig) {
+        this.lig = lig;
+    }
+
+    public boolean getBlood() {
+        return blood;
+    }
+
+    public void setBlood(boolean blood) {
+        this.blood = blood;
+    }
+
+    public boolean getDew() {
+        return dew;
+    }
+
+    public void setDew(boolean dew) {
+        this.dew = dew;
+    }
+
+    public boolean getearsCleaned() {
+        return earsCleaned;
+    }
+
+    public void setearsCleaned(boolean earsCleaned) {
+        this.earsCleaned = earsCleaned;
+    }
+
+    public boolean getnailsCutted() {
+        return nailsCutted;
+    }
+
+    public void setnailsCutted(boolean nailsCutted) {
+        this.nailsCutted = nailsCutted;
+    }
+
+    public boolean getAntiparasite() {
+        return antiparasite;
+    }
+
+    public void setAntiparasite(boolean antiparasite) {
+        this.antiparasite = antiparasite;
+    }
+
+    public boolean getAllCheck() {
+        return allCheck;
+    }
+
+    public void setAllCheck(boolean allCheck) {
+        this.allCheck = allCheck;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String type) {
+        this.color = type;
+    }
+
+    public String getOther() {
+        return other;
+    }
+
+    public void setOther(String other) {
+        this.other = other;
+    }
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    public boolean getSex() {
+        return sex;
+    }
+
+    public void setSex(boolean sex) {
+        this.sex = sex;
+    }
+
+    public void setCatPic (ArrayList<Integer> catPic) {this.catPic = catPic;}
+
+    public ArrayList<Integer> getCatPic() {return catPic;}
+
+
+    public String getBirth() {
+        return birth;
+    }
+
+    public void setBirth(String birth) {
+        this.birth = birth;
+    }
+
+    public String getAdoption() {
+        return adoption;
+    }
+
+    public void setAdoption(String adoption) {
+        this.adoption = adoption;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
 
 
     @Override
@@ -59,7 +259,7 @@ public class DataBaseCat {
         return "DataBaseCat id = " + id +
                 "DataBaseCat weight = " + weight +
                 "DataBaseCat birth = " + birth +
-                "DataBaseCat adoption date = " + adoption +
+                "DataBaseCat adoption String = " + adoption +
                 "DataBaseCat color = " + color +
                 "DataBaseCat vaccine name = " + vaccineName +
                 "DataBaseCat sexuality = " + sex +
@@ -71,7 +271,7 @@ public class DataBaseCat {
                 "DataBaseCat nails cutted = " + nailsCutted +
                 "DataBaseCat antiparasite = " + antiparasite +
                 "DataBaseCat mixed = " + mixed +
-                "DataBaseCat all = " + all;
+                "DataBaseCat allCheck = " + allCheck;
     }
 
 

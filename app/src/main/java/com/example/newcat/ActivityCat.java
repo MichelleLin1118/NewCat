@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -30,8 +31,9 @@ import java.util.Date;
 
 public class ActivityCat extends Activity implements View.OnClickListener {
     String TAG = "homework";
+    Button deleteButton;
     ImageButton home;
-    CheckBox vaccine, deworm, bloodTest,ligation, antiparasite, nailsCutted, earsCleaned, all, mixed;
+    CheckBox vaccine, deworm, bloodTest,ligation, antiparasite, nailsCutted, earsCleaned, allCheck, mixed;
     ImageView catImg;
     ToggleButton sexuality;
     ViewPager pager;
@@ -39,12 +41,12 @@ public class ActivityCat extends Activity implements View.OnClickListener {
     Spinner color;
     //ArrayList<View> catDataArrayList = new ArrayList<>();
     ArrayList<View> catPageArrayList = new ArrayList<>();
-    ArrayList<DataCat> data = new ArrayList<>();
+    DataBaseUtils dataBaseUtils = new DataBaseUtils(this);
+    ArrayList<DataBaseCat> data = dataBaseUtils.getCatDataFromDB();
     int index = 0;
     int location;
     CatActivityAdapter mCatActivityAdapter = new CatActivityAdapter(this);
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
 
     public ArrayList<Integer> InitCatPicture(int cat1, int cat2, int cat3) {
         ArrayList<Integer> catPic = new ArrayList<>();
@@ -54,35 +56,12 @@ public class ActivityCat extends Activity implements View.OnClickListener {
         return catPic;
     }
 
-    private void initCatData() {
-        data.add(new DataCat(true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                false,
-                false,
-                "white",
-                "don't know",
-                "hello",
-                true,
-                "hello",
-                InitCatPicture(R.drawable.cat1, R.drawable.cat2, R.drawable.cat3),
-                new Date(120,1,1),
-                new Date(88, 2,2),
-                3 , false));
-//        data.add(new DataCat(false, true, false,true,false,true,false,false, "brown", "don't know", "hi", true, "hi", R.drawable.cat21, R.drawable.cat22, R.drawable.b_cat_white, new Date(89,3,3), new Date(91, 4,4), 2, true));
-//        data.add(new DataCat(false,false,false,false,false,false,false,true,"orange", "don't know", "bye", true, "bye", R.drawable.or1, R.drawable.or2,R.drawable.or3, new Date(92, 5,5), new Date(93,6,6),3, true));
-        data.add(new DataCat());
 
-    }
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         Log.i(TAG, "onCreate");
         setContentView(R.layout.activity_cat);
-        initCatData();
 
         pager= (ViewPager) findViewById(R.id.view_pager_cat);
         //catDataArrayList.add(LayoutInflater.from(getActivity()).inflate(R.layout.view_pager_cat, null));
@@ -111,18 +90,27 @@ public class ActivityCat extends Activity implements View.OnClickListener {
 
         //Access db
         ContentValues values = new ContentValues();
-        values.put(DataBaseCat._ID, 1);
+        //values.put(DataBaseCat._ID, 1);
         values.put(DataBaseCat.WEIGHT, "3");
-        values.put(DataBaseCat.ALL, true);
-        getContentResolver().insert(DataBaseCat.CONTENT_URI_CAT, values);
+        values.put(DataBaseCat.BIRTH, "20200101");
+        values.put(DataBaseCat.ADOPTION, "20200102");
+        values.put(DataBaseCat.COLOR, 3);
+        values.put(DataBaseCat.VACCINE_NAME, "hi");
+        values.put(DataBaseCat.ABOUT,"hye");
+        values.put(DataBaseCat.OTHER, "");
+        values.put(DataBaseCat.VACCINE, true);
+        values.put(DataBaseCat.LIGATION, true);
+        values.put(DataBaseCat.DEWORM, false);
+        values.put(DataBaseCat.BLOOD_TEST,false);
+        values.put(DataBaseCat.EARS_CLEANED, false);
+        values.put(DataBaseCat.NAILS_CUTTED, true);
+        values.put(DataBaseCat.ANTIPARASITE,true);
+        values.put(DataBaseCat.MIXED, true);
+        values.put(DataBaseCat.SEXUALITY, true);
+        values.put(DataBaseCat.ALL_CHECK, true);
+        //getContentResolver().insert(DataBaseCat.CONTENT_URI_CAT, values);
 
-        Cursor cursor = getContentResolver().query(DataBaseCat.CONTENT_URI_CAT, null, null, null, null );
-        while (cursor.moveToNext()) {
-            Log.i(TAG, "db" + cursor.getString(0));
-            Log.i(TAG, "db" + cursor.getString(1));
-            Log.i(TAG, "db" + cursor.getString(2));
-
-        }
+        dataBaseUtils.showCatDataBaseResult();
 
     }
 
@@ -172,9 +160,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) { }
         };
 
         @Override
@@ -184,6 +170,12 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             index = position;
             ((ViewPager) container).addView(catPageArrayList.get(position));
 
+            //delete test
+            deleteButton = (Button) catPageArrayList.get(position).findViewById(R.id.test_delete_button);
+            //deleteButton.setOnClickListener(this);
+            deleteButton.setTag("ActivityCat" +location + "delete_button");
+            deleteButton.setOnClickListener(this);
+
             vaccine = (CheckBox) catPageArrayList.get(position).findViewById(R.id.vaccine);
             deworm = (CheckBox) catPageArrayList.get(position).findViewById(R.id.deworm);
             bloodTest = (CheckBox) catPageArrayList.get(position).findViewById(R.id.blood_test);
@@ -191,7 +183,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             antiparasite = (CheckBox) catPageArrayList.get(position).findViewById(R.id.antiparasite);
             earsCleaned = (CheckBox) catPageArrayList.get(position).findViewById(R.id.cleanEar);
             nailsCutted = (CheckBox) catPageArrayList.get(position).findViewById(R.id.cutNails);
-            all = (CheckBox) catPageArrayList.get(position).findViewById(R.id.all);
+            allCheck = (CheckBox) catPageArrayList.get(position).findViewById(R.id.allCheck);
 
             vaccine.setChecked(data.get(position).getVac());
             vaccine.setOnClickListener(this);
@@ -207,7 +199,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             earsCleaned.setOnClickListener(this);
             nailsCutted.setChecked(data.get(position).getnailsCutted());
             nailsCutted.setOnClickListener(this);
-            all.setOnClickListener(this);
+            allCheck.setOnClickListener(this);
 
             vaccine.setTag("ActivityCat" +location + "vaccine");
             deworm.setTag("ActivityCat" +location + "deworm");
@@ -216,12 +208,12 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             antiparasite.setTag("ActivityCat" +location + "antiparasite");
             earsCleaned.setTag("ActivityCat" +location + "earsCleaned");
             nailsCutted.setTag("ActivityCat" +location + "nailsCutted");
-            all.setTag("ActivityCat" +location + "all");
+            allCheck.setTag("ActivityCat" +location + "allCheck");
 
             weight = (EditText) catPageArrayList.get(position).findViewById(R.id.weight);
-            weight.setText(Integer.toString(data.get(position).getWeight()));
+            weight.setText(data.get(position).getWeight());
             birth = (EditText) catPageArrayList.get(position).findViewById((R.id.birth));
-            birth.setText(sdf.format(data.get(position).getBirth()));
+            birth.setText(data.get(position).getBirth());
             vaccineName= (EditText) catPageArrayList.get(position).findViewById((R.id.vaccineName));
             vaccineName.setText(data.get(position).getVaccineName());
             about= (EditText) catPageArrayList.get(position).findViewById((R.id.about));
@@ -229,7 +221,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             others= (EditText) catPageArrayList.get(position).findViewById((R.id.others_cat));
             others.setText(data.get(position).getOther());
             adoptionDate= (EditText) catPageArrayList.get(position).findViewById((R.id.adoptionDate));
-            adoptionDate.setText(sdf.format(data.get(position).getAdoption()));
+            adoptionDate.setText(data.get(position).getAdoption());
 
             catImg = (ImageView) catPageArrayList.get(position).findViewById(R.id.cat1);
             catImg.setImageResource(data.get(position).getCatPic().get(0));
@@ -261,22 +253,35 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             return catPageArrayList.get(position);
         }
 
-        public void mixedClick(boolean mixedCalled) {
-            if (mixedCalled == true) {
-                ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "mixed")).setChecked(true);
-                ((EditText)pager.findViewWithTag("ActivityCat" +location + "colorEdit")).setVisibility(View.GONE);
-                ((Spinner)pager.findViewWithTag("ActivityCat" +location +"color")).setVisibility(View.VISIBLE);
-            } else {
-                ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "mixed")).setChecked(true);
-                ((EditText)pager.findViewWithTag("ActivityCat" +location + "colorEdit")).setVisibility(View.VISIBLE);
-                ((Spinner)pager.findViewWithTag("ActivityCat" +location +"color")).setVisibility(View.GONE);
-            }
-        }
+
 
         @Override
         public void onClick(View v) {
             Log.i(TAG, "onClick");
             Log.i(TAG, "v.getTag() = " + v.getTag());
+            if (v == pager.findViewWithTag("ActivityCat" +location + "delete_button")) {
+                Log.i(TAG, "--------------------click");
+                ContentValues values = new ContentValues();
+                values.put(DataBaseCat.WEIGHT, "3");
+                values.put(DataBaseCat.BIRTH, "20200101");
+                values.put(DataBaseCat.ADOPTION, "20200102");
+                values.put(DataBaseCat.COLOR, 3);
+                values.put(DataBaseCat.VACCINE_NAME, "hi");
+                values.put(DataBaseCat.ABOUT,"-------------------");
+                values.put(DataBaseCat.OTHER, "");
+                values.put(DataBaseCat.VACCINE, true);
+                values.put(DataBaseCat.LIGATION, true);
+                values.put(DataBaseCat.DEWORM, false);
+                values.put(DataBaseCat.BLOOD_TEST,false);
+                values.put(DataBaseCat.EARS_CLEANED, false);
+                values.put(DataBaseCat.NAILS_CUTTED, true);
+                values.put(DataBaseCat.MIXED, true);
+                values.put(DataBaseCat.SEXUALITY, true);
+                values.put(DataBaseCat.ALL_CHECK, true);
+                getContentResolver().update(DataBaseCat.CONTENT_URI_CAT, values, DataBaseCat._ID + " = " + 2, null);
+                //getContentResolver().delete(DataBaseCat.CONTENT_URI_CAT, DataBaseCat._ID + " = " + 1, null);
+                dataBaseUtils.showCatDataBaseResult();
+            }
             if (v == pager.findViewWithTag("ActivityCat" +location + "catImg")){
                 Log.i(TAG, "pic index = " + pictureIndex);
                 Log.i(TAG, "index" + data.get(location).getCatPic().get((pictureIndex+1)%3));
@@ -285,9 +290,9 @@ public class ActivityCat extends Activity implements View.OnClickListener {
                 mCatActivityAdapter.notifyDataSetChanged();
 
             }
-            if (v == pager.findViewWithTag("ActivityCat" +location + "all")) {
-                Log.i(TAG, "all checked");
-                if (((CheckBox) pager.findViewWithTag("ActivityCat" + location + "all")).isChecked() == false) {
+            if (v == pager.findViewWithTag("ActivityCat" +location + "allCheck")) {
+                Log.i(TAG, "allCheck checked");
+                if (((CheckBox) pager.findViewWithTag("ActivityCat" + location + "allCheck")).isChecked() == true) {
                     ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "mixed")).setChecked(true);
                     ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "vaccine")).setChecked(true);
                     ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "deworm")).setChecked(true);
@@ -328,6 +333,17 @@ public class ActivityCat extends Activity implements View.OnClickListener {
                 }
             }
 
+        }
+        public void mixedClick(boolean mixedCalled) {
+            if (mixedCalled == true) {
+                ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "mixed")).setChecked(true);
+                ((EditText)pager.findViewWithTag("ActivityCat" +location + "colorEdit")).setVisibility(View.GONE);
+                ((Spinner)pager.findViewWithTag("ActivityCat" +location +"color")).setVisibility(View.VISIBLE);
+            } else {
+                ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "mixed")).setChecked(true);
+                ((EditText)pager.findViewWithTag("ActivityCat" +location + "colorEdit")).setVisibility(View.VISIBLE);
+                ((Spinner)pager.findViewWithTag("ActivityCat" +location +"color")).setVisibility(View.GONE);
+            }
         }
     }
 }

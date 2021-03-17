@@ -94,7 +94,20 @@ public class ContentProviderCat extends ContentProvider {
             db.execSQL("CREATE TABLE " + DataBaseCat.TABLE_CAT + "(" +
                     DataBaseCat._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     DataBaseCat.WEIGHT + " TEXT NOT NULL, " +
-                    DataBaseCat.ALL + "boolean DEFAULT 0, " +
+                    DataBaseCat.BIRTH + " INTEGER, " +
+                    DataBaseCat.ADOPTION + " INTEGER, " +
+                    DataBaseCat.COLOR + " INTEGER, " +
+                    DataBaseCat.VACCINE_NAME + " TEXT NOT NULL, " +
+                    DataBaseCat.ABOUT + " TEXT, " +
+                    DataBaseCat.OTHER + " TEXT, " +
+                    DataBaseCat.VACCINE + " boolean DEFAULT 0, " +
+                    DataBaseCat.LIGATION + " boolean DEFAULT 0, " +
+                    DataBaseCat.DEWORM + " boolean DEFAULT 0, " +
+                    DataBaseCat.EARS_CLEANED + " boolean DEFAULT 0, " +
+                    DataBaseCat.NAILS_CUTTED + " boolean DEFAULT 0, " +
+                    DataBaseCat.MIXED + " boolean DEFAULT 0, " +
+                    DataBaseCat.SEXUALITY + " boolean DEFAULT 0, " +
+                    DataBaseCat.ALL_CHECK + " boolean DEFAULT 0, " +
                     "UNIQUE(" + DataBaseCat._ID + ")" + ");" );
         }
 

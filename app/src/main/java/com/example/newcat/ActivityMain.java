@@ -20,6 +20,7 @@ public class ActivityMain extends Activity implements View.OnClickListener{
 
     String TAG = "homework";
     ImageButton cat, information, home, adopter, calendar, search;
+    DataBaseUtils dataBaseUtils = new DataBaseUtils(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +93,7 @@ public class ActivityMain extends Activity implements View.OnClickListener{
             ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityCat");
             catIntent.setComponent(cn);
             startActivity(catIntent);
+
         }
         if (v == information){
             Intent informationIntent = new Intent();
@@ -120,10 +122,15 @@ public class ActivityMain extends Activity implements View.OnClickListener{
             startActivity(homeIntent);
         }
         if (v == search) {
-            Intent searchIntent = new Intent();
-            ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivitySearch");
-            searchIntent.setComponent(cn);
-            startActivity(searchIntent);
+            //dataBaseUtils.createCatData(new DataBaseCat());
+            getContentResolver().insert(DataBaseCat.CONTENT_URI_CAT, dataBaseUtils.createCatData(new DataBaseCat()));
+            getContentResolver().insert(DataBaseCat.CONTENT_URI_CAT, dataBaseUtils.createCatData(new DataBaseCat()));
+            dataBaseUtils.showCatDataBaseResult();
+
+//            Intent searchIntent = new Intent();
+//            ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivitySearch");
+//            searchIntent.setComponent(cn);
+//            startActivity(searchIntent);
         }
 
 
