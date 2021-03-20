@@ -43,6 +43,8 @@
     <string name="mixed">Mixed</string>
     <string name="all">All</string> //全選
 
+    <string name="save_button">Save</string>
+
 <!--    black, white, orange, calico, tuxedo, tabby-->
     <string-array name="color_array">
         <item>select a color</item>

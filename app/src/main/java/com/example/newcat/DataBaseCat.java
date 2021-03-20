@@ -29,15 +29,19 @@ public class DataBaseCat {
     public static String ALL_CHECK = "all_check";
     public static String SEXUALITY = "sexuality";
 
+    public static String CAT_IMG = "cat_img";
+    //public static int CAT_IMG;
+
     public static final String AUTHORITY = "com.example.newcat";
     public static final Uri CONTENT_URI_CAT = Uri.parse("content://" + AUTHORITY + "/" + TABLE_CAT);
 
     private long id;
-    private String weight, birth, adoption, color, vaccineName, about, other;
+    private String weight, birth, adoption, vaccineName, about, other;
+    private int color, catImg;
     private boolean vac, lig, blood, dew, earsCleaned, nailsCutted, antiparasite, allCheck, mixed, sex;
     private ArrayList<Integer> catPic;
 
-    public DataBaseCat(long id, String weight, String birth, String adoption, String color, String vaccineName, String about, String other, boolean vac, boolean lig, boolean blood, boolean dew, boolean earsCleaned, boolean nailsCutted, boolean antiparasite, boolean allCheck, boolean mixed, boolean sex) {
+    public DataBaseCat(long id, String weight, String birth, String adoption, int color, String vaccineName, String about, String other, boolean vac, boolean lig, boolean blood, boolean dew, boolean earsCleaned, boolean nailsCutted, boolean antiparasite, boolean allCheck, boolean mixed, boolean sex, int catImg) {
         this.id = id;
         this.weight = weight;
         this.birth = birth;
@@ -56,10 +60,11 @@ public class DataBaseCat {
         this.allCheck = allCheck;
         this.mixed = mixed;
         this.sex = sex;
+        this.catImg = catImg;
     }
 
 
-    public DataBaseCat(boolean vac, boolean lig, boolean blood, boolean dew, String color, boolean sex, boolean mixed) {
+    public DataBaseCat(boolean vac, boolean lig, boolean blood, boolean dew, int color, boolean sex, boolean mixed) {
         this.mixed = mixed;
         this.vac = vac;
         this.lig = lig;
@@ -93,19 +98,19 @@ public class DataBaseCat {
         this.nailsCutted = false;
         this.antiparasite = false;
         this.allCheck = false;
-        this.color = "";
-        this.vaccineName = "";
-        this.about = "";
+        this.color = 0;
+        this.vaccineName = "vacName";
+        this.about = "about";
         this.sex = false;
-        this.other = "";
-        this.catPic = initDefaultCatPicture();
+        this.other = "other";
+        this.catImg = R.drawable.b_cat_white;//initDefaultCatPicture();
         // catPic = no picture
 //        this.cat = R.drawable.b_cat_white;
 //        this.cat2 = R.drawable.b_cat_white;
 //        this.cat3 = R.drawable.b_cat_white;
-        this.birth = "141414";
-        this.adoption = "151515";
-        this.weight = "0";
+        this.birth = "birth";
+        this.adoption = "adoption";
+        this.weight = "weight:0";
     }
     
     public ArrayList<Integer> initDefaultCatPicture() {
@@ -193,11 +198,11 @@ public class DataBaseCat {
         this.allCheck = allCheck;
     }
 
-    public String getColor() {
+    public int getColor() {
         return color;
     }
 
-    public void setColor(String type) {
+    public void setColor(int type) {
         this.color = type;
     }
 
@@ -253,6 +258,9 @@ public class DataBaseCat {
         this.weight = weight;
     }
 
+    public int getCatImg() {return catImg;}
+
+    public void setCatImg(int catImg) {this.catImg = catImg;}
 
     @Override
     public String toString() {

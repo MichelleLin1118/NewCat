@@ -82,12 +82,6 @@
                     android:layout_weight="1"/>
             </LinearLayout>
 
-            <Button
-                android:id="@+id/test_delete_button"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"/>
-
 
             <CheckBox
                 android:id="@+id/allCheck"
@@ -221,5 +215,15 @@
                 android:inputType="date"
                 android:layout_weight="1"/>
 
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/save_button"
+                android:textColor="@color/morandi_Parchment"
+                android:layout_weight="1"/>
         </LinearLayout>
-    </ScrollView>
+
+
+
+</ScrollView>

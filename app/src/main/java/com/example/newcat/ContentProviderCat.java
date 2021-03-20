@@ -102,12 +102,15 @@ public class ContentProviderCat extends ContentProvider {
                     DataBaseCat.OTHER + " TEXT, " +
                     DataBaseCat.VACCINE + " boolean DEFAULT 0, " +
                     DataBaseCat.LIGATION + " boolean DEFAULT 0, " +
+                    DataBaseCat.BLOOD_TEST + " boolean DEFAULT 0, " +
                     DataBaseCat.DEWORM + " boolean DEFAULT 0, " +
                     DataBaseCat.EARS_CLEANED + " boolean DEFAULT 0, " +
                     DataBaseCat.NAILS_CUTTED + " boolean DEFAULT 0, " +
+                    DataBaseCat.ANTIPARASITE + " boolean DEFAULT 0, " +
                     DataBaseCat.MIXED + " boolean DEFAULT 0, " +
                     DataBaseCat.SEXUALITY + " boolean DEFAULT 0, " +
                     DataBaseCat.ALL_CHECK + " boolean DEFAULT 0, " +
+                    DataBaseCat.CAT_IMG + " INTEGER, " +
                     "UNIQUE(" + DataBaseCat._ID + ")" + ");" );
         }
 

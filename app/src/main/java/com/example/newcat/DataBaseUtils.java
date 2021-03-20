@@ -40,6 +40,7 @@ public class DataBaseUtils {
     }
 
     public ArrayList<DataBaseCat> getCatDataFromDB () {
+        Log.i(TAG, "============== getCatDataFromDB ");
         ArrayList<DataBaseCat> catData = new ArrayList<DataBaseCat>();
          Cursor cursor = context.getContentResolver().query(DataBaseCat.CONTENT_URI_CAT, null, null, null, null);
          while (cursor.moveToNext()) {
@@ -47,22 +48,30 @@ public class DataBaseUtils {
              String weight = cursor.getString(cursor.getColumnIndex(DataBaseCat.WEIGHT));
              String birth = cursor.getString(cursor.getColumnIndex(DataBaseCat.BIRTH));
              String adoption  = cursor.getString(cursor.getColumnIndex(DataBaseCat.ADOPTION));
-             String color = cursor.getString(cursor.getColumnIndex(DataBaseCat.COLOR));
+             int color = Integer.valueOf(cursor.getColumnIndex(DataBaseCat.COLOR));
              String vaccineName = cursor.getString(cursor.getColumnIndex(DataBaseCat.VACCINE_NAME));
              String about = cursor.getString(cursor.getColumnIndex(DataBaseCat.ABOUT));
              String other = cursor.getString(cursor.getColumnIndex(DataBaseCat.OTHER));
-             Boolean vaccine = valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.VACCINE)));
-             Boolean ligation = valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.LIGATION)));
-             Boolean bloodTest = valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.BLOOD_TEST)));
-             Boolean deworm = valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.DEWORM)));
-             Boolean earsCleaned = valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.EARS_CLEANED)));
-             Boolean nailsCutted = valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.NAILS_CUTTED)));
-             Boolean antiparasite = valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.ANTIPARASITE)));
-             Boolean allCheck = valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.ALL_CHECK)));
-             Boolean mixed = valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.MIXED)));
-             Boolean sexuality = valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.SEXUALITY)));
+             boolean vaccine = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(DataBaseCat.VACCINE)));
+             boolean ligation = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(DataBaseCat.LIGATION)));
+             boolean bloodTest = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(DataBaseCat.BLOOD_TEST)));
+             boolean deworm = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(DataBaseCat.DEWORM)));
+             boolean earsCleaned = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(DataBaseCat.EARS_CLEANED)));
+             boolean nailsCutted = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(DataBaseCat.NAILS_CUTTED)));
+             boolean antiparasite = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(DataBaseCat.ANTIPARASITE)));
+             boolean allCheck = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(DataBaseCat.ALL_CHECK)));
+             if (cursor.getString(cursor.getColumnIndex(DataBaseCat.ALL_CHECK)).equals("1")) {
+                 allCheck = true;
+             } else {
+                 allCheck = false;
+             }// make into function
+             Log.i(TAG, "===== all ========= " + cursor.getString(cursor.getColumnIndex(DataBaseCat.ALL_CHECK)));
+             Log.i(TAG, "===== all = " + allCheck);
+             Boolean mixed = Boolean.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.MIXED)));
+             Boolean sexuality = Boolean.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.SEXUALITY)));
+             int catImg = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.CAT_IMG)));
 
-             DataBaseCat catdb = new DataBaseCat(id, weight, birth, adoption, color, vaccineName, about, other, vaccine, ligation, bloodTest, deworm, earsCleaned, nailsCutted, antiparasite, allCheck, mixed, sexuality);
+             DataBaseCat catdb = new DataBaseCat(id, weight, birth, adoption, color, vaccineName, about, other, vaccine, ligation, bloodTest, deworm, earsCleaned, nailsCutted, antiparasite, allCheck, mixed, sexuality, catImg);
              catData.add(catdb);
          }
          return catData;
@@ -110,6 +119,7 @@ public class DataBaseUtils {
         values.put(DataBaseCat.MIXED, cat.getMixed());
         values.put(DataBaseCat.SEXUALITY, cat.getSex());
         values.put(DataBaseCat.ALL_CHECK, cat.getAllCheck());
+        values.put(DataBaseCat.CAT_IMG, cat.getCatImg());
 
         return values;
     }
