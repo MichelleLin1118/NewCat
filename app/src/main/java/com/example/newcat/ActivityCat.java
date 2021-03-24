@@ -203,15 +203,15 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             allCheck.setOnClickListener(this);
 
             vaccine.setTag("ActivityCat" +position + "vaccine");
-            deworm.setTag("ActivityCat" +location + "deworm");
-            bloodTest.setTag("ActivityCat" +location + "bloodTest");
-            ligation.setTag("ActivityCat" +location + "ligation");
-            antiparasite.setTag("ActivityCat" +location + "antiparasite");
-            earsCleaned.setTag("ActivityCat" +location + "earsCleaned");
-            nailsCutted.setTag("ActivityCat" +location + "nailsCutted");
-            allCheck.setTag("ActivityCat" +location + "allCheck");
+            deworm.setTag("ActivityCat" +position + "deworm");
+            bloodTest.setTag("ActivityCat" +position + "bloodTest");
+            ligation.setTag("ActivityCat" +position + "ligation");
+            antiparasite.setTag("ActivityCat" +position + "antiparasite");
+            earsCleaned.setTag("ActivityCat" +position + "earsCleaned");
+            nailsCutted.setTag("ActivityCat" +position + "nailsCutted");
+            allCheck.setTag("ActivityCat" +position + "allCheck");
             Log.i(TAG, "=========all = " + data.get(position).getAllCheck());
-            ((CheckBox)(pager.findViewWithTag("ActivityCat" +location + "allCheck"))).setChecked(data.get(position).getAllCheck());
+            ((CheckBox)(pager.findViewWithTag("ActivityCat" +position + "allCheck"))).setChecked(data.get(position).getAllCheck());
 
             weight = (EditText) catPageArrayList.get(position).findViewById(R.id.weight);
             Log.i(TAG, "=========== weight = " + data.get(position).getWeight());
@@ -227,28 +227,28 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             adoptionDate= (EditText) catPageArrayList.get(position).findViewById((R.id.adoptionDate));
             adoptionDate.setText(data.get(position).getAdoption());
 
-            weight.setTag("ActivityCat" +location +"weight");
-            birth.setTag("ActivityCat" +location +"birth");
-            vaccineName.setTag("ActivityCat" +location +"vaccineName");
-            about.setTag("ActivityCat" +location +"about");
-            others.setTag("ActivityCat" +location +"others");
-            adoptionDate.setTag("ActivityCat" +location +"adoptionDate");
+            weight.setTag("ActivityCat" +position +"weight");
+            birth.setTag("ActivityCat" +position +"birth");
+            vaccineName.setTag("ActivityCat" +position +"vaccineName");
+            about.setTag("ActivityCat" +position +"about");
+            others.setTag("ActivityCat" +position +"others");
+            adoptionDate.setTag("ActivityCat" +position +"adoptionDate");
 
             //catImg = (ImageView) catPageArrayList.get(position).findViewById(R.id.cat1);
             //Log.i(TAG, "===========image==" + data.get(position).getCatImg());
             catImg.setImageResource(data.get(position).getCatImg());
             pictureIndex = 0;
-            catImg.setTag("ActivityCat" + location + "catImg");
-            pager.findViewWithTag("ActivityCat" +location + "catImg").setOnClickListener(this);
+            catImg.setTag("ActivityCat" + position + "catImg");
+            pager.findViewWithTag("ActivityCat" +position + "catImg").setOnClickListener(this);
 
 //            catPic = (ArrayList<Integer>) (catPageArrayList.get(position).findViewById(R.id.cat1));
 //            for (int i = 0; i < 3 ; i ++) {
-//                catPic.setTag("ActivityCat" + location + "catPic" + i);
+//                catPic.setTag("ActivityCat" + position + "catPic" + i);
 //            }
             // how to set tags for arraylist?
 
             sexuality = (ToggleButton) findViewById(R.id.sexuality_button);
-            sexuality.setTag("ActivityCat" +location +"sexuality");
+            sexuality.setTag("ActivityCat" +position +"sexuality");
             sexuality.setText("unknown");
             sexuality.setTextOff("male");
             sexuality.setTextOn("female");
@@ -260,14 +260,14 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             color.setAdapter(arrayAdapter);
             color.setSelection(0, false);
             color.setOnItemSelectedListener(mSpinSelectedListener);
-            color.setTag("ActivityCat" +location +"color");
+            color.setTag("ActivityCat" +position +"color");
             colorEdit = (EditText) catPageArrayList.get(position).findViewById(R.id.color_editText);
-            colorEdit.setTag("ActivityCat" +location + "colorEdit");
+            colorEdit.setTag("ActivityCat" +position + "colorEdit");
 
 
             mixed = (CheckBox) catPageArrayList.get(position).findViewById(R.id.mixed);
             mixed.setOnClickListener(this);
-            mixed.setTag("ActivityCat" + location + "mixed");
+            mixed.setTag("ActivityCat" + position + "mixed");
             mixedClick(data.get(position).getMixed());
 
             return catPageArrayList.get(position);
@@ -335,6 +335,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
                 }
             }
             if(v == pager.findViewWithTag("ActivityCat" + location + "save_button")) {
+                int id = location +1;
                 Log.i(TAG, "=======" + ((EditText)(pager.findViewWithTag("ActivityCat" + location + "weight"))).getText().toString());
                 Log.i(TAG, "========checkbox " + ((CheckBox)(pager.findViewWithTag("ActivityCat" + location + "allCheck"))).isChecked());
 
@@ -356,7 +357,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
                 values.put(DataBaseCat.MIXED, (((CheckBox)(pager.findViewWithTag("ActivityCat" + location + "mixed"))).isChecked()));
                 values.put(DataBaseCat.SEXUALITY, (((CheckBox)(pager.findViewWithTag("ActivityCat" + location + "sexuality"))).isChecked()));
                 values.put(DataBaseCat.ALL_CHECK, (((CheckBox)(pager.findViewWithTag("ActivityCat" + location + "allCheck"))).isChecked()));
-                getContentResolver().update(DataBaseCat.CONTENT_URI_CAT, values, DataBaseCat._ID + " = " + 1, null);
+                getContentResolver().update(DataBaseCat.CONTENT_URI_CAT, values, DataBaseCat._ID + " = " + id, null);
                 dataBaseUtils.showCatDataBaseResult();
             }
 
