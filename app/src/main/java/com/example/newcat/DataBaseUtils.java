@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
+import android.widget.CheckBox;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 
@@ -69,9 +71,11 @@ public class DataBaseUtils {
              Log.i(TAG, "===== all = " + allCheck);
              Boolean mixed = Boolean.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.MIXED)));
              Boolean sexuality = Boolean.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.SEXUALITY)));
-             int catImg = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.CAT_IMG)));
+             //int catImg = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.CAT_IMG)));
+             //int[3]
+             Integer catPic = Integer.valueOf(cursor.getString(cursor.getColumnIndex(String.valueOf(DataBaseCat.CAT_PIC))));
 
-             DataBaseCat catdb = new DataBaseCat(id, weight, birth, adoption, color, vaccineName, about, other, vaccine, ligation, bloodTest, deworm, earsCleaned, nailsCutted, antiparasite, allCheck, mixed, sexuality, catImg);
+             DataBaseCat catdb = new DataBaseCat(id, weight, birth, adoption, color, vaccineName, about, other, vaccine, ligation, bloodTest, deworm, earsCleaned, nailsCutted, antiparasite, allCheck, mixed, sexuality, catPic);
              catData.add(catdb);
          }
          return catData;
@@ -123,6 +127,7 @@ public class DataBaseUtils {
 
         return values;
     }
+
 
     public ContentValues createAdopterData (DataBaseAdopter adop) {
         ContentValues values = new ContentValues();

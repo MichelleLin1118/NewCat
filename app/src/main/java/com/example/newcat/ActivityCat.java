@@ -39,6 +39,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
     ViewPager pager;
     EditText weight, birth, adoptionDate, vaccineName, about,others, colorEdit;
     Spinner color;
+    ArrayList<Integer> catPic;
     //ArrayList<View> catDataArrayList = new ArrayList<>();
     ArrayList<View> catPageArrayList = new ArrayList<>();
     DataBaseUtils dataBaseUtils;
@@ -226,20 +227,31 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             adoptionDate= (EditText) catPageArrayList.get(position).findViewById((R.id.adoptionDate));
             adoptionDate.setText(data.get(position).getAdoption());
 
-            weight.setTag("ActivityCat" +location +"weight"); // hw: edit text set Tag
+            weight.setTag("ActivityCat" +location +"weight");
+            birth.setTag("ActivityCat" +location +"birth");
+            vaccineName.setTag("ActivityCat" +location +"vaccineName");
+            about.setTag("ActivityCat" +location +"about");
+            others.setTag("ActivityCat" +location +"others");
+            adoptionDate.setTag("ActivityCat" +location +"adoptionDate");
 
-            catImg = (ImageView) catPageArrayList.get(position).findViewById(R.id.cat1);
-            Log.i(TAG, "===========image==" + data.get(position).getCatImg());
+            //catImg = (ImageView) catPageArrayList.get(position).findViewById(R.id.cat1);
+            //Log.i(TAG, "===========image==" + data.get(position).getCatImg());
             catImg.setImageResource(data.get(position).getCatImg());
             pictureIndex = 0;
             catImg.setTag("ActivityCat" + location + "catImg");
             pager.findViewWithTag("ActivityCat" +location + "catImg").setOnClickListener(this);
 
+//            catPic = (ArrayList<Integer>) (catPageArrayList.get(position).findViewById(R.id.cat1));
+//            for (int i = 0; i < 3 ; i ++) {
+//                catPic.setTag("ActivityCat" + location + "catPic" + i);
+//            }
+            // how to set tags for arraylist?
+
             sexuality = (ToggleButton) findViewById(R.id.sexuality_button);
+            sexuality.setTag("ActivityCat" +location +"sexuality");
             sexuality.setText("unknown");
             sexuality.setTextOff("male");
             sexuality.setTextOn("female");
-
 
 
             color = (Spinner) catPageArrayList.get(position).findViewById(R.id.spinner_color);
@@ -294,33 +306,16 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             if (v == pager.findViewWithTag("ActivityCat" +location + "catImg")){
                 Log.i(TAG, "pic index = " + pictureIndex);
                 Log.i(TAG, "index" + data.get(location).getCatPic().get((pictureIndex+1)%3));
-                catImg.setImageResource(data.get(location).getCatPic().get((pictureIndex+1)%3)); //change into find view with tag
+                //catImg.setImageResource(pager.findViewWithTag("ActivityCat" +location + "").get((pictureIndex+1)%3)); //change into find view with tag
                 pictureIndex = pictureIndex + 1;
                 //mCatActivityAdapter.notifyDataSetChanged();
-
             }
             if (v == pager.findViewWithTag("ActivityCat" +location + "allCheck")) {
                 Log.i(TAG, "allCheck checked");
                 if (((CheckBox) pager.findViewWithTag("ActivityCat" + location + "allCheck")).isChecked() == true) {
-                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "mixed")).setChecked(true);
-                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "vaccine")).setChecked(true);
-                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "deworm")).setChecked(true);
-                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "bloodTest")).setChecked(true);
-                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "ligation")).setChecked(true);
-                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "antiparasite")).setChecked(true);
-                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "earsCleaned")).setChecked(true);
-                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "nailsCutted")).setChecked(true);
-                    mixedClick(true);
+                    allClicked(true);
                 } else {
-                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "mixed")).setChecked(false);
-                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "vaccine")).setChecked(false);
-                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "deworm")).setChecked(false);
-                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "bloodTest")).setChecked(false);
-                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "ligation")).setChecked(false);
-                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "antiparasite")).setChecked(false);
-                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "earsCleaned")).setChecked(false);
-                    ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "nailsCutted")).setChecked(false);
-                    mixedClick(false);
+                    allClicked(false);
                 }
             }
             
@@ -334,11 +329,9 @@ public class ActivityCat extends Activity implements View.OnClickListener {
 
             if(v == pager.findViewWithTag("ActivityCat" + location + "mixed")) {
                 if (((CheckBox) pager.findViewWithTag("ActivityCat" + location + "mixed")).isChecked() == true) {
-                    pager.findViewWithTag("ActivityCat" + location +"colorEdit").setVisibility(View.GONE);
-                    pager.findViewWithTag("ActivityCat" + location + "color").setVisibility(View.VISIBLE);
+                    mixedClick(true);
                 } else {
-                    pager.findViewWithTag("ActivityCat" + location +"colorEdit").setVisibility(View.VISIBLE);
-                    pager.findViewWithTag("ActivityCat" + location +"color").setVisibility(View.GONE);
+                   mixedClick(false);
                 }
             }
             if(v == pager.findViewWithTag("ActivityCat" + location + "save_button")) {
@@ -347,6 +340,21 @@ public class ActivityCat extends Activity implements View.OnClickListener {
 
                 ContentValues values = new ContentValues();
                 values.put(DataBaseCat.WEIGHT, (((EditText)(pager.findViewWithTag("ActivityCat" + location + "weight"))).getText().toString()));
+                values.put(DataBaseCat.BIRTH, (((EditText)(pager.findViewWithTag("ActivityCat" + location + "birth"))).getText().toString()));
+                values.put(DataBaseCat.ADOPTION, (((EditText)(pager.findViewWithTag("ActivityCat" + location + "adoptionDate"))).getText().toString()));
+                values.put(DataBaseCat.COLOR, (((EditText)(pager.findViewWithTag("ActivityCat" + location + "color"))).getText().toString()));
+                values.put(DataBaseCat.VACCINE_NAME, (((EditText)(pager.findViewWithTag("ActivityCat" + location + "vaccineName"))).getText().toString()));
+                values.put(DataBaseCat.ABOUT,(((EditText)(pager.findViewWithTag("ActivityCat" + location + "about"))).getText().toString()));
+                values.put(DataBaseCat.OTHER, (((EditText)(pager.findViewWithTag("ActivityCat" + location + "others"))).getText().toString()));
+                values.put(DataBaseCat.VACCINE, (((CheckBox)(pager.findViewWithTag("ActivityCat" + location + "vaccine"))).isChecked()));
+                values.put(DataBaseCat.LIGATION, (((CheckBox)(pager.findViewWithTag("ActivityCat" + location + "ligaiton"))).isChecked()));
+                values.put(DataBaseCat.DEWORM, (((CheckBox)(pager.findViewWithTag("ActivityCat" + location + "dewrom"))).isChecked()));
+                values.put(DataBaseCat.BLOOD_TEST,(((CheckBox)(pager.findViewWithTag("ActivityCat" + location + "bloodTest"))).isChecked()));
+                values.put(DataBaseCat.EARS_CLEANED, (((CheckBox)(pager.findViewWithTag("ActivityCat" + location + "earsCleaned"))).isChecked()));
+                values.put(DataBaseCat.NAILS_CUTTED,(((CheckBox)(pager.findViewWithTag("ActivityCat" + location + "nailsCutted"))).isChecked()));
+                values.put(DataBaseCat.ANTIPARASITE,(((CheckBox)(pager.findViewWithTag("ActivityCat" + location + "antiparasite"))).isChecked()));
+                values.put(DataBaseCat.MIXED, (((CheckBox)(pager.findViewWithTag("ActivityCat" + location + "mixed"))).isChecked()));
+                values.put(DataBaseCat.SEXUALITY, (((CheckBox)(pager.findViewWithTag("ActivityCat" + location + "sexuality"))).isChecked()));
                 values.put(DataBaseCat.ALL_CHECK, (((CheckBox)(pager.findViewWithTag("ActivityCat" + location + "allCheck"))).isChecked()));
                 getContentResolver().update(DataBaseCat.CONTENT_URI_CAT, values, DataBaseCat._ID + " = " + 1, null);
                 dataBaseUtils.showCatDataBaseResult();
@@ -362,6 +370,29 @@ public class ActivityCat extends Activity implements View.OnClickListener {
                 ((CheckBox)pager.findViewWithTag("ActivityCat" +location + "mixed")).setChecked(true);
                 ((EditText)pager.findViewWithTag("ActivityCat" +location + "colorEdit")).setVisibility(View.VISIBLE);
                 ((Spinner)pager.findViewWithTag("ActivityCat" +location +"color")).setVisibility(View.GONE);
+            }
+        }
+        public void allClicked(boolean allCalled) {
+            if (allCalled == true) {
+                ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "mixed")).setChecked(true);
+                ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "vaccine")).setChecked(true);
+                ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "deworm")).setChecked(true);
+                ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "bloodTest")).setChecked(true);
+                ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "ligation")).setChecked(true);
+                ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "antiparasite")).setChecked(true);
+                ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "earsCleaned")).setChecked(true);
+                ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "nailsCutted")).setChecked(true);
+                mixedClick(true);
+            } else {
+                ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "mixed")).setChecked(false);
+                ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "vaccine")).setChecked(false);
+                ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "deworm")).setChecked(false);
+                ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "bloodTest")).setChecked(false);
+                ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "ligation")).setChecked(false);
+                ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "antiparasite")).setChecked(false);
+                ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "earsCleaned")).setChecked(false);
+                ((CheckBox) pager.findViewWithTag("ActivityCat" + location + "nailsCutted")).setChecked(false);
+                mixedClick(false);
             }
         }
     }

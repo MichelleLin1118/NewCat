@@ -30,7 +30,7 @@ public class DataBaseCat {
     public static String SEXUALITY = "sexuality";
 
     public static String CAT_IMG = "cat_img";
-    //public static int CAT_IMG;
+    public static int[] CAT_PIC = {R.drawable.b_cat_white, R.drawable.b_cat_black, R.drawable.b_cat_calico};
 
     public static final String AUTHORITY = "com.example.newcat";
     public static final Uri CONTENT_URI_CAT = Uri.parse("content://" + AUTHORITY + "/" + TABLE_CAT);
