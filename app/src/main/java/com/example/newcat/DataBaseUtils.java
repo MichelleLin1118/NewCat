@@ -22,7 +22,7 @@ public class DataBaseUtils {
     public void showCatDataBaseResult() {
         Cursor cursor = context.getContentResolver().query(DataBaseCat.CONTENT_URI_CAT, null, null, null, null);
         while (cursor.moveToNext()) {
-            Log.i(TAG, "db " + cursor.getString(0));
+            /*Log.i(TAG, "db " + cursor.getString(0));
             Log.i(TAG, "db" + cursor.getString(1));
             Log.i(TAG, "db" + cursor.getString(2));
             Log.i(TAG, "db" + cursor.getString(3));
@@ -37,7 +37,8 @@ public class DataBaseUtils {
             Log.i(TAG, "nails_cutted" + cursor.getString(12));
             Log.i(TAG, "mixed" + cursor.getString(13));
             Log.i(TAG, "sexuality" + cursor.getString(14));
-            Log.i(TAG, "all" + cursor.getString(15));
+            Log.i(TAG, "all" + cursor.getString(15));*/
+            Log.i(TAG, "------------ spnner = " + cursor.getColumnIndex(DataBaseCat.COLOR) + "---" + cursor.getString(4));
         }
     }
 
@@ -51,6 +52,7 @@ public class DataBaseUtils {
              String birth = cursor.getString(cursor.getColumnIndex(DataBaseCat.BIRTH));
              String adoption  = cursor.getString(cursor.getColumnIndex(DataBaseCat.ADOPTION));
              int color = Integer.valueOf(cursor.getColumnIndex(DataBaseCat.COLOR));
+             Log.i(TAG, "++++++++ color = " + color);
              String vaccineName = cursor.getString(cursor.getColumnIndex(DataBaseCat.VACCINE_NAME));
              String about = cursor.getString(cursor.getColumnIndex(DataBaseCat.ABOUT));
              String other = cursor.getString(cursor.getColumnIndex(DataBaseCat.OTHER));
@@ -71,11 +73,16 @@ public class DataBaseUtils {
              Log.i(TAG, "===== all = " + allCheck);
              Boolean mixed = Boolean.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.MIXED)));
              Boolean sexuality = Boolean.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.SEXUALITY)));
-             //int catImg = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.CAT_IMG)));
-             //int[3]
-             Integer catPic = Integer.valueOf(cursor.getString(cursor.getColumnIndex(String.valueOf(DataBaseCat.CAT_PIC))));
+             int catImg = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.CAT_IMG)));
+             int catImg2 = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.CAT_IMG2)));
+             int catImg3 = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.CAT_IMG3)));
+             ArrayList<Integer> catPic = new ArrayList<Integer>();
+             catPic.add(catImg);
+             catPic.add(catImg2);
+             catPic.add(catImg3);
 
-             DataBaseCat catdb = new DataBaseCat(id, weight, birth, adoption, color, vaccineName, about, other, vaccine, ligation, bloodTest, deworm, earsCleaned, nailsCutted, antiparasite, allCheck, mixed, sexuality, catPic);
+
+             DataBaseCat catdb = new DataBaseCat(id, weight, birth, adoption, color, vaccineName, about, other, vaccine, ligation, bloodTest, deworm, earsCleaned, nailsCutted, antiparasite, allCheck, mixed, sexuality, catImg,catImg2, catImg3, catPic);
              catData.add(catdb);
          }
          return catData;
@@ -112,6 +119,7 @@ public class DataBaseUtils {
         values.put(DataBaseCat.BIRTH, cat.getBirth());
         values.put(DataBaseCat.ADOPTION, cat.getAdoption());
         values.put(DataBaseCat.COLOR, cat.getColor());
+        Log.i(TAG, ">>>>>>>>> color = " + cat.getColor());
         values.put(DataBaseCat.VACCINE_NAME, cat.getVaccineName());
         values.put(DataBaseCat.ABOUT,cat.getAbout());
         values.put(DataBaseCat.OTHER, cat.getOther());
@@ -124,6 +132,8 @@ public class DataBaseUtils {
         values.put(DataBaseCat.SEXUALITY, cat.getSex());
         values.put(DataBaseCat.ALL_CHECK, cat.getAllCheck());
         values.put(DataBaseCat.CAT_IMG, cat.getCatImg());
+        values.put(DataBaseCat.CAT_IMG2, cat.getCatImg2());
+        values.put(DataBaseCat.CAT_IMG3, cat.getCatImg3());
 
         return values;
     }

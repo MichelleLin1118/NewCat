@@ -30,6 +30,8 @@ public class DataBaseCat {
     public static String SEXUALITY = "sexuality";
 
     public static String CAT_IMG = "cat_img";
+    public static String CAT_IMG2 = "cat_img2";
+    public static String CAT_IMG3 = "cat_img3";
     public static int[] CAT_PIC = {R.drawable.b_cat_white, R.drawable.b_cat_black, R.drawable.b_cat_calico};
 
     public static final String AUTHORITY = "com.example.newcat";
@@ -37,11 +39,11 @@ public class DataBaseCat {
 
     private long id;
     private String weight, birth, adoption, vaccineName, about, other;
-    private int color, catImg;
+    private int color, catImg, catImg2, catImg3;
     private boolean vac, lig, blood, dew, earsCleaned, nailsCutted, antiparasite, allCheck, mixed, sex;
     private ArrayList<Integer> catPic;
 
-    public DataBaseCat(long id, String weight, String birth, String adoption, int color, String vaccineName, String about, String other, boolean vac, boolean lig, boolean blood, boolean dew, boolean earsCleaned, boolean nailsCutted, boolean antiparasite, boolean allCheck, boolean mixed, boolean sex, int catImg) {
+    public DataBaseCat(long id, String weight, String birth, String adoption, int color, String vaccineName, String about, String other, boolean vac, boolean lig, boolean blood, boolean dew, boolean earsCleaned, boolean nailsCutted, boolean antiparasite, boolean allCheck, boolean mixed, boolean sex, int catImg, int catImg2, int catImg3, ArrayList<Integer> catPic) {
         this.id = id;
         this.weight = weight;
         this.birth = birth;
@@ -61,6 +63,9 @@ public class DataBaseCat {
         this.mixed = mixed;
         this.sex = sex;
         this.catImg = catImg;
+        this.catImg2 = catImg2;
+        this.catImg3 = catImg3;
+        this.catPic = catPic;
     }
 
 
@@ -103,14 +108,16 @@ public class DataBaseCat {
         this.about = "about";
         this.sex = false;
         this.other = "other";
-        this.catImg = R.drawable.b_cat_white;//initDefaultCatPicture();
-        // catPic = no picture
+        this.catImg = R.drawable.b_cat_orange;//initDefaultCatPicture();
+        this.catImg2 = R.drawable.b_cat_black;
+        this.catImg3 = R.drawable.b_cat_calico;
+        this.catPic = null;
 //        this.cat = R.drawable.b_cat_white;
 //        this.cat2 = R.drawable.b_cat_white;
 //        this.cat3 = R.drawable.b_cat_white;
-        this.birth = "birth";
-        this.adoption = "adoption";
-        this.weight = "weight:0";
+        this.birth = "bDay";
+        this.adoption = "adopt";
+        this.weight = "w:0";
     }
     
     public ArrayList<Integer> initDefaultCatPicture() {
@@ -261,6 +268,15 @@ public class DataBaseCat {
     public int getCatImg() {return catImg;}
 
     public void setCatImg(int catImg) {this.catImg = catImg;}
+
+    public int getCatImg2() {return catImg2;}
+
+    public void setCatImg2(int catImg) {this.catImg2 = catImg2;}
+
+    public int getCatImg3() {return catImg3;}
+
+    public void setCatImg3(int catImg) {this.catImg3 = catImg3;}
+
 
     @Override
     public String toString() {

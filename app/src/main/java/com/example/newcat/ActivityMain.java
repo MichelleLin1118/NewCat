@@ -125,6 +125,8 @@ public class ActivityMain extends Activity implements View.OnClickListener{
             //dataBaseUtils.createCatData(new DataBaseCat());
             getContentResolver().insert(DataBaseCat.CONTENT_URI_CAT, dataBaseUtils.createCatData(new DataBaseCat()));
             getContentResolver().insert(DataBaseCat.CONTENT_URI_CAT, dataBaseUtils.createCatData(new DataBaseCat()));
+            DataBaseCat cat = new DataBaseCat();
+            Log.i(TAG, "DataBaseCat getSpinner = " + cat.getColor());
             Log.i(TAG, "----------------");
             dataBaseUtils.showCatDataBaseResult();
 

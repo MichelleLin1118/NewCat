@@ -111,6 +111,8 @@ public class ContentProviderCat extends ContentProvider {
                     DataBaseCat.SEXUALITY + " boolean DEFAULT 0, " +
                     DataBaseCat.ALL_CHECK + " boolean DEFAULT 0, " +
                     DataBaseCat.CAT_IMG + " INTEGER, " +
+                    DataBaseCat.CAT_IMG2 + " INTEGER, " +
+                    DataBaseCat.CAT_IMG3 + " INTEGER, " +
                     "UNIQUE(" + DataBaseCat._ID + ")" + ");" );
         }
 
