@@ -38,7 +38,29 @@ public class DataBaseUtils {
             Log.i(TAG, "mixed" + cursor.getString(13));
             Log.i(TAG, "sexuality" + cursor.getString(14));
             Log.i(TAG, "all" + cursor.getString(15));*/
-            Log.i(TAG, "------------ spnner = " + cursor.getColumnIndex(DataBaseCat.COLOR) + "---" + cursor.getString(4));
+            Log.i(TAG, "------------ spnner = " + cursor.getString(cursor.getColumnIndex(DataBaseCat.COLOR)));
+        }
+    }
+
+    public void showAdopDataBaseResult() {
+        Cursor cursor = context.getContentResolver().query(DataBaseAdopter.CONTENT_URI_ADOPTER, null, null, null, null);
+        while (cursor.moveToNext()) {
+            Log.i(TAG, "db " + cursor.getString(0));
+            Log.i(TAG, "db" + cursor.getString(1));
+            Log.i(TAG, "db" + cursor.getString(2));
+            Log.i(TAG, "db" + cursor.getString(3));
+            Log.i(TAG, "db" + cursor.getString(4));
+            Log.i(TAG, "db" + cursor.getString(5));
+            Log.i(TAG, "db" + cursor.getString(6));
+            Log.i(TAG, "db" + cursor.getString(7));
+            Log.i(TAG, "db" + cursor.getString(8));
+            Log.i(TAG, "db" + cursor.getString(9));
+            Log.i(TAG, "db" + cursor.getString(10));
+            Log.i(TAG, "db" + cursor.getString(11));
+            Log.i(TAG, "db" + cursor.getString(12));
+            Log.i(TAG, "db" + cursor.getString(13));
+            Log.i(TAG, "db" + cursor.getString(14));
+            Log.i(TAG, "db" + cursor.getString(15));
         }
     }
 
@@ -51,7 +73,7 @@ public class DataBaseUtils {
              String weight = cursor.getString(cursor.getColumnIndex(DataBaseCat.WEIGHT));
              String birth = cursor.getString(cursor.getColumnIndex(DataBaseCat.BIRTH));
              String adoption  = cursor.getString(cursor.getColumnIndex(DataBaseCat.ADOPTION));
-             int color = Integer.valueOf(cursor.getColumnIndex(DataBaseCat.COLOR));
+             int color = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.COLOR)));
              Log.i(TAG, "++++++++ color = " + color);
              String vaccineName = cursor.getString(cursor.getColumnIndex(DataBaseCat.VACCINE_NAME));
              String about = cursor.getString(cursor.getColumnIndex(DataBaseCat.ABOUT));
@@ -119,7 +141,6 @@ public class DataBaseUtils {
         values.put(DataBaseCat.BIRTH, cat.getBirth());
         values.put(DataBaseCat.ADOPTION, cat.getAdoption());
         values.put(DataBaseCat.COLOR, cat.getColor());
-        Log.i(TAG, ">>>>>>>>> color = " + cat.getColor());
         values.put(DataBaseCat.VACCINE_NAME, cat.getVaccineName());
         values.put(DataBaseCat.ABOUT,cat.getAbout());
         values.put(DataBaseCat.OTHER, cat.getOther());

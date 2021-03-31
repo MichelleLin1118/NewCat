@@ -125,10 +125,17 @@ public class ActivityMain extends Activity implements View.OnClickListener{
             //dataBaseUtils.createCatData(new DataBaseCat());
             getContentResolver().insert(DataBaseCat.CONTENT_URI_CAT, dataBaseUtils.createCatData(new DataBaseCat()));
             getContentResolver().insert(DataBaseCat.CONTENT_URI_CAT, dataBaseUtils.createCatData(new DataBaseCat()));
+            getContentResolver().insert(DataBaseAdopter.CONTENT_URI_ADOPTER, dataBaseUtils.createAdopterData(new DataBaseAdopter()));
+            getContentResolver().insert(DataBaseAdopter.CONTENT_URI_ADOPTER, dataBaseUtils.createAdopterData(new DataBaseAdopter()));
+
             DataBaseCat cat = new DataBaseCat();
-            Log.i(TAG, "DataBaseCat getSpinner = " + cat.getColor());
-            Log.i(TAG, "----------------");
+            DataBaseAdopter adop = new DataBaseAdopter();
+            Log.i(TAG, "------------------------------------------");
             dataBaseUtils.showCatDataBaseResult();
+            Log.i(TAG, "------------------------------------------");
+            dataBaseUtils.showAdopDataBaseResult();
+            Log.i(TAG, "------------------------------------------");
+
 
 //            Intent searchIntent = new Intent();
 //            ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivitySearch");

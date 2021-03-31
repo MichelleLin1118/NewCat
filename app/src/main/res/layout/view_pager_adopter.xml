@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/morandi_Soft_Amber">
+        android:background="@color/morandi_Parchment">
         <RelativeLayout
             android:id="@+id/title_area"
             android:layout_width="match_parent"
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@color/morandi_Soft_Amber">
+            android:background="@color/morandi_Parchment">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -180,32 +180,41 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/adoptionContract"
+            android:textColor="@color/morandi_Armadillo"
             android:background="@color/morandi_Soft_Amber"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:orientation="horizontal"
-            android:background="@color/morandi_Parchment">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@color/morandi_Monogoose">
-                <ImageButton
-                    android:id="@+id/adopter_messenger_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/a_messenger_button"/>
-                <ImageButton
-                    android:id="@+id/adopter_fb_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/a_fb_button"/>
-            </LinearLayout>
-        </LinearLayout>
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="300dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:background="@color/morandi_Parchment">-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:background="@color/morandi_Monogoose">-->
+<!--                <ImageButton-->
+<!--                    android:id="@+id/adopter_messenger_button"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:background="@drawable/a_messenger_button"/>-->
+<!--                <ImageButton-->
+<!--                    android:id="@+id/adopter_fb_button"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:background="@drawable/a_fb_button"/>-->
+<!--            </LinearLayout>-->
+<!--        </LinearLayout>-->
 
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/save_button"
+            android:textColor="@color/morandi_Armadillo"
+            android:background="@color/morandi_Soft_Amber"
+            android:layout_weight="1"/>
     </LinearLayout>
 </ScrollView>
