@@ -38,14 +38,15 @@ public class DataBaseUtils {
             Log.i(TAG, "mixed" + cursor.getString(13));
             Log.i(TAG, "sexuality" + cursor.getString(14));
             Log.i(TAG, "all" + cursor.getString(15));*/
-            Log.i(TAG, "------------ spnner = " + cursor.getString(cursor.getColumnIndex(DataBaseCat.COLOR)));
+            Log.i(TAG, "------------ cat" );
         }
     }
 
     public void showAdopDataBaseResult() {
         Cursor cursor = context.getContentResolver().query(DataBaseAdopter.CONTENT_URI_ADOPTER, null, null, null, null);
         while (cursor.moveToNext()) {
-            Log.i(TAG, "db " + cursor.getString(0));
+            Log.i(TAG, "adopter db >>>>>>>>>>>>>>>>>>>" + cursor.getString(1));//cursor.getString(cursor.getColumnIndex(DataBaseAdopter.NAME)));
+           /* Log.i(TAG, "db " + cursor.getString(0));
             Log.i(TAG, "db" + cursor.getString(1));
             Log.i(TAG, "db" + cursor.getString(2));
             Log.i(TAG, "db" + cursor.getString(3));
@@ -60,7 +61,7 @@ public class DataBaseUtils {
             Log.i(TAG, "db" + cursor.getString(12));
             Log.i(TAG, "db" + cursor.getString(13));
             Log.i(TAG, "db" + cursor.getString(14));
-            Log.i(TAG, "db" + cursor.getString(15));
+            Log.i(TAG, "db" + cursor.getString(15));*/
         }
     }
 
@@ -78,23 +79,18 @@ public class DataBaseUtils {
              String vaccineName = cursor.getString(cursor.getColumnIndex(DataBaseCat.VACCINE_NAME));
              String about = cursor.getString(cursor.getColumnIndex(DataBaseCat.ABOUT));
              String other = cursor.getString(cursor.getColumnIndex(DataBaseCat.OTHER));
-             boolean vaccine = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(DataBaseCat.VACCINE)));
-             boolean ligation = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(DataBaseCat.LIGATION)));
-             boolean bloodTest = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(DataBaseCat.BLOOD_TEST)));
-             boolean deworm = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(DataBaseCat.DEWORM)));
-             boolean earsCleaned = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(DataBaseCat.EARS_CLEANED)));
-             boolean nailsCutted = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(DataBaseCat.NAILS_CUTTED)));
-             boolean antiparasite = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(DataBaseCat.ANTIPARASITE)));
-             boolean allCheck = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(DataBaseCat.ALL_CHECK)));
-             if (cursor.getString(cursor.getColumnIndex(DataBaseCat.ALL_CHECK)).equals("1")) {
-                 allCheck = true;
-             } else {
-                 allCheck = false;
-             }// make into function
-             Log.i(TAG, "===== all ========= " + cursor.getString(cursor.getColumnIndex(DataBaseCat.ALL_CHECK)));
-             Log.i(TAG, "===== all = " + allCheck);
-             Boolean mixed = Boolean.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.MIXED)));
-             Boolean sexuality = Boolean.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.SEXUALITY)));
+
+             boolean vaccine = getBooleanFromDB(cursor, DataBaseCat.VACCINE);
+             boolean ligation = getBooleanFromDB(cursor, DataBaseCat.LIGATION);
+             boolean bloodTest = getBooleanFromDB(cursor, DataBaseCat.BLOOD_TEST);
+             boolean deworm = getBooleanFromDB(cursor, DataBaseCat.DEWORM);
+             boolean earsCleaned = getBooleanFromDB(cursor, DataBaseCat.EARS_CLEANED);
+             boolean nailsCutted = getBooleanFromDB(cursor, DataBaseCat.NAILS_CUTTED);
+             boolean antiparasite = getBooleanFromDB(cursor, DataBaseCat.ANTIPARASITE);
+             boolean allCheck = getBooleanFromDB(cursor, DataBaseCat.ALL_CHECK);
+             boolean mixed = getBooleanFromDB(cursor, DataBaseCat.MIXED);
+             boolean sexuality = getBooleanFromDB(cursor, DataBaseCat.SEXUALITY);
+
              int catImg = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.CAT_IMG)));
              int catImg2 = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.CAT_IMG2)));
              int catImg3 = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.CAT_IMG3)));
@@ -103,11 +99,17 @@ public class DataBaseUtils {
              catPic.add(catImg2);
              catPic.add(catImg3);
 
-
              DataBaseCat catdb = new DataBaseCat(id, weight, birth, adoption, color, vaccineName, about, other, vaccine, ligation, bloodTest, deworm, earsCleaned, nailsCutted, antiparasite, allCheck, mixed, sexuality, catImg,catImg2, catImg3, catPic);
              catData.add(catdb);
          }
          return catData;
+    }
+    private boolean getBooleanFromDB (Cursor cursor, String columnName) {
+        if (cursor.getString(cursor.getColumnIndex(columnName)).equals("1")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
@@ -150,7 +152,7 @@ public class DataBaseUtils {
         values.put(DataBaseCat.EARS_CLEANED, cat.getearsCleaned());
         values.put(DataBaseCat.NAILS_CUTTED, cat.getnailsCutted());
         values.put(DataBaseCat.MIXED, cat.getMixed());
-        values.put(DataBaseCat.SEXUALITY, cat.getSex());
+        values.put(DataBaseCat.SEXUALITY, cat.getSexuality());
         values.put(DataBaseCat.ALL_CHECK, cat.getAllCheck());
         values.put(DataBaseCat.CAT_IMG, cat.getCatImg());
         values.put(DataBaseCat.CAT_IMG2, cat.getCatImg2());
@@ -163,6 +165,7 @@ public class DataBaseUtils {
     public ContentValues createAdopterData (DataBaseAdopter adop) {
         ContentValues values = new ContentValues();
         values.put(DataBaseAdopter.NAME, adop.getName());
+        Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>adop name = " + adop.getName());
         values.put(DataBaseAdopter.ADDRESS, adop.getAddr());
         values.put(DataBaseAdopter.FAMILY_MEMBERS, adop.getFamilyMembers());
         values.put(DataBaseAdopter.ENVIRONMENT, adop.getEnvironment());

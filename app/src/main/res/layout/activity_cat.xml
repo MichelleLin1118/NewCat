@@ -1,7 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.viewpager.widget.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/view_pager_cat"
+<LinearLayout
     android:layout_height="wrap_content"
-    android:layout_width="wrap_content">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+<RelativeLayout android:id="@+id/title_area"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/morandi_Soya_Bean"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textSize="50dp"
+        android:layout_alignParentLeft="true"
+        android:textColor="@color/morandi_Parchment"
+        android:layout_gravity="center_vertical" />
+    <Button
+        android:id="@+id/addNewPage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginRight="60dp"
+        android:text="+"
+        android:background="@color/morandi_Parchment"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"/>
+    <ImageButton
+        android:id="@+id/home_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/a_home_button"/>
+</RelativeLayout>
+    <androidx.viewpager.widget.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/view_pager_cat"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content">
+    </androidx.viewpager.widget.ViewPager>
 
-</androidx.viewpager.widget.ViewPager>
+</LinearLayout>

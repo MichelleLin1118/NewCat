@@ -26,7 +26,7 @@ public class DataBaseCat {
     public static String NAILS_CUTTED = "nails_cutted";
     public static String ANTIPARASITE = "antiparasite";
     public static String MIXED = "mixed";
-    public static String ALL_CHECK = "all_check";
+    public static String ALL_CHECK = "allCheck";
     public static String SEXUALITY = "sexuality";
 
     public static String CAT_IMG = "cat_img";
@@ -40,10 +40,10 @@ public class DataBaseCat {
     private long id;
     private String weight, birth, adoption, vaccineName, about, other;
     private int color, catImg, catImg2, catImg3;
-    private boolean vac, lig, blood, dew, earsCleaned, nailsCutted, antiparasite, allCheck, mixed, sex;
+    private boolean vac, lig, blood, dew, earsCleaned, nailsCutted, antiparasite, allCheck, mixed, sexuality;
     private ArrayList<Integer> catPic;
 
-    public DataBaseCat(long id, String weight, String birth, String adoption, int color, String vaccineName, String about, String other, boolean vac, boolean lig, boolean blood, boolean dew, boolean earsCleaned, boolean nailsCutted, boolean antiparasite, boolean allCheck, boolean mixed, boolean sex, int catImg, int catImg2, int catImg3, ArrayList<Integer> catPic) {
+    public DataBaseCat(long id, String weight, String birth, String adoption, int color, String vaccineName, String about, String other, boolean vac, boolean lig, boolean blood, boolean dew, boolean earsCleaned, boolean nailsCutted, boolean antiparasite, boolean allCheck, boolean mixed, boolean sexuality, int catImg, int catImg2, int catImg3, ArrayList<Integer> catPic) {
         this.id = id;
         this.weight = weight;
         this.birth = birth;
@@ -61,7 +61,7 @@ public class DataBaseCat {
         this.antiparasite = antiparasite;
         this.allCheck = allCheck;
         this.mixed = mixed;
-        this.sex = sex;
+        this.sexuality = sexuality;
         this.catImg = catImg;
         this.catImg2 = catImg2;
         this.catImg3 = catImg3;
@@ -69,7 +69,7 @@ public class DataBaseCat {
     }
 
 
-    public DataBaseCat(boolean vac, boolean lig, boolean blood, boolean dew, int color, boolean sex, boolean mixed) {
+    public DataBaseCat(boolean vac, boolean lig, boolean blood, boolean dew, int color, boolean sexuality, boolean mixed) {
         this.mixed = mixed;
         this.vac = vac;
         this.lig = lig;
@@ -82,12 +82,11 @@ public class DataBaseCat {
         this.color = color;
         this.vaccineName = "";
         this.about = "";
-        this.sex = sex;
+        this.sexuality = sexuality;
         this.other = "";
-        // catPic = no picture
-//        this.cat = R.drawable.b_cat_white;
-//        this.cat2 = R.drawable.b_cat_white;
-//        this.cat3 = R.drawable.b_cat_white;
+        this.catImg = R.drawable.b_cat_orange;
+        this.catImg2 = R.drawable.b_cat_black;
+        this.catImg3 = R.drawable.b_cat_calico;
         this.birth = "151515";
         this.adoption = "151515";
         this.weight = "0";
@@ -106,177 +105,126 @@ public class DataBaseCat {
         this.color = 0;
         this.vaccineName = "vacName";
         this.about = "about";
-        this.sex = false;
+        this.sexuality = false;
         this.other = "other";
-        this.catImg = R.drawable.b_cat_orange;//initDefaultCatPicture();
+        this.catImg = R.drawable.b_cat_orange;
         this.catImg2 = R.drawable.b_cat_black;
         this.catImg3 = R.drawable.b_cat_calico;
         this.catPic = null;
-//        this.cat = R.drawable.b_cat_white;
-//        this.cat2 = R.drawable.b_cat_white;
-//        this.cat3 = R.drawable.b_cat_white;
         this.birth = "bDay";
         this.adoption = "adopt";
         this.weight = "w:0";
     }
-    
-    public ArrayList<Integer> initDefaultCatPicture() {
-        ArrayList<Integer> initDefaultCatPicture = new ArrayList<Integer>();
-        initDefaultCatPicture.add(R.drawable.b_cat_white);
-        return initDefaultCatPicture;
-    }
+
 
     public String getVaccineName() {
         return vaccineName;
     }
-
     public void setVaccineName(String vaccineName) {
         this.vaccineName = vaccineName;
     }
     public boolean getMixed() {
         return mixed;
     }
-
     public void setMixed(boolean mixed) {
         this.mixed = mixed;
     }
-
     public boolean getVac() {
         return vac;
     }
-
     public void setVac(boolean vac) {
         this.vac = vac;
     }
-
     public boolean getLig() {
         return lig;
     }
-
     public void setLig(boolean lig) {
         this.lig = lig;
     }
-
     public boolean getBlood() {
         return blood;
     }
-
     public void setBlood(boolean blood) {
         this.blood = blood;
     }
-
     public boolean getDew() {
         return dew;
     }
-
     public void setDew(boolean dew) {
         this.dew = dew;
     }
-
     public boolean getearsCleaned() {
         return earsCleaned;
     }
-
     public void setearsCleaned(boolean earsCleaned) {
         this.earsCleaned = earsCleaned;
     }
-
     public boolean getnailsCutted() {
         return nailsCutted;
     }
-
     public void setnailsCutted(boolean nailsCutted) {
         this.nailsCutted = nailsCutted;
     }
-
     public boolean getAntiparasite() {
         return antiparasite;
     }
-
     public void setAntiparasite(boolean antiparasite) {
         this.antiparasite = antiparasite;
     }
-
     public boolean getAllCheck() {
         return allCheck;
     }
-
     public void setAllCheck(boolean allCheck) {
         this.allCheck = allCheck;
     }
-
     public int getColor() {
         return color;
     }
-
     public void setColor(int type) {
         this.color = type;
     }
-
     public String getOther() {
         return other;
     }
-
     public void setOther(String other) {
         this.other = other;
     }
-    public String getAbout() {
-        return about;
-    }
-
+    public String getAbout() { return about; }
     public void setAbout(String about) {
         this.about = about;
     }
-
-    public boolean getSex() {
-        return sex;
+    public boolean getSexuality() {
+        return sexuality;
     }
-
-    public void setSex(boolean sex) {
-        this.sex = sex;
+    public void setSexuality(boolean sexuality) {
+        this.sexuality = sexuality;
     }
-
-    public void setCatPic (ArrayList<Integer> catPic) {this.catPic = catPic;}
-
     public ArrayList<Integer> getCatPic() {return catPic;}
-
-
+    public void setCatPic (ArrayList<Integer> catPic) {this.catPic = catPic;}
     public String getBirth() {
         return birth;
     }
-
     public void setBirth(String birth) {
         this.birth = birth;
     }
-
     public String getAdoption() {
         return adoption;
     }
-
     public void setAdoption(String adoption) {
         this.adoption = adoption;
     }
-
     public String getWeight() {
         return weight;
     }
-
     public void setWeight(String weight) {
         this.weight = weight;
     }
-
     public int getCatImg() {return catImg;}
-
     public void setCatImg(int catImg) {this.catImg = catImg;}
-
     public int getCatImg2() {return catImg2;}
-
     public void setCatImg2(int catImg) {this.catImg2 = catImg2;}
-
     public int getCatImg3() {return catImg3;}
-
     public void setCatImg3(int catImg) {this.catImg3 = catImg3;}
-
 
     @Override
     public String toString() {
@@ -286,7 +234,7 @@ public class DataBaseCat {
                 "DataBaseCat adoption String = " + adoption +
                 "DataBaseCat color = " + color +
                 "DataBaseCat vaccine name = " + vaccineName +
-                "DataBaseCat sexuality = " + sex +
+                "DataBaseCat sexuality = " + sexuality +
                 "DataBaseCat vaccine = " + vac +
                 "DataBaseCat ligation = " + lig +
                 "DataBaseCat blood test = " + blood +

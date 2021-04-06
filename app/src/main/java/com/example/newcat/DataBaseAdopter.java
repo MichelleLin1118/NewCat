@@ -79,10 +79,10 @@ public class DataBaseAdopter {
     }
 
     public DataBaseAdopter() {
-        this.name = null;
-        this.addr = null;
-        this.familyMembers = null;
-        this.environment = null;
+        this.name = "";
+        this.addr = "";
+        this.familyMembers = "";
+        this.environment = "";
         this.adopterId = "";
 
         this.familyAgree = false;
@@ -191,9 +191,7 @@ public class DataBaseAdopter {
         return predictedExpense;
     }
 
-    public void setPredictedExpense(String predictedExpense) {
-        this.predictedExpense = predictedExpense;
-    }
+    public void setPredictedExpense(String predictedExpense) { this.predictedExpense = predictedExpense; }
 
     public String getCatsAtHome() {
         return catsAtHome;

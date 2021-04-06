@@ -32,7 +32,7 @@ import java.util.Date;
 
 public class ActivityAdopter extends Activity implements View.OnClickListener {
     String TAG = "homework";
-    Button saveButton;
+    Button saveButton, addPageButton;
     ImageButton messenger, fb, home;
     EditText adopterName, address, familyMembers, environment, adopterId, birthday, adoptDate, contactNumber, predictedExpense, catsAtHome;
     CheckBox familyAgree;
@@ -59,6 +59,13 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
 
         dataBaseUtils = new DataBaseUtils(this);
         data = dataBaseUtils.getAdopterDataFromDB();
+
+        home = (ImageButton) findViewById((R.id.home_button));
+        home.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        home.setOnClickListener(this);
+
+        addPageButton = (Button) findViewById(R.id.addNewPage);
+        addPageButton.setOnClickListener(this);
 
         pager= (ViewPager) findViewById(R.id.view_pager_adopter);
         for (int i = 0; i < 3 ; i++) {
@@ -96,6 +103,13 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
             ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.MainActivity");
             homeIntent.setComponent(cn);
             startActivity(homeIntent);
+        }
+        if (v == addPageButton) {
+            getContentResolver().insert(DataBaseCat.CONTENT_URI_CAT, dataBaseUtils.createCatData(new DataBaseCat()));
+            mAdopterActivityAdapter.notifyDataSetChanged();
+            for (int i = 0; i < data.size() ; i++) {
+                adopterPageArrayList.add(LayoutInflater.from(this).inflate(R.layout.view_pager_cat, null));
+            }
         }
     }
 
@@ -139,7 +153,6 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
             familyAgree = (CheckBox) adopterPageArrayList.get(position).findViewById(R.id.adopter_familyAgree);
             saveButton = (Button) adopterPageArrayList.get(position).findViewById(R.id.save_button);
 
-            sexuality.setText("unknown");
             sexuality.setTextOff("male");
             sexuality.setTextOn("female");
 
@@ -180,17 +193,17 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
             pager.findViewWithTag("ActivityAdopter" +position + "familyAgree").setOnClickListener(this);
             pager.findViewWithTag("ActivityAdopter" +position + "saveButton").setOnClickListener(this);
 
-            ((CheckBox)(pager.findViewWithTag("ActivityAdopter" +position + "familyAgree"))).setChecked(data.get(position).getFamilyAgree());
-//            ((EditText)(pager.findViewWithTag("ActivityAdopter" +position + "adopterName").setText(data.get(position).getName())));
-//            ((EditText)(pager.findViewWithTag("ActivityAdopter" +position + "address").setText(data.get(position).getAddr())));
-//            ((EditText)(pager.findViewWithTag("ActivityAdopter" +position + "familyMembers").setText(data.get(position).getFamilyMembers())));
-//            ((EditText)(pager.findViewWithTag("ActivityAdopter" +position + "environment").setText(data.get(position).getEnvironment())));
-//            ((EditText)(pager.findViewWithTag("ActivityAdopter" +position + "adopterId").setText(data.get(position).getAdopterId())));
-//            ((EditText)(pager.findViewWithTag("ActivityAdopter" +position + "birthday").setText(data.get(position).getBirthday())));
-//            ((EditText)(pager.findViewWithTag("ActivityAdopter" +position + "adopDate").setText(data.get(position).getAdoptDate())));
-//            ((EditText)(pager.findViewWithTag("ActivityAdopter" +position + "contactNumber").setText(data.get(position).getContactNumber())));
-//            ((EditText)(pager.findViewWithTag("ActivityAdopter" +position + "predictedExpense").setText(data.get(position).getPredictedExpense())));
-//            ((EditText)(pager.findViewWithTag("ActivityAdopter" +position + "catsAtHome").setText(data.get(position).getCatsAtHome())));
+            ((CheckBox)findTagFunction(position + "familyAgree")).setChecked(data.get(position).getFamilyAgree());
+            ((EditText)findTagFunction(position + "adopterName")).setText(data.get(position).getName());
+            ((EditText)findTagFunction(position + "address")).setText(data.get(position).getAddr());
+            ((EditText)findTagFunction(position + "familyMembers")).setText(data.get(position).getFamilyMembers());
+            ((EditText)findTagFunction(position + "environment")).setText(data.get(position).getEnvironment());
+            ((EditText)findTagFunction(position + "adopterId")).setText(data.get(position).getAdopterId());
+            ((EditText)findTagFunction(position + "birthday")).setText(data.get(position).getBirthday());
+            ((EditText)findTagFunction(position + "adopDate")).setText(data.get(position).getAdoptDate());
+            ((EditText)findTagFunction(position + "contactNumber")).setText(data.get(position).getContactNumber());
+            ((EditText)findTagFunction(position + "predictedExpense")).setText(data.get(position).getPredictedExpense());
+            ((EditText)findTagFunction(position + "catsAtHome")).setText(data.get(position).getCatsAtHome());
 
             return adopterPageArrayList.get(position);
         }
@@ -204,18 +217,18 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
                 int id = location + 1;
                 ContentValues values = new ContentValues();
 
-                values.put(DataBaseAdopter.NAME, (((EditText)(pager.findViewWithTag("ActivityAdopter" + location + "adopterName"))).getText().toString()));
-                values.put(DataBaseAdopter.ADDRESS, (((EditText)(pager.findViewWithTag("ActivityAdopter" + location + "address"))).getText().toString()));
-                values.put(DataBaseAdopter.FAMILY_MEMBERS, (((EditText)(pager.findViewWithTag("ActivityAdopter" + location + "familyMembers"))).getText().toString()));
-                values.put(DataBaseAdopter.ENVIRONMENT, (((EditText)(pager.findViewWithTag("ActivityAdopter" + location + "environment"))).getText().toString()));
-                values.put(DataBaseAdopter.ADOPTER_ID, (((EditText)(pager.findViewWithTag("ActivityAdopter" + location + "adopterId"))).getText().toString()));
-                values.put(DataBaseAdopter.ADOPTER_BIRTHDAY, (((EditText)(pager.findViewWithTag("ActivityAdopter" + location + "birthday"))).getText().toString()));
-                values.put(DataBaseAdopter.ADOPTION_DATE, (((EditText)(pager.findViewWithTag("ActivityAdopter" + location + "adopDate"))).getText().toString()));
-                values.put(DataBaseAdopter.CONTACT_NUMBER, (((EditText)(pager.findViewWithTag("ActivityAdopter" + location + "contactNumber"))).getText().toString()));
-                values.put(DataBaseAdopter.PREDICTED_EXPENSE, (((EditText)(pager.findViewWithTag("ActivityAdopter" + location + "predictedExpense"))).getText().toString()));
-                values.put(DataBaseAdopter.CATS_AT_HOME, (((EditText)(pager.findViewWithTag("ActivityAdopter" + location + "catsAtHome"))).getText().toString()));
-                values.put(DataBaseAdopter.FAMILY_AGREE, (((CheckBox)(pager.findViewWithTag("ActivityAdopter" + location + "familyAgree"))).isChecked()));
-                //values.put(DataBaseAdopter.ADOPTER_SEXUALITY, (((ToggleButton)(pager.findViewWithTag("ActivityAdopter" + location + "sexuality"))).isChecked()));
+                values.put(DataBaseAdopter.NAME, ((EditText)findTagFunction( location + "adopterName")).getText().toString());
+                values.put(DataBaseAdopter.ADDRESS, ((EditText)findTagFunction( location + "address")).getText().toString());
+                values.put(DataBaseAdopter.FAMILY_MEMBERS, ((EditText)findTagFunction( location + "familyMembers")).getText().toString());
+                values.put(DataBaseAdopter.ENVIRONMENT, ((EditText)findTagFunction( location + "environment")).getText().toString());
+                values.put(DataBaseAdopter.ADOPTER_ID, ((EditText)findTagFunction( location + "adopterId")).getText().toString());
+                values.put(DataBaseAdopter.ADOPTER_BIRTHDAY, ((EditText)findTagFunction( location + "birthday")).getText().toString());
+                values.put(DataBaseAdopter.ADOPTION_DATE, ((EditText)findTagFunction( location + "adopDate")).getText().toString());
+                values.put(DataBaseAdopter.CONTACT_NUMBER, ((EditText)findTagFunction(location + "contactNumber")).getText().toString());
+                values.put(DataBaseAdopter.PREDICTED_EXPENSE, ((EditText)findTagFunction( location + "predictedExpense")).getText().toString());
+                values.put(DataBaseAdopter.CATS_AT_HOME, ((EditText)findTagFunction( location + "catsAtHome")).getText().toString());
+                values.put(DataBaseAdopter.FAMILY_AGREE, ((CheckBox)findTagFunction( location + "familyAgree")).isChecked());
+                values.put(DataBaseAdopter.ADOPTER_SEXUALITY, ((ToggleButton)findTagFunction(location + "sexuality")).isChecked());
 
                 getContentResolver().update(DataBaseAdopter.CONTENT_URI_ADOPTER, values, DataBaseAdopter._ID + " = " + id, null);
                 dataBaseUtils.showAdopDataBaseResult();
@@ -228,6 +241,9 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
 //                Intent fbIntent = new Intent(Intent.ACTION_VIEW);
 //                fbIntent.setData(Uri.parse("https://www.facebook.com/")); //+getFbId() in adopter db
 //            }
+        }
+        public View findTagFunction(String tag) {
+            return pager.findViewWithTag("ActivityAdopter"+tag);
         }
     }
 }

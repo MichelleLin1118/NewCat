@@ -93,18 +93,18 @@ public class ContentProviderAdopter extends ContentProvider {
         public void onCreate(SQLiteDatabase db) {
             db.execSQL("CREATE TABLE " + DataBaseAdopter.TABLE_ADOPTER + "(" +
                     DataBaseAdopter._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    DataBaseAdopter.NAME + " TEXT NOT NULL, " +
-                    DataBaseAdopter.ADDRESS + "TEXT" +
-                    DataBaseAdopter.FAMILY_MEMBERS + "TEXT" +
-                    DataBaseAdopter.ENVIRONMENT + "TEXT" +
-                    DataBaseAdopter.ADOPTER_ID + "TEXT" +
-                    DataBaseAdopter.ADOPTER_BIRTHDAY + "TEXT" +
-                    DataBaseAdopter.ADOPTION_DATE + "TEXT" +
-                    DataBaseAdopter.CONTACT_NUMBER + "TEXT" +
-                    DataBaseAdopter.PREDICTED_EXPENSE + "TEXT" +
-                    DataBaseAdopter.CATS_AT_HOME + "TEXT" +
+                    DataBaseAdopter.NAME + " TEXT, " +
+                    DataBaseAdopter.ADDRESS + " TEXT, " +
+                    DataBaseAdopter.FAMILY_MEMBERS + " TEXT, " +
+                    DataBaseAdopter.ENVIRONMENT + " TEXT, " +
+                    DataBaseAdopter.ADOPTER_ID + " TEXT, " +
+                    DataBaseAdopter.ADOPTER_BIRTHDAY + " TEXT, " +
+                    DataBaseAdopter.ADOPTION_DATE + " TEXT, " +
+                    DataBaseAdopter.CONTACT_NUMBER + " TEXT, " +
+                    DataBaseAdopter.PREDICTED_EXPENSE + " TEXT, " +
+                    DataBaseAdopter.CATS_AT_HOME + " TEXT, " +
                     DataBaseAdopter.FAMILY_AGREE + "boolean DEFAULT 0, " +
-                    DataBaseAdopter.ADOPTER_SEXUALITY + "boolean DEFAULT 0, " +
+                    DataBaseAdopter.ADOPTER_SEXUALITY + " boolean DEFAULT 0, " +
                     "UNIQUE(" + DataBaseAdopter._ID + ")" + ");" );
         }
 

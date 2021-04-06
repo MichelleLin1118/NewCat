@@ -97,14 +97,14 @@ public class ActivityMain extends Activity implements View.OnClickListener{
         }
         if (v == information){
             Intent informationIntent = new Intent();
-            ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.Activityinformation");
+            ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityInformation");
             informationIntent.setComponent(cn);
             startActivity(informationIntent);
         }
 
         if (v == adopter){
             Intent adopterIntent = new Intent();
-            ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.Activityadopterter");
+            ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityAdopter");
             adopterIntent.setComponent(cn);
             startActivity(adopterIntent);
         }
