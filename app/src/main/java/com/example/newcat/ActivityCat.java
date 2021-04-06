@@ -298,10 +298,12 @@ public class ActivityCat extends Activity implements View.OnClickListener {
                 ((CheckBox)findTagFunction(index + "mixed")).setChecked(true);
                 ((EditText)findTagFunction(index + "colorEdit")).setVisibility(View.GONE);
                 ((Spinner)findTagFunction(index +"color")).setVisibility(View.VISIBLE);
+                ((Spinner)findTagFunction(index +"color")).setSelection(data.get(index).getColor());
             } else {
                 ((CheckBox)findTagFunction(index + "mixed")).setChecked(false);
                 ((EditText)findTagFunction(index + "colorEdit")).setVisibility(View.VISIBLE);
                 ((Spinner)findTagFunction(index +"color")).setVisibility(View.GONE);
+                ((Spinner)findTagFunction(index +"color")).setSelection(data.get(index).getColor());
                 allCheckFalse();
             }
         }
