@@ -97,7 +97,7 @@ public class ActivityMain extends Activity implements View.OnClickListener{
         }
         if (v == information){
             Intent informationIntent = new Intent();
-            ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityInformation");
+            ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityInfo");
             informationIntent.setComponent(cn);
             startActivity(informationIntent);
         }
@@ -130,9 +130,6 @@ public class ActivityMain extends Activity implements View.OnClickListener{
 
             DataBaseCat cat = new DataBaseCat();
             DataBaseAdopter adop = new DataBaseAdopter();
-            Log.i(TAG, "------------------------------------------");
-            dataBaseUtils.showCatDataBaseResult();
-            Log.i(TAG, "------------------------------------------");
             dataBaseUtils.showAdopDataBaseResult();
             Log.i(TAG, "------------------------------------------");
 

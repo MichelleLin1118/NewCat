@@ -90,7 +90,7 @@ public class DataBaseUtils {
              boolean allCheck = getBooleanFromDB(cursor, DataBaseCat.ALL_CHECK);
              boolean mixed = getBooleanFromDB(cursor, DataBaseCat.MIXED);
              boolean sexuality = getBooleanFromDB(cursor, DataBaseCat.SEXUALITY);
-
+             Log.i(TAG, "all check ==================================" + allCheck);
              int catImg = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.CAT_IMG)));
              int catImg2 = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.CAT_IMG2)));
              int catImg3 = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.CAT_IMG3)));
@@ -165,7 +165,7 @@ public class DataBaseUtils {
     public ContentValues createAdopterData (DataBaseAdopter adop) {
         ContentValues values = new ContentValues();
         values.put(DataBaseAdopter.NAME, adop.getName());
-        Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>adop name = " + adop.getName());
+        Log.i(TAG, " name ===============" + adop.getName());
         values.put(DataBaseAdopter.ADDRESS, adop.getAddr());
         values.put(DataBaseAdopter.FAMILY_MEMBERS, adop.getFamilyMembers());
         values.put(DataBaseAdopter.ENVIRONMENT, adop.getEnvironment());

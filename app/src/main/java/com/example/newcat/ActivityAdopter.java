@@ -68,7 +68,7 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
         addPageButton.setOnClickListener(this);
 
         pager= (ViewPager) findViewById(R.id.view_pager_adopter);
-        for (int i = 0; i < 3 ; i++) {
+        for (int i = 0; i < data.size() ; i++) {
             adopterPageArrayList.add(LayoutInflater.from(this).inflate(R.layout.view_pager_adopter, null));
         }
         pager.setAdapter(mAdopterActivityAdapter);

@@ -22,7 +22,7 @@ public class DataBaseAdopter {
     public static String CONTACT_NUMBER = "contact_number";
     public static String PREDICTED_EXPENSE = "predicted_expense";
     public static String CATS_AT_HOME = "cats_at_home";
-    public static String FAMILY_AGREE = "family agree";
+    public static String FAMILY_AGREE = "family_agree";
     public static String ADOPTER_SEXUALITY = "sexuality";
 
     public static final String AUTHORITY = "com.example.newcat";
@@ -79,21 +79,21 @@ public class DataBaseAdopter {
     }
 
     public DataBaseAdopter() {
-        this.name = "";
-        this.addr = "";
-        this.familyMembers = "";
-        this.environment = "";
-        this.adopterId = "";
+        this.name = "name";
+        this.addr = "addr";
+        this.familyMembers = "fam";
+        this.environment = "env";
+        this.adopterId = "adopId";
 
         this.familyAgree = false;
         this.sexuality = false;
 
-        this.birthday = "";
-        this.adoptDate = "";
+        this.birthday = "birth";
+        this.adoptDate = "date";
 
-        this.contactNumber = "";
-        this.predictedExpense = "";
-        this.catsAtHome = "";
+        this.contactNumber = "cont";
+        this.predictedExpense = "pre-ex";
+        this.catsAtHome = "cats";
     }
 
 

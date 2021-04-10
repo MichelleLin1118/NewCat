@@ -137,10 +137,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
 
         private AdapterView.OnItemSelectedListener mSpinSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.i(TAG, "page = " +location + " select spinner" + position);
-                //save the data into db
-            }
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
@@ -232,9 +229,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             ((ImageView)findTagFunction(position + "catImg")).setImageResource(data.get(position).getCatPic().get(0));
             ((ToggleButton)findTagFunction(position + "sexuality")).setText(getSexuality(data.get(position).getSexuality()));
 
-            allChecked(data.get(position).getAllCheck(), globalPosition);
             mixedCheck(data.get(position).getMixed(), position);
-            Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>mixed : " + data.get(position).getMixed());
             return catPageArrayList.get(position);
         }
 
@@ -251,7 +246,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             }
             if (v == findTagFunction(location + "allCheck")) {
                 if (((CheckBox) findTagFunction( location + "allCheck")).isChecked() == true) {
-                    allChecked(true, location); } else { allChecked(false, location);
+                    allCheckedClick(true);} else { allCheckedClick(false);
                 }
             }
             if(v == findTagFunction(location + "vaccine")) {checkboxFunction("vaccine");}
@@ -310,20 +305,25 @@ public class ActivityCat extends Activity implements View.OnClickListener {
         public void allCheckFalse () {
             ((CheckBox)findTagFunction(location + "allCheck")).setChecked(false);
         }
-        public void allChecked(boolean allCalled, int index) {
+        public void allCheckedInit(boolean allCalled) {
             if (allCalled == true) {
                 for (int i=0; i < checkbox.length; i ++) {
-                    ((CheckBox) findTagFunction(index + checkbox[i])).setChecked(true);
-                }
-                mixedCheck(true, index);
+                    ((CheckBox) findTagFunction(globalPosition + checkbox[i])).setChecked(true); }
+                mixedCheck(true, globalPosition);
             } else {
-                for (int i=0; i < checkbox.length; i ++) {
-                    ((CheckBox) findTagFunction(index + checkbox[i])).setChecked(false);
-                }
-                mixedCheck(false, index);
+                ((CheckBox) findTagFunction(globalPosition + "allCheck")).setChecked(false); }
+        }
+        public void allCheckedClick(boolean allCalled) {
+            if (allCalled == true) {
+                for (int i = 0; i < checkbox.length; i++) {
+                    ((CheckBox) findTagFunction(location + checkbox[i])).setChecked(true); }
+                mixedCheck(true, location);
+            } else {
+                for (int i = 0; i < checkbox.length; i++) {
+                    ((CheckBox) findTagFunction(location + checkbox[i])).setChecked(false); }
+                mixedCheck(false, location);
             }
         }
-
 
         public String getSexuality (boolean sexuality) {
             return sexuality ? "FEMALE" : "MALE";
@@ -334,10 +334,10 @@ public class ActivityCat extends Activity implements View.OnClickListener {
         }
 
         public void checkboxFunction (String tag) {
-                if (((CheckBox)findTagFunction(location + tag)).isChecked() == false) {
-                    ((CheckBox)findTagFunction(location + tag)).setChecked(true);
-                } else {((CheckBox)findTagFunction(location + tag)).setChecked(false); allCheckFalse();
-                }
+            if (((CheckBox)findTagFunction(location + tag)).isChecked() == false) {
+                    ((CheckBox)findTagFunction(location + tag)).setChecked(false); allCheckFalse();
+            } else {((CheckBox)findTagFunction(location + tag)).setChecked(true);
+            }
         }
     }
 }

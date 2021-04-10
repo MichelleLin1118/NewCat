@@ -21,9 +21,13 @@
         <activity android:name=".ActivityCalendar"/>
         <activity android:name=".ActivityCat"/>
         <activity android:name=".ActivityInfo"/>
-        <provider
+        <!--provider
             android:authorities="com.example.newcat"
             android:name=".ContentProviderCat"
+            android:exported="true"/-->
+        <provider
+            android:authorities="com.example.newcat"
+            android:name=".ContentProviderAdopter"
             android:exported="true"/>
     </application>
 
