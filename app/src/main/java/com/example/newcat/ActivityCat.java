@@ -31,8 +31,8 @@ import java.util.Date;
 
 public class ActivityCat extends Activity implements View.OnClickListener {
     String TAG = "homework";
-    Button saveButton, addPageButton;
-    ImageButton home;
+    Button saveButton;
+    ImageButton home, addPageButton;
     CheckBox vaccine, deworm, bloodTest,ligation, antiparasite, nailsCutted, earsCleaned, allCheck, mixed;
     EditText weight, birth, adoptionDate, vaccineName, about,others, colorEdit;
     ImageView catImg;
@@ -60,7 +60,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
         home = (ImageButton) findViewById((R.id.home_button));
         home.setOnClickListener(this);
 
-        addPageButton = (Button) findViewById(R.id.addNewPage);
+        addPageButton = (ImageButton) findViewById(R.id.add_page_button);
         addPageButton.setOnClickListener(this);
 
         pager= (ViewPager) findViewById(R.id.view_pager_cat);
@@ -209,7 +209,6 @@ public class ActivityCat extends Activity implements View.OnClickListener {
                 findTagFunction(position + checkbox[i]).setOnClickListener(this);
             }
 
-            Log.i(TAG, "all = " + position + ": " + data.get(position).getAllCheck());
             ((CheckBox)findTagFunction(position + "vaccine")).setChecked(data.get(position).getVac());
             ((CheckBox)findTagFunction(position + "deworm")).setChecked(data.get(position).getDew());
             ((CheckBox)findTagFunction(position + "bloodTest")).setChecked(data.get(position).getBlood());

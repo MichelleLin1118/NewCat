@@ -9,27 +9,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/morandi_Parchment">
-        <RelativeLayout
-            android:id="@+id/title_area"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/morandi_Soya_Bean">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:textSize="50sp"
-                android:layout_alignParentLeft="true"
-                android:textColor="@color/morandi_Parchment"
-                android:layout_gravity="center_vertical" />
-            <ImageButton
-                android:id="@+id/home_button"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/a_home_button"/>
-        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,19 +36,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/birth"
-                android:layout_weight="1"/>
-            <EditText
-                android:id="@+id/adopter_birthday"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="date"
-                android:layout_weight="1"/>
 
         </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/birth"
+            android:layout_weight="1"/>
+        <EditText
+            android:id="@+id/adopter_birthday"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="date"
+            android:layout_weight="1"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -80,16 +59,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/morandi_Armadillo"/>
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/address"
-            android:textColor="@color/morandi_Armadillo"/>
-        <EditText
-            android:id="@+id/adopter_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/morandi_Armadillo"/>
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/city"/>
+            <Spinner
+                android:id="@+id/spinner_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/address"
+                android:textColor="@color/morandi_Armadillo"/>
+            <EditText
+                android:id="@+id/adopter_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/morandi_Armadillo"/>
+        </LinearLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -176,6 +168,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/morandi_Armadillo"/>
+        <ImageView
+            android:id="@+id/adopter_cat_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

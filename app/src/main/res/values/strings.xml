@@ -11,17 +11,18 @@
 
     <string name="name">Name:</string>
 
-    <string name="id">Id:</string>
+    <string name="id">Id Number:</string>
     <string name="address">Address:</string>
-    <string name="contact">Contact:</string>
-    <string name="otherCats">Cat(s) at Home:</string>
-    <string name="family">Family Members:</string>
+    <string name="contact">Contact Number:</string>
+    <string name="otherCats">Does the adopter have other cats at home? :</string>
+    <string name="family">Family Members (include all that will be living with the cat):</string>
     <string name="familyAgree">Does everyone in the house agree to adopt this cat?</string>
-    <string name="expense">Predicted Expense on Cat(s): (NTD)</string>
+    <string name="expense">Predicted Expense on Cat(s): (NTD/month)</string>
     <string name="environment">Environment:</string>
     <string name="adoptionContract">Adoption Contract</string>
+    <string name="city">City:</string>
 
-    <string name="sex">Sex:</string>
+    <string name="sex">Sexuality:</string>
     <string name="female">Female</string>
     <string name="male">Male</string>
     <string name="unknown">Unknown</string>
@@ -41,7 +42,7 @@
     <string name="cutNail">Nails Cutted</string>
     <string name="antiparasite">Antiparasite</string>
     <string name="mixed">Mixed</string>
-    <string name="all">All</string> //全選
+    <string name="all">All</string>
 
     <string name="save_button">Save</string>
 
@@ -55,6 +56,18 @@
         <item>Tuxedo (賓士)</item>
         <item>Tabby (虎斑)</item>
         <item>others</item>
+    </string-array>
+
+    <string-array name="address_array">
+        <item>select a city</item>
+        <item>台北市</item>
+        <item>新北市</item>
+        <item>桃園市</item>
+        <item>新竹市</item>
+        <item>新竹縣</item>
+        <item>苗栗縣</item>
+        <item>台中市</item>
+        <item>其他</item>
     </string-array>
 
     <string name="example_cat">This cat is 3 months old.\nFemale.\nBlood test and Deworm:\n Done.</string>

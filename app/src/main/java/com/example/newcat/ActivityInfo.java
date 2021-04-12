@@ -21,7 +21,7 @@ import android.widget.TextView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-public class ActivityInfo extends Activity {
+public class ActivityInfo extends Activity implements View.OnClickListener{
     String TAG = "homework";
     ListView hospitals;
     ImageButton home;
@@ -37,8 +37,18 @@ public class ActivityInfo extends Activity {
         Adapter ad = new Adapter(this);
         hospitals.setAdapter(ad);
     }
+    @Override
+    public void onClick(View v) {
+        if (v == home){
+            Intent homeIntent = new Intent();
+            ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityMain");
+            homeIntent.setComponent(cn);
+            startActivity(homeIntent);
+        }
 
-    public class Adapter extends BaseAdapter implements View.OnClickListener{
+    }
+
+    public class Adapter extends BaseAdapter {
         TextView name;
         TextView contact;
         TextView address;
@@ -180,15 +190,6 @@ public class ActivityInfo extends Activity {
         }
 
 
-        @Override
-        public void onClick(View v) {
-            if (v == home){
-                Intent homeIntent = new Intent();
-                ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.MainActivity");
-                homeIntent.setComponent(cn);
-                startActivity(homeIntent);
-            }
 
-        }
     }
 }

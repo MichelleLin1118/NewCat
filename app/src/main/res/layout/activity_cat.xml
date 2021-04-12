@@ -3,6 +3,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:id="@+id/activity_cat"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 <RelativeLayout android:id="@+id/title_area"
     android:layout_width="match_parent"
@@ -17,15 +18,14 @@
         android:layout_alignParentLeft="true"
         android:textColor="@color/morandi_Parchment"
         android:layout_gravity="center_vertical" />
-    <Button
-        android:id="@+id/addNewPage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginRight="60dp"
-        android:text="+"
-        android:background="@color/morandi_Parchment"
+    <ImageButton
+        android:id="@+id/add_page_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="70dp"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        android:background="@drawable/a_add_page_button"/>
     <ImageButton
         android:id="@+id/home_button"
         android:layout_width="50dp"

@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -32,12 +34,14 @@ import java.util.Date;
 
 public class ActivityAdopter extends Activity implements View.OnClickListener {
     String TAG = "homework";
-    Button saveButton, addPageButton;
-    ImageButton messenger, fb, home;
+    Button saveButton;
+    ImageButton messenger, fb, home, addPageButton;
     EditText adopterName, address, familyMembers, environment, adopterId, birthday, adoptDate, contactNumber, predictedExpense, catsAtHome;
     CheckBox familyAgree;
     ToggleButton sexuality;
     ViewPager pager;
+    Spinner city;
+    ImageView catImg;
     
     ArrayList<View> adopterPageArrayList = new ArrayList<>();
     DataBaseUtils dataBaseUtils;
@@ -64,7 +68,7 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
         home.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         home.setOnClickListener(this);
 
-        addPageButton = (Button) findViewById(R.id.addNewPage);
+        addPageButton = (ImageButton) findViewById(R.id.add_page_button);
         addPageButton.setOnClickListener(this);
 
         pager= (ViewPager) findViewById(R.id.view_pager_adopter);
@@ -136,6 +140,17 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
         }
 
         @Override
+        public int getItemPosition(Object object){return POSITION_NONE;}
+
+        private AdapterView.OnItemSelectedListener mSpinSelectedListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        };
+
+        @Override
         public Object instantiateItem(ViewGroup container, int position) {
             globalPosition = position;
             ((ViewPager) container).addView(adopterPageArrayList.get(position));
@@ -152,9 +167,8 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
             sexuality = (ToggleButton) adopterPageArrayList.get(position).findViewById(R.id.sexuality_button);
             familyAgree = (CheckBox) adopterPageArrayList.get(position).findViewById(R.id.adopter_familyAgree);
             saveButton = (Button) adopterPageArrayList.get(position).findViewById(R.id.save_button);
-
-            sexuality.setTextOff("male");
-            sexuality.setTextOn("female");
+            city = (Spinner) adopterPageArrayList.get(position).findViewById(R.id.spinner_address);
+            catImg = (ImageView) adopterPageArrayList.get(position).findViewById(R.id.adopter_cat_img);
 
             adopterName = (EditText) adopterPageArrayList.get(position).findViewById((R.id.adopter_name));
             adopterName.setText(data.get(position).getName());
@@ -167,9 +181,9 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
             adopterId = (EditText) adopterPageArrayList.get(position).findViewById((R.id.adopter_id));
             adopterId.setText(data.get(position).getAdopterId());
             birthday = (EditText) adopterPageArrayList.get(position).findViewById((R.id.adopter_birthday));
-            birthday.setText(sdf.format(data.get(position).getBirthday()));
+            birthday.setText(data.get(position).getBirthday());
             adoptDate = (EditText) adopterPageArrayList.get(position).findViewById((R.id.adopter_adoptionDate));
-            adoptDate.setText(sdf.format(data.get(position).getAdoptDate()));
+            adoptDate.setText(data.get(position).getAdoptDate());
             contactNumber = (EditText) adopterPageArrayList.get(position).findViewById(R.id.adopter_contact);
             contactNumber.setText(data.get(position).getContactNumber());
             predictedExpense = (EditText) adopterPageArrayList.get(position).findViewById(R.id.adopter_predictedExpense);
@@ -190,8 +204,19 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
             contactNumber.setTag("ActivityAdopter" +position + "contactNumber");
             predictedExpense.setTag("ActivityAdopter" +position + "predictedExpense");
             catsAtHome.setTag("ActivityAdopter" +position + "catsAtHome");
-            pager.findViewWithTag("ActivityAdopter" +position + "familyAgree").setOnClickListener(this);
-            pager.findViewWithTag("ActivityAdopter" +position + "saveButton").setOnClickListener(this);
+            city.setTag("ActivityAdopter" +position + "city");
+            catImg.setTag("ActivityAdopter" +position + "catImg");
+            findTagFunction(position + "familyAgree").setOnClickListener(this);
+            findTagFunction(position + "saveButton").setOnClickListener(this);
+            findTagFunction(position + "catImg").setOnClickListener(this);
+
+            ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(context, R.array.address_array, android.R.layout.simple_spinner_item);
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+            city.setAdapter(arrayAdapter);
+            city.setSelection(0, false);
+            city.setOnItemSelectedListener(mSpinSelectedListener);
+            sexuality.setTextOff("male");
+            sexuality.setTextOn("female");
 
             ((CheckBox)findTagFunction(position + "familyAgree")).setChecked(data.get(position).getFamilyAgree());
             ((EditText)findTagFunction(position + "adopterName")).setText(data.get(position).getName());
@@ -204,16 +229,21 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
             ((EditText)findTagFunction(position + "contactNumber")).setText(data.get(position).getContactNumber());
             ((EditText)findTagFunction(position + "predictedExpense")).setText(data.get(position).getPredictedExpense());
             ((EditText)findTagFunction(position + "catsAtHome")).setText(data.get(position).getCatsAtHome());
+            ((Spinner)findTagFunction(position + "city")).setSelection(data.get(position).getCity());
+            ((ImageView)findTagFunction(position + "catImg")).setImageResource(data.get(position).getCatImg());
 
             return adopterPageArrayList.get(position);
         }
         @Override
         public void onClick(View v) {
-            if (v ==  pager.findViewWithTag("ActivityAdopter" +location + "familyAgree")) {
-                Log.i(TAG, "familyAgree check");
+            if(v == findTagFunction(location + "catImg")){
+                // link to the cat's page
+            }
+            if (v ==  findTagFunction(location + "familyAgree")) {
                 ((CheckBox)pager.findViewWithTag("ActivityAdopter" +location + "familyAgree")).setChecked(true);
             }
-            if(v == pager.findViewWithTag("ActivityCat" + location + "saveButton")) {
+            if(v == findTagFunction(location + "saveButton")) {
+                Log.i(TAG, "--------------------save button clicked");
                 int id = location + 1;
                 ContentValues values = new ContentValues();
 
@@ -229,6 +259,7 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
                 values.put(DataBaseAdopter.CATS_AT_HOME, ((EditText)findTagFunction( location + "catsAtHome")).getText().toString());
                 values.put(DataBaseAdopter.FAMILY_AGREE, ((CheckBox)findTagFunction( location + "familyAgree")).isChecked());
                 values.put(DataBaseAdopter.ADOPTER_SEXUALITY, ((ToggleButton)findTagFunction(location + "sexuality")).isChecked());
+                values.put(DataBaseAdopter.CITY, ((Spinner)findTagFunction(location + "city")).getSelectedItemPosition());
 
                 getContentResolver().update(DataBaseAdopter.CONTENT_URI_ADOPTER, values, DataBaseAdopter._ID + " = " + id, null);
                 dataBaseUtils.showAdopDataBaseResult();

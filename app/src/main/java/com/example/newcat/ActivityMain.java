@@ -133,7 +133,6 @@ public class ActivityMain extends Activity implements View.OnClickListener{
             dataBaseUtils.showAdopDataBaseResult();
             Log.i(TAG, "------------------------------------------");
 
-
 //            Intent searchIntent = new Intent();
 //            ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivitySearch");
 //            searchIntent.setComponent(cn);

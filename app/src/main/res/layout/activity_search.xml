@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_activity"
+    android:id="@+id/activity_search"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -26,69 +26,67 @@
             android:layout_centerVertical="true"
             android:background="@drawable/a_home_button"/>
     </RelativeLayout>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_vertical"
-    android:layout_marginBottom="40dp">
+    
+    
     <LinearLayout
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_horizontal"
+    android:layout_marginBottom="10dp"
+        android:background="@color/morandi_Silk">
       <ImageButton
           android:id="@+id/cat_black_button"
-          android:layout_width="80dp"
-          android:layout_height="80dp"
-          android:background="@drawable/a_cat_black_button"
-          android:layout_marginRight="20dp"/>
-
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          android:layout_marginRight="5dp"
+          android:layout_marginLeft="5dp"
+          android:background="@drawable/a_cat_black_button"/>
       <ImageButton
           android:id="@+id/cat_white_button"
-          android:layout_width="80dp"
-          android:layout_height="80dp"
-          android:layout_marginLeft="20dp"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          android:layout_marginRight="5dp"
+          android:layout_marginLeft="5dp"
           android:background="@drawable/a_cat_white_button" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp">
       <ImageButton
           android:id="@+id/cat_orange_button"
-          android:layout_width="80dp"
-          android:layout_height="80dp"
-          android:background="@drawable/a_cat_orange_button"
-          android:layout_marginRight="20dp"/>
-
-        <ImageButton
-            android:id="@+id/cat_calico_button"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@drawable/a_cat_calico_button"
-            android:layout_marginLeft="20dp"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp">
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          android:layout_marginRight="5dp"
+          android:layout_marginLeft="5dp"
+          android:background="@drawable/a_cat_orange_button"/>
+      <ImageButton
+          android:id="@+id/cat_calico_button"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          android:layout_marginRight="5dp"
+          android:layout_marginLeft="5dp"
+          android:background="@drawable/a_cat_calico_button"/>
         <ImageButton
             android:id="@+id/cat_tuxedo_button"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginRight="20dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
             android:background="@drawable/a_cat_tuxedo_button" />
-
         <ImageButton
             android:id="@+id/cat_tabby_button"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginLeft="20dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
             android:background="@drawable/a_cat_tabby_button" />
+        <ImageButton
+            android:id="@+id/cat_other_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/a_cat_other_button" />
     </LinearLayout>
-</LinearLayout>
-    <!--    black, white, orange, calico, tuxedo, tabby-->
-
+    <ListView
+        android:id="@+id/list_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

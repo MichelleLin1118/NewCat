@@ -45,37 +45,35 @@ public class DataBaseUtils {
     public void showAdopDataBaseResult() {
         Cursor cursor = context.getContentResolver().query(DataBaseAdopter.CONTENT_URI_ADOPTER, null, null, null, null);
         while (cursor.moveToNext()) {
-            Log.i(TAG, "adopter db >>>>>>>>>>>>>>>>>>>" + cursor.getString(1));//cursor.getString(cursor.getColumnIndex(DataBaseAdopter.NAME)));
-           /* Log.i(TAG, "db " + cursor.getString(0));
-            Log.i(TAG, "db" + cursor.getString(1));
-            Log.i(TAG, "db" + cursor.getString(2));
-            Log.i(TAG, "db" + cursor.getString(3));
-            Log.i(TAG, "db" + cursor.getString(4));
-            Log.i(TAG, "db" + cursor.getString(5));
-            Log.i(TAG, "db" + cursor.getString(6));
-            Log.i(TAG, "db" + cursor.getString(7));
-            Log.i(TAG, "db" + cursor.getString(8));
-            Log.i(TAG, "db" + cursor.getString(9));
-            Log.i(TAG, "db" + cursor.getString(10));
-            Log.i(TAG, "db" + cursor.getString(11));
-            Log.i(TAG, "db" + cursor.getString(12));
-            Log.i(TAG, "db" + cursor.getString(13));
-            Log.i(TAG, "db" + cursor.getString(14));
-            Log.i(TAG, "db" + cursor.getString(15));*/
+//            Log.i(TAG, "adopter db >>>>>>>>>>>>>>>>>>>" + cursor.getString(cursor.getColumnIndex(DataBaseAdopter.NAME)));
+//            Log.i(TAG, "db " + cursor.getString(0));
+//            Log.i(TAG, "db" + cursor.getString(1));
+//            Log.i(TAG, "db" + cursor.getString(2));
+//            Log.i(TAG, "db" + cursor.getString(3));
+//            Log.i(TAG, "db" + cursor.getString(4));
+//            Log.i(TAG, "db" + cursor.getString(5));
+//            Log.i(TAG, "db" + cursor.getString(6));
+//            Log.i(TAG, "db" + cursor.getString(7));
+//            Log.i(TAG, "db" + cursor.getString(8));
+//            Log.i(TAG, "db" + cursor.getString(9));
+//            Log.i(TAG, "db" + cursor.getString(10));
+//            Log.i(TAG, "db" + cursor.getString(11));
+//            Log.i(TAG, "db" + cursor.getString(12));
+//            Log.i(TAG, "db" + cursor.getString(13));
+//            Log.i(TAG, "db" + cursor.getString(14));
+            Log.i(TAG, "------------ adopter" );
         }
     }
 
     public ArrayList<DataBaseCat> getCatDataFromDB () {
-        Log.i(TAG, "============== getCatDataFromDB ");
         ArrayList<DataBaseCat> catData = new ArrayList<DataBaseCat>();
          Cursor cursor = context.getContentResolver().query(DataBaseCat.CONTENT_URI_CAT, null, null, null, null);
          while (cursor.moveToNext()) {
-             Long id = Long.parseLong(cursor.getString(cursor.getColumnIndex(DataBaseCat._ID)));
+             long id = Long.parseLong(cursor.getString(cursor.getColumnIndex(DataBaseCat._ID)));
              String weight = cursor.getString(cursor.getColumnIndex(DataBaseCat.WEIGHT));
              String birth = cursor.getString(cursor.getColumnIndex(DataBaseCat.BIRTH));
              String adoption  = cursor.getString(cursor.getColumnIndex(DataBaseCat.ADOPTION));
              int color = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.COLOR)));
-             Log.i(TAG, "++++++++ color = " + color);
              String vaccineName = cursor.getString(cursor.getColumnIndex(DataBaseCat.VACCINE_NAME));
              String about = cursor.getString(cursor.getColumnIndex(DataBaseCat.ABOUT));
              String other = cursor.getString(cursor.getColumnIndex(DataBaseCat.OTHER));
@@ -90,7 +88,6 @@ public class DataBaseUtils {
              boolean allCheck = getBooleanFromDB(cursor, DataBaseCat.ALL_CHECK);
              boolean mixed = getBooleanFromDB(cursor, DataBaseCat.MIXED);
              boolean sexuality = getBooleanFromDB(cursor, DataBaseCat.SEXUALITY);
-             Log.i(TAG, "all check ==================================" + allCheck);
              int catImg = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.CAT_IMG)));
              int catImg2 = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.CAT_IMG2)));
              int catImg3 = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.CAT_IMG3)));
@@ -117,8 +114,9 @@ public class DataBaseUtils {
         ArrayList<DataBaseAdopter> adopterData = new ArrayList<DataBaseAdopter>();
         Cursor cursor = context.getContentResolver().query(DataBaseAdopter.CONTENT_URI_ADOPTER, null, null, null, null);
         while (cursor.moveToNext()) {
-            Long id = Long.parseLong(cursor.getString(cursor.getColumnIndex(DataBaseAdopter._ID)));
+            long id = Long.parseLong(cursor.getString(cursor.getColumnIndex(DataBaseAdopter._ID)));
             String name = cursor.getString(cursor.getColumnIndex(DataBaseAdopter.NAME));
+            int city = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseAdopter.CITY)));
             String address = cursor.getString(cursor.getColumnIndex(DataBaseAdopter.ADDRESS));
             String familyMembers = cursor.getString(cursor.getColumnIndex(DataBaseAdopter.FAMILY_MEMBERS));
             String environment = cursor.getString(cursor.getColumnIndex(DataBaseAdopter.ENVIRONMENT));
@@ -128,10 +126,12 @@ public class DataBaseUtils {
             String contactNumber = cursor.getString(cursor.getColumnIndex(DataBaseAdopter.CONTACT_NUMBER));
             String predictedExpense = cursor.getString(cursor.getColumnIndex(DataBaseAdopter.PREDICTED_EXPENSE));
             String catsAtHome = cursor.getString(cursor.getColumnIndex(DataBaseAdopter.CATS_AT_HOME));
-            Boolean familyAgree = valueOf(cursor.getString(cursor.getColumnIndex(DataBaseAdopter.FAMILY_AGREE)));
-            Boolean sexuality = valueOf(cursor.getString(cursor.getColumnIndex(DataBaseAdopter.ADOPTER_SEXUALITY)));
+            boolean familyAgree = getBooleanFromDB(cursor,DataBaseAdopter.FAMILY_AGREE);
+            boolean sexuality = getBooleanFromDB(cursor,DataBaseAdopter.ADOPTER_SEXUALITY);
+            int catImg = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseAdopter.CAT_IMG)));
 
-            DataBaseAdopter adopdb = new DataBaseAdopter(id, name, address, familyMembers, environment, adopterId, birthday, adoptDate, contactNumber, predictedExpense, catsAtHome, familyAgree, sexuality);
+
+            DataBaseAdopter adopdb = new DataBaseAdopter(id, name, city, address, familyMembers, environment, adopterId, birthday, adoptDate, contactNumber, predictedExpense, catsAtHome, familyAgree, sexuality, catImg);
             adopterData.add(adopdb);
         }
         return adopterData;
@@ -165,7 +165,7 @@ public class DataBaseUtils {
     public ContentValues createAdopterData (DataBaseAdopter adop) {
         ContentValues values = new ContentValues();
         values.put(DataBaseAdopter.NAME, adop.getName());
-        Log.i(TAG, " name ===============" + adop.getName());
+        values.put(DataBaseAdopter.CITY, adop.getCity());
         values.put(DataBaseAdopter.ADDRESS, adop.getAddr());
         values.put(DataBaseAdopter.FAMILY_MEMBERS, adop.getFamilyMembers());
         values.put(DataBaseAdopter.ENVIRONMENT, adop.getEnvironment());
@@ -177,6 +177,7 @@ public class DataBaseUtils {
         values.put(DataBaseAdopter.CATS_AT_HOME, adop.getCatsAtHome());
         values.put(DataBaseAdopter.FAMILY_AGREE, adop.getFamilyAgree());
         values.put(DataBaseAdopter.ADOPTER_SEXUALITY, adop.getSexuality());
+        values.put(DataBaseAdopter.CAT_IMG, adop.getCatImg());
 
         return values;
     }
