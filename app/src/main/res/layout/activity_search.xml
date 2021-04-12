@@ -14,14 +14,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textSize="50dp"
+            android:textSize="42dp"
             android:layout_alignParentLeft="true"
             android:textColor="@color/morandi_Parchment"
             android:layout_gravity="center_vertical" />
         <ImageButton
             android:id="@+id/home_button"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@drawable/a_home_button"/>
@@ -29,61 +29,135 @@
     
     
     <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center_horizontal"
-    android:layout_marginBottom="10dp"
-        android:background="@color/morandi_Silk">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/morandi_Soft_Amber">
       <ImageButton
           android:id="@+id/cat_black_button"
-          android:layout_width="50dp"
-          android:layout_height="50dp"
+          android:layout_width="42dp"
+          android:layout_height="42dp"
           android:layout_marginRight="5dp"
           android:layout_marginLeft="5dp"
           android:background="@drawable/a_cat_black_button"/>
       <ImageButton
           android:id="@+id/cat_white_button"
-          android:layout_width="50dp"
-          android:layout_height="50dp"
+          android:layout_width="42dp"
+          android:layout_height="42dp"
           android:layout_marginRight="5dp"
           android:layout_marginLeft="5dp"
           android:background="@drawable/a_cat_white_button" />
       <ImageButton
           android:id="@+id/cat_orange_button"
-          android:layout_width="50dp"
-          android:layout_height="50dp"
+          android:layout_width="42dp"
+          android:layout_height="42dp"
           android:layout_marginRight="5dp"
           android:layout_marginLeft="5dp"
           android:background="@drawable/a_cat_orange_button"/>
       <ImageButton
           android:id="@+id/cat_calico_button"
-          android:layout_width="50dp"
-          android:layout_height="50dp"
+          android:layout_width="42dp"
+          android:layout_height="42dp"
           android:layout_marginRight="5dp"
           android:layout_marginLeft="5dp"
           android:background="@drawable/a_cat_calico_button"/>
         <ImageButton
             android:id="@+id/cat_tuxedo_button"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
             android:background="@drawable/a_cat_tuxedo_button" />
         <ImageButton
             android:id="@+id/cat_tabby_button"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
             android:background="@drawable/a_cat_tabby_button" />
         <ImageButton
             android:id="@+id/cat_other_button"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
             android:background="@drawable/a_cat_other_button" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="5dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/morandi_Armadillo"
+                android:background="@color/morandi_Soft_Amber"
+                android:text="@string/taipei"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/morandi_Armadillo"
+                android:background="@color/morandi_Soft_Amber"
+                android:text="@string/newTaipei"/>
+            <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/morandi_Armadillo"
+                android:background="@color/morandi_Soft_Amber"
+                android:text="@string/taoyuan"/>
+            <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/morandi_Armadillo"
+                android:background="@color/morandi_Soft_Amber"
+                android:text="@string/hsinchu"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/morandi_Armadillo"
+                android:background="@color/morandi_Soft_Amber"
+                android:text="@string/chubei"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/morandi_Armadillo"
+                android:background="@color/morandi_Soft_Amber"
+                android:text="@string/miaoli"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/morandi_Armadillo"
+                android:background="@color/morandi_Soft_Amber"
+                android:text="@string/taichung"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/morandi_Armadillo"
+                android:background="@color/morandi_Soft_Amber"
+                android:text="@string/other"/>
+        </LinearLayout>
+
     </LinearLayout>
     <ListView
         android:id="@+id/list_search"

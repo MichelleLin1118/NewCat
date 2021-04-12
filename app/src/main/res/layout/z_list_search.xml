@@ -2,64 +2,82 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/catList">
+        android:id="@+id/catList"
+        android:orientation="horizontal">
         <ImageView
         android:id="@+id/cat_img"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:layout_width="160dp"
+        android:layout_height="160dp"/>
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.5"
-        android:orientation="vertical">
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
             <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/color"/>
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/color"/>
             <TextView
-            android:id="@+id/cat_color"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
-            <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/birth"/>
-            <TextView
-            android:id="@+id/cat_birth"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
+                android:id="@+id/cat_color"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/birth"/>
+                <TextView
+                    android:id="@+id/cat_birth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:id="@+id/adopterList">
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/city"/>
+            android:orientation="horizontal"
+            android:layout_weight="1">
         <TextView
-            android:id="@+id/adopter_city"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
-        <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/name"/>
         <TextView
             android:id="@+id/adopter_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:orientation="horizontal"
+            android:layout_weight="1">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/city"/>
+        <TextView
+            android:id="@+id/adopter_city"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
 
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

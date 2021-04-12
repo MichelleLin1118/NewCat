@@ -19,7 +19,7 @@ import android.widget.ImageView;
 public class ActivityMain extends Activity implements View.OnClickListener{
 
     String TAG = "homework";
-    ImageButton cat, information, home, adopter, calendar, search;
+    ImageButton cat, information, home, adopter, calendar, search, init;
     DataBaseUtils dataBaseUtils = new DataBaseUtils(this);
 
     @Override
@@ -52,6 +52,10 @@ public class ActivityMain extends Activity implements View.OnClickListener{
         search = (ImageButton) findViewById((R.id.search_button));
         search.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         search.setOnClickListener(this);
+
+        init = (ImageButton) findViewById((R.id.init_button));
+        init.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        init.setOnClickListener(this);
 
 
 
@@ -122,6 +126,12 @@ public class ActivityMain extends Activity implements View.OnClickListener{
             startActivity(homeIntent);
         }
         if (v == search) {
+            Intent searchIntent = new Intent();
+            ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivitySearch");
+            searchIntent.setComponent(cn);
+            startActivity(searchIntent);
+        }
+        if (v == init) {
             //dataBaseUtils.createCatData(new DataBaseCat());
             getContentResolver().insert(DataBaseCat.CONTENT_URI_CAT, dataBaseUtils.createCatData(new DataBaseCat()));
             getContentResolver().insert(DataBaseCat.CONTENT_URI_CAT, dataBaseUtils.createCatData(new DataBaseCat()));
@@ -132,11 +142,6 @@ public class ActivityMain extends Activity implements View.OnClickListener{
             DataBaseAdopter adop = new DataBaseAdopter();
             dataBaseUtils.showAdopDataBaseResult();
             Log.i(TAG, "------------------------------------------");
-
-//            Intent searchIntent = new Intent();
-//            ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivitySearch");
-//            searchIntent.setComponent(cn);
-//            startActivity(searchIntent);
         }
 
 

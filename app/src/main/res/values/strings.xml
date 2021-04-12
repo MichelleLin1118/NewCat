@@ -9,7 +9,7 @@
     <string name="calendar">Calendar</string>
     <string name="adop">Adopter</string>
 
-    <string name="name">Name:</string>
+    <string name="name">Adopter:</string>
 
     <string name="id">Id Number:</string>
     <string name="address">Address:</string>
@@ -69,6 +69,15 @@
         <item>台中市</item>
         <item>其他</item>
     </string-array>
+
+    <string name="taipei">台北市</string>
+    <string name="newTaipei">新北市</string>
+    <string name="taoyuan">桃園市</string>
+    <string name="hsinchu">新竹市</string>
+    <string name="chubei">新竹縣</string>
+    <string name="miaoli">苗栗縣</string>
+    <string name ="taichung">台中市</string>
+    <string name ="other">其他</string>
 
     <string name="example_cat">This cat is 3 months old.\nFemale.\nBlood test and Deworm:\n Done.</string>
 

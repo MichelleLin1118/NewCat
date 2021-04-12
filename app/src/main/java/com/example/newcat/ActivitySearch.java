@@ -32,6 +32,9 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
         search = findViewById(R.id.list_search);
         search.setAdapter(ad);
 
+        home = (ImageButton) findViewById(R.id.home_button);
+        home.setOnClickListener(this);
+
         black = (ImageButton) findViewById(R.id.cat_black_button);
         black.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         black.setOnClickListener(this);
@@ -64,8 +67,9 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v == home){
+            Log.i(TAG, "search home button pressed >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.");
             Intent homeIntent = new Intent();
-            ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.MainActivity");
+            ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityMain");
             homeIntent.setComponent(cn);
             startActivity(homeIntent);
         }
@@ -143,21 +147,7 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
                 }
             });
 
-            if (position == 0 ) {
-                catColor.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-                catColor.setTextColor(getResources().getColor(R.color.morandi_Parchment));
-                catColor.setBackgroundColor(getResources().getColor(R.color.morandi_Armadillo));
-                catBirth.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-                catBirth.setTextColor(getResources().getColor(R.color.morandi_Parchment));
-                catBirth.setBackgroundColor(getResources().getColor(R.color.morandi_Armadillo));
-                adopterName.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-                adopterName.setTextColor(getResources().getColor(R.color.morandi_Parchment));
-                adopterName.setBackgroundColor(getResources().getColor(R.color.morandi_Armadillo));
-                adopterCity.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-                adopterCity.setTextColor(getResources().getColor(R.color.morandi_Parchment));
-                adopterCity.setBackgroundColor(getResources().getColor(R.color.morandi_Armadillo));
-            }
-            if (position != 0) {
+
                 if (position%2 == 0) {
                     catColor.setTextColor(getResources().getColor(R.color.text_brown));
                     catColor.setBackgroundColor(getResources().getColor(R.color.morandi_Soft_Amber));
@@ -179,7 +169,7 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
                     adopterCity.setTextColor(getResources().getColor(R.color.text_brown));
                     adopterCity.setBackgroundColor(getResources().getColor(R.color.morandi_Donkey_Brown));
                 }
-            }
+
 
 
             return view;
