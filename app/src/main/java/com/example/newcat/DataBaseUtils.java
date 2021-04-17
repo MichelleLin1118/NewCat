@@ -3,6 +3,7 @@ package com.example.newcat;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -65,6 +66,19 @@ public class DataBaseUtils {
         }
     }
 
+    public ArrayList<DataBaseCat> getCatDataWithColorFromDB (int colorIndex) {
+        ArrayList<DataBaseCat> catData = new ArrayList<DataBaseCat>();
+        Cursor cursor = context.getContentResolver().query(DataBaseCat.CONTENT_URI_CAT, null, DataBaseCat.COLOR + " = " + colorIndex, null, null);
+        while (cursor.moveToNext()) {
+            int color = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.COLOR)));
+            String birth = cursor.getString(cursor.getColumnIndex(DataBaseCat.BIRTH));
+            Log.i(TAG, "+++++++++++++++++++++_______________ birth = " + cursor.getString(cursor.getColumnIndex(DataBaseCat.BIRTH)));
+            DataBaseCat catColorDb = new DataBaseCat(color, birth);
+            catData.add(catColorDb);
+        }
+        return catData;
+    }
+
     public ArrayList<DataBaseCat> getCatDataFromDB () {
         ArrayList<DataBaseCat> catData = new ArrayList<DataBaseCat>();
          Cursor cursor = context.getContentResolver().query(DataBaseCat.CONTENT_URI_CAT, null, null, null, null);
@@ -77,7 +91,7 @@ public class DataBaseUtils {
              String vaccineName = cursor.getString(cursor.getColumnIndex(DataBaseCat.VACCINE_NAME));
              String about = cursor.getString(cursor.getColumnIndex(DataBaseCat.ABOUT));
              String other = cursor.getString(cursor.getColumnIndex(DataBaseCat.OTHER));
-
+             String adopterName = cursor.getString(cursor.getColumnIndex(DataBaseCat.ADOPTER_NAME));
              boolean vaccine = getBooleanFromDB(cursor, DataBaseCat.VACCINE);
              boolean ligation = getBooleanFromDB(cursor, DataBaseCat.LIGATION);
              boolean bloodTest = getBooleanFromDB(cursor, DataBaseCat.BLOOD_TEST);
@@ -96,7 +110,7 @@ public class DataBaseUtils {
              catPic.add(catImg2);
              catPic.add(catImg3);
 
-             DataBaseCat catdb = new DataBaseCat(id, weight, birth, adoption, color, vaccineName, about, other, vaccine, ligation, bloodTest, deworm, earsCleaned, nailsCutted, antiparasite, allCheck, mixed, sexuality, catImg,catImg2, catImg3, catPic);
+             DataBaseCat catdb = new DataBaseCat(id, weight, birth, adoption, color, vaccineName, about, other, vaccine, ligation, bloodTest, deworm, earsCleaned, nailsCutted, antiparasite, allCheck, mixed, sexuality, catImg,catImg2, catImg3, catPic, adopterName);
              catData.add(catdb);
          }
          return catData;
@@ -157,6 +171,7 @@ public class DataBaseUtils {
         values.put(DataBaseCat.CAT_IMG, cat.getCatImg());
         values.put(DataBaseCat.CAT_IMG2, cat.getCatImg2());
         values.put(DataBaseCat.CAT_IMG3, cat.getCatImg3());
+        values.put(DataBaseCat.ADOPTER_NAME, cat.getAdopterName());
 
         return values;
     }

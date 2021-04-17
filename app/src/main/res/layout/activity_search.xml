@@ -95,28 +95,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <Button
+            <RadioButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:textColor="@color/morandi_Armadillo"
                 android:background="@color/morandi_Soft_Amber"
                 android:text="@string/taipei"/>
-            <Button
+            <RadioButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:textColor="@color/morandi_Armadillo"
                 android:background="@color/morandi_Soft_Amber"
                 android:text="@string/newTaipei"/>
-            <Button
+            <RadioButton
             android:layout_width="match_parent"
             android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:textColor="@color/morandi_Armadillo"
                 android:background="@color/morandi_Soft_Amber"
                 android:text="@string/taoyuan"/>
-            <Button
+            <RadioButton
             android:layout_width="match_parent"
             android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -128,34 +128,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <Button
+            <RadioButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:textColor="@color/morandi_Armadillo"
                 android:background="@color/morandi_Soft_Amber"
                 android:text="@string/chubei"/>
-            <Button
+            <RadioButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:textColor="@color/morandi_Armadillo"
                 android:background="@color/morandi_Soft_Amber"
                 android:text="@string/miaoli"/>
-            <Button
+            <RadioButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:textColor="@color/morandi_Armadillo"
                 android:background="@color/morandi_Soft_Amber"
                 android:text="@string/taichung"/>
-            <Button
+            <RadioButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:textColor="@color/morandi_Armadillo"
                 android:background="@color/morandi_Soft_Amber"
                 android:text="@string/other"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/clear_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/clear_button"
+                android:textColor="@color/morandi_Armadillo"
+                android:background="@color/morandi_bone"/>
         </LinearLayout>
 
     </LinearLayout>

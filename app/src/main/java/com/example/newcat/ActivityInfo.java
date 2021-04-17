@@ -32,6 +32,8 @@ public class ActivityInfo extends Activity implements View.OnClickListener{
         Log.i(TAG, "onCreate");
         setContentView(R.layout.activity_info);
 
+        home = (ImageButton) findViewById(R.id.home_button);
+        home.setOnClickListener(this);
 
         hospitals = findViewById(R.id.list);
         Adapter ad = new Adapter(this);

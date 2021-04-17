@@ -34,7 +34,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
     Button saveButton;
     ImageButton home, addPageButton;
     CheckBox vaccine, deworm, bloodTest,ligation, antiparasite, nailsCutted, earsCleaned, allCheck, mixed;
-    EditText weight, birth, adoptionDate, vaccineName, about,others, colorEdit;
+    EditText weight, birth, adoptionDate, vaccineName, about,others, colorEdit, adopterName;
     ImageView catImg;
     ToggleButton sexuality;
     Spinner color;
@@ -88,6 +88,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             }
         });
         dataBaseUtils.showCatDataBaseResult();
+        pager.setCurrentItem(data.size()-1, false);
     }
 
     @Override
@@ -160,6 +161,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             nailsCutted = (CheckBox) catPageArrayList.get(position).findViewById(R.id.cutNails);
             allCheck = (CheckBox) catPageArrayList.get(position).findViewById(R.id.allCheck);
             saveButton = (Button) catPageArrayList.get(position).findViewById(R.id.save_button);
+            mixed = (CheckBox) catPageArrayList.get(position).findViewById(R.id.mixed);
 
             weight = (EditText) catPageArrayList.get(position).findViewById(R.id.weight);
             birth = (EditText) catPageArrayList.get(position).findViewById((R.id.birth));
@@ -171,7 +173,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             sexuality = (ToggleButton) catPageArrayList.get(position).findViewById(R.id.sexuality_button);
             color = (Spinner) catPageArrayList.get(position).findViewById(R.id.spinner_color);
             colorEdit = (EditText) catPageArrayList.get(position).findViewById(R.id.color_editText);
-            mixed = (CheckBox) catPageArrayList.get(position).findViewById(R.id.mixed);
+            adopterName = (EditText) catPageArrayList.get(position).findViewById(R.id.adopter_name);
 
             vaccine.setTag("ActivityCat" +position + "vaccine");
             deworm.setTag("ActivityCat" +position + "deworm");
@@ -193,6 +195,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             color.setTag("ActivityCat" +position +"color");
             colorEdit.setTag("ActivityCat" +position + "colorEdit");
             mixed.setTag("ActivityCat" + position + "mixed");
+            adopterName.setTag("ActivityCat" + position + "adopterName");
 
             sexuality.setTextOff("male");
             sexuality.setTextOn("female");
@@ -224,6 +227,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             ((EditText)findTagFunction(position + "about")).setText(data.get(position).getAbout());
             ((EditText)findTagFunction(position + "others")).setText(data.get(position).getOther());
             ((EditText)findTagFunction(position + "adoptionDate")).setText(data.get(position).getAdoption());
+            ((EditText)findTagFunction(position + "adopterName")).setText(data.get(position).getAdopterName());
             ((Spinner)findTagFunction(position + "color")).setSelection(data.get(position).getColor());
             ((ImageView)findTagFunction(position + "catImg")).setImageResource(data.get(position).getCatPic().get(0));
             ((ToggleButton)findTagFunction(position + "sexuality")).setText(getSexuality(data.get(position).getSexuality()));
@@ -272,6 +276,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
                 values.put(DataBaseCat.VACCINE_NAME, (((EditText)(findTagFunction( location + "vaccineName"))).getText().toString()));
                 values.put(DataBaseCat.ABOUT,(((EditText)(findTagFunction( location + "about"))).getText().toString()));
                 values.put(DataBaseCat.OTHER, (((EditText)(findTagFunction( location + "others"))).getText().toString()));
+                values.put(DataBaseCat.ADOPTER_NAME, (((EditText)(findTagFunction(location + "adopterName"))).getText().toString()));
                 values.put(DataBaseCat.VACCINE, (((CheckBox)(findTagFunction( location + "vaccine"))).isChecked()));
                 values.put(DataBaseCat.LIGATION, (((CheckBox)(findTagFunction( location + "ligation"))).isChecked()));
                 values.put(DataBaseCat.DEWORM, (((CheckBox)(findTagFunction( location + "deworm"))).isChecked()));

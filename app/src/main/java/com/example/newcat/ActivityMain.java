@@ -140,6 +140,7 @@ public class ActivityMain extends Activity implements View.OnClickListener{
 
             DataBaseCat cat = new DataBaseCat();
             DataBaseAdopter adop = new DataBaseAdopter();
+            dataBaseUtils.showCatDataBaseResult();
             dataBaseUtils.showAdopDataBaseResult();
             Log.i(TAG, "------------------------------------------");
         }

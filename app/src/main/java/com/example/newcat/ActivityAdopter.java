@@ -109,10 +109,10 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
             startActivity(homeIntent);
         }
         if (v == addPageButton) {
-            getContentResolver().insert(DataBaseCat.CONTENT_URI_CAT, dataBaseUtils.createCatData(new DataBaseCat()));
+            getContentResolver().insert(DataBaseAdopter.CONTENT_URI_ADOPTER, dataBaseUtils.createAdopterData(new DataBaseAdopter()));
             mAdopterActivityAdapter.notifyDataSetChanged();
             for (int i = 0; i < data.size() ; i++) {
-                adopterPageArrayList.add(LayoutInflater.from(this).inflate(R.layout.view_pager_cat, null));
+                adopterPageArrayList.add(LayoutInflater.from(this).inflate(R.layout.view_pager_adopter, null));
             }
         }
     }

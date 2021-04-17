@@ -11,15 +11,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class ActivitySearch extends Activity implements View.OnClickListener {
     String TAG = "homework";
-    ListView search;
+    ListView searchList;
     ImageButton home, black, white, orange, calico, tuxedo, tabby, other;
+    //RadioButton ;
+    Button clear;
+    DataBaseUtils dataBaseUtils;
+    ArrayList<DataBaseCat> searchArray;
+    Adapter ad;
     //calico = 三花; tuxedo cat (燕尾服貓)= 賓士貓; tabby = 虎斑;
 
     @Override
@@ -27,10 +36,12 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
         super.onCreate(bundle);
         Log.i(TAG, "onCreate");
         setContentView(R.layout.activity_search);
-        Adapter ad = new Adapter(this);
+        ad = new Adapter(this);
+        dataBaseUtils = new DataBaseUtils(this);
 
-        search = findViewById(R.id.list_search);
-        search.setAdapter(ad);
+
+        searchList = (ListView) findViewById(R.id.list_search);
+        searchList.setAdapter(ad);
 
         home = (ImageButton) findViewById(R.id.home_button);
         home.setOnClickListener(this);
@@ -62,16 +73,41 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
         other = (ImageButton) findViewById(R.id.cat_tabby_button);
         other.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         other.setOnClickListener(this);
+
+        clear = (Button) findViewById(R.id.clear_button);
+        clear.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         if (v == home){
-            Log.i(TAG, "search home button pressed >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.");
+            Log.i(TAG, "searchList home button pressed >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.");
             Intent homeIntent = new Intent();
             ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityMain");
             homeIntent.setComponent(cn);
             startActivity(homeIntent);
+        }
+        if(v == black){
+            searchArray = dataBaseUtils.getCatDataWithColorFromDB(1);
+            ad.notifyDataSetChanged();
+        }
+        if(v == white) {
+            dataBaseUtils.getCatDataWithColorFromDB(2);
+        }
+        if(v == orange) {
+            dataBaseUtils.getCatDataWithColorFromDB(3);
+        }
+        if(v == calico) {
+            dataBaseUtils.getCatDataWithColorFromDB(4);
+        }
+        if(v == tuxedo) {
+            dataBaseUtils.getCatDataWithColorFromDB(5);
+        }
+        if(v == tabby) {
+            dataBaseUtils.getCatDataWithColorFromDB(6);
+        }
+        if(v == other) {
+            dataBaseUtils.getCatDataWithColorFromDB(7);
         }
         // if click "color cat button": jump to the section of such color
     }
@@ -97,12 +133,16 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
 
         @Override
         public int getCount() {
-            return cat_pic.length;
+            if (searchArray == null) {
+                return 0;
+            } else {
+                return searchArray.size();
+            }
         }
 
         @Override
         public Object getItem(int position) {
-            return cat_pic[position];
+            return null;
         }
 
         @Override
@@ -120,55 +160,56 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
             adopterName = (TextView) view.findViewById(R.id.adopter_name);
 
             catImg.setImageResource(cat_pic[position]);
-            catColor.setText(cat_color[position]);
-            catBirth.setText(cat_birth[position]);
+            catColor.setText(" " + searchArray.get(position).getColor()); // need to make a function: change color indexes to strings + change setText() to set...() for int
+            catBirth.setText(searchArray.get(position).getBirth());
             adopterCity.setText(adopter_city[position]);
             adopterName.setText(adopter_name[position]);
 
-            catImg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent();
-                    ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityCat");
-                    intent.setComponent(cn);
-                    startActivity(intent);
-                    // open to specific cat page
-                }
-            });
+            // click the layout ("search_cat" and "search_adopter")
+//            .setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent();
+//                    ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityCat");
+//                    intent.setComponent(cn);
+//                    startActivity(intent);
+//                    // open to specific cat page
+//                }
+//            });
+//
+//            adopterName.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent();
+//                    ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityAdopter");
+//                    intent.setComponent(cn);
+//                    startActivity(intent);
+//                    // open to specific adopter page
+//                }
+//            });
 
-            adopterName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent();
-                    ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityAdopter");
-                    intent.setComponent(cn);
-                    startActivity(intent);
-                    // open to specific adopter page
-                }
-            });
 
-
-                if (position%2 == 0) {
-                    catColor.setTextColor(getResources().getColor(R.color.text_brown));
-                    catColor.setBackgroundColor(getResources().getColor(R.color.morandi_Soft_Amber));
-                    catBirth.setTextColor(getResources().getColor(R.color.text_brown));
-                    catBirth.setBackgroundColor(getResources().getColor(R.color.morandi_Soft_Amber));
-                    adopterName.setTextColor(getResources().getColor(R.color.text_brown));
-                    adopterName.setBackgroundColor(getResources().getColor(R.color.morandi_Soft_Amber));
-                    adopterCity.setTextColor(getResources().getColor(R.color.text_brown));
-                    adopterCity.setBackgroundColor(getResources().getColor(R.color.morandi_Soft_Amber));
-
-                }
-                if (position%2 != 0) {
-                    catColor.setTextColor(getResources().getColor(R.color.text_brown));
-                    catColor.setBackgroundColor(getResources().getColor(R.color.morandi_Donkey_Brown));
-                    catBirth.setTextColor(getResources().getColor(R.color.text_brown));
-                    catBirth.setBackgroundColor(getResources().getColor(R.color.morandi_Donkey_Brown));
-                    adopterName.setTextColor(getResources().getColor(R.color.text_brown));
-                    adopterName.setBackgroundColor(getResources().getColor(R.color.morandi_Donkey_Brown));
-                    adopterCity.setTextColor(getResources().getColor(R.color.text_brown));
-                    adopterCity.setBackgroundColor(getResources().getColor(R.color.morandi_Donkey_Brown));
-                }
+//                if (position%2 == 0) {
+//                    catColor.setTextColor(getResources().getColor(R.color.text_brown));
+//                    catColor.setBackgroundColor(getResources().getColor(R.color.morandi_Soft_Amber));
+//                    catBirth.setTextColor(getResources().getColor(R.color.text_brown));
+//                    catBirth.setBackgroundColor(getResources().getColor(R.color.morandi_Soft_Amber));
+//                    adopterName.setTextColor(getResources().getColor(R.color.text_brown));
+//                    adopterName.setBackgroundColor(getResources().getColor(R.color.morandi_Soft_Amber));
+//                    adopterCity.setTextColor(getResources().getColor(R.color.text_brown));
+//                    adopterCity.setBackgroundColor(getResources().getColor(R.color.morandi_Soft_Amber));
+//
+//                }
+//                if (position%2 != 0) {
+//                    catColor.setTextColor(getResources().getColor(R.color.text_brown));
+//                    catColor.setBackgroundColor(getResources().getColor(R.color.morandi_Donkey_Brown));
+//                    catBirth.setTextColor(getResources().getColor(R.color.text_brown));
+//                    catBirth.setBackgroundColor(getResources().getColor(R.color.morandi_Donkey_Brown));
+//                    adopterName.setTextColor(getResources().getColor(R.color.text_brown));
+//                    adopterName.setBackgroundColor(getResources().getColor(R.color.morandi_Donkey_Brown));
+//                    adopterCity.setTextColor(getResources().getColor(R.color.text_brown));
+//                    adopterCity.setBackgroundColor(getResources().getColor(R.color.morandi_Donkey_Brown));
+//                }
 
 
 

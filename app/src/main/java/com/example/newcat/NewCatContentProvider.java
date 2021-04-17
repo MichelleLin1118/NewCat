@@ -149,6 +149,7 @@ public class NewCatContentProvider extends ContentProvider {
                     DataBaseCat.CAT_IMG + " INTEGER, " +
                     DataBaseCat.CAT_IMG2 + " INTEGER, " +
                     DataBaseCat.CAT_IMG3 + " INTEGER, " +
+                    DataBaseCat.ADOPTER_NAME + " TEXT, " +
                     "UNIQUE(" + DataBaseCat._ID + ")" + ");" );
             db.execSQL("CREATE TABLE " + DataBaseAdopter.TABLE_ADOPTER + "(" +
                     DataBaseAdopter._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
