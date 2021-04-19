@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,12 +24,14 @@ import java.util.ArrayList;
 public class ActivitySearch extends Activity implements View.OnClickListener {
     String TAG = "homework";
     ListView searchList;
-    ImageButton home, black, white, orange, calico, tuxedo, tabby, other;
-    //RadioButton ;
+    ImageButton home, black, white, orange, calico, tuxedo, tabby, otherColor;
+    //RadioButton taipei, newTaipei, taoyuan, hsinchuCity, hsinchuCounty, miaoli, taichung, otherCity;
     Button clear;
     DataBaseUtils dataBaseUtils;
-    ArrayList<DataBaseCat> searchArray;
+    ArrayList<DataBaseCat> searchCatArray;
+    ArrayList<DataBaseAdopter> searchAdopArray;
     Adapter ad;
+    int globalPosition = 0;
     //calico = 三花; tuxedo cat (燕尾服貓)= 賓士貓; tabby = 虎斑;
 
     @Override
@@ -70,9 +73,9 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
         tabby.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         tabby.setOnClickListener(this);
 
-        other = (ImageButton) findViewById(R.id.cat_tabby_button);
-        other.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        other.setOnClickListener(this);
+        otherColor = (ImageButton) findViewById(R.id.cat_tabby_button);
+        otherColor.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        otherColor.setOnClickListener(this);
 
         clear = (Button) findViewById(R.id.clear_button);
         clear.setOnClickListener(this);
@@ -88,32 +91,38 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
             startActivity(homeIntent);
         }
         if(v == black){
-            searchArray = dataBaseUtils.getCatDataWithColorFromDB(1);
+            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(1);
             ad.notifyDataSetChanged();
         }
         if(v == white) {
-            dataBaseUtils.getCatDataWithColorFromDB(2);
+            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(2);
+            ad.notifyDataSetChanged();
         }
         if(v == orange) {
-            dataBaseUtils.getCatDataWithColorFromDB(3);
+            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(3);
+            ad.notifyDataSetChanged();
         }
         if(v == calico) {
-            dataBaseUtils.getCatDataWithColorFromDB(4);
+            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(4);
+            ad.notifyDataSetChanged();
         }
         if(v == tuxedo) {
-            dataBaseUtils.getCatDataWithColorFromDB(5);
+            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(5);
+            ad.notifyDataSetChanged();
         }
         if(v == tabby) {
-            dataBaseUtils.getCatDataWithColorFromDB(6);
+            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(6);
+            ad.notifyDataSetChanged();
         }
-        if(v == other) {
-            dataBaseUtils.getCatDataWithColorFromDB(7);
+        if(v == otherColor) {
+            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(7);
+            ad.notifyDataSetChanged();
         }
-        // if click "color cat button": jump to the section of such color
     }
 
     public class Adapter extends BaseAdapter {
         TextView catColor, catBirth, adopterCity, adopterName;
+        View search_cat, search_adop;
         ImageView catImg;
         Context context;
         LayoutInflater inflater;
@@ -133,10 +142,10 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
 
         @Override
         public int getCount() {
-            if (searchArray == null) {
+            if (searchCatArray == null) {
                 return 0;
             } else {
-                return searchArray.size();
+                return searchCatArray.size();
             }
         }
 
@@ -152,64 +161,44 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
 
         @Override
         public View getView(int position, View view, ViewGroup parent) {
+            globalPosition = position;
             view = inflater.inflate(R.layout.z_list_search, parent, false);
+            search_cat = (View) view.findViewById(R.id.search_cat);
+            search_adop = (View) view.findViewById(R.id.search_adopter);
+
             catImg = (ImageView) view.findViewById(R.id.cat_img);
             catColor = (TextView) view.findViewById(R.id.cat_color);
             catBirth = (TextView) view.findViewById(R.id.cat_birth);
             adopterCity = (TextView) view.findViewById(R.id.adopter_city);
             adopterName = (TextView) view.findViewById(R.id.adopter_name);
 
-            catImg.setImageResource(cat_pic[position]);
-            catColor.setText(" " + searchArray.get(position).getColor()); // need to make a function: change color indexes to strings + change setText() to set...() for int
-            catBirth.setText(searchArray.get(position).getBirth());
-            adopterCity.setText(adopter_city[position]);
-            adopterName.setText(adopter_name[position]);
+            catImg.setImageResource(searchCatArray.get(position).getCatImg3());
+            catColor.setText(catColorFunction());
+            catBirth.setText(searchCatArray.get(position).getBirth());
+            //adopterCity.setText(searchAdopArray.get(position).getCity()); // how to find city?
+            adopterName.setText(searchCatArray.get(position).getAdopterName());
 
-            // click the layout ("search_cat" and "search_adopter")
-//            .setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent intent = new Intent();
-//                    ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityCat");
-//                    intent.setComponent(cn);
-//                    startActivity(intent);
-//                    // open to specific cat page
-//                }
-//            });
-//
-//            adopterName.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent intent = new Intent();
-//                    ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityAdopter");
-//                    intent.setComponent(cn);
-//                    startActivity(intent);
-//                    // open to specific adopter page
-//                }
-//            });
+            search_cat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityCat");
+                    intent.setComponent(cn);
+                    startActivity(intent);
+                    // open to specific cat page
+                }
+            });
 
-
-//                if (position%2 == 0) {
-//                    catColor.setTextColor(getResources().getColor(R.color.text_brown));
-//                    catColor.setBackgroundColor(getResources().getColor(R.color.morandi_Soft_Amber));
-//                    catBirth.setTextColor(getResources().getColor(R.color.text_brown));
-//                    catBirth.setBackgroundColor(getResources().getColor(R.color.morandi_Soft_Amber));
-//                    adopterName.setTextColor(getResources().getColor(R.color.text_brown));
-//                    adopterName.setBackgroundColor(getResources().getColor(R.color.morandi_Soft_Amber));
-//                    adopterCity.setTextColor(getResources().getColor(R.color.text_brown));
-//                    adopterCity.setBackgroundColor(getResources().getColor(R.color.morandi_Soft_Amber));
-//
-//                }
-//                if (position%2 != 0) {
-//                    catColor.setTextColor(getResources().getColor(R.color.text_brown));
-//                    catColor.setBackgroundColor(getResources().getColor(R.color.morandi_Donkey_Brown));
-//                    catBirth.setTextColor(getResources().getColor(R.color.text_brown));
-//                    catBirth.setBackgroundColor(getResources().getColor(R.color.morandi_Donkey_Brown));
-//                    adopterName.setTextColor(getResources().getColor(R.color.text_brown));
-//                    adopterName.setBackgroundColor(getResources().getColor(R.color.morandi_Donkey_Brown));
-//                    adopterCity.setTextColor(getResources().getColor(R.color.text_brown));
-//                    adopterCity.setBackgroundColor(getResources().getColor(R.color.morandi_Donkey_Brown));
-//                }
+            search_adop.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityAdopter");
+                    intent.setComponent(cn);
+                    startActivity(intent);
+                    // open to specific adopter page
+                }
+            });
 
 
 
@@ -217,6 +206,35 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
         }
     }
 
+    public String catColorFunction() {
+        if ((searchCatArray.get(globalPosition).getColor()) == 1) {
+            return "Black";
+        }
+        if ((searchCatArray.get(globalPosition).getColor()) == 2) {
+            return "White";
+        }
+        if ((searchCatArray.get(globalPosition).getColor()) == 3) {
+            return "Orange";
+        }
+        if ((searchCatArray.get(globalPosition).getColor()) == 4) {
+            return "Calico";
+        }
+        if ((searchCatArray.get(globalPosition).getColor()) == 5) {
+            return "Tuxedo";
+        }
+        if ((searchCatArray.get(globalPosition).getColor()) == 6) {
+            return "Tabby";
+        }
+        else {
+            return "others";
+        }
+        //((searchCatArray.get(globalPosition).getColor()) == 7)
+    }
+     public void adopterCityFunction() {
+        String name, city;
+        name = searchCatArray.get(globalPosition).getAdopterName();
+
+     }
 
 
 }

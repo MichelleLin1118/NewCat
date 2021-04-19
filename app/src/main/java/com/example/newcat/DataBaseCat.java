@@ -130,7 +130,7 @@ public class DataBaseCat {
         this.nailsCutted = false;
         this.antiparasite = false;
         this.allCheck = false;
-        this.color = 0;
+        this.color = 1;
         this.vaccineName = "vacName";
         this.about = "about";
         this.sexuality = false;
