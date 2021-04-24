@@ -33,8 +33,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_horizontal"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@color/morandi_Soft_Amber">
       <ImageButton
           android:id="@+id/cat_black_button"
@@ -86,16 +86,23 @@
             android:layout_marginLeft="5dp"
             android:background="@drawable/a_cat_other_button" />
     </LinearLayout>
-    <LinearLayout
+    <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginBottom="5dp">
-        <LinearLayout
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        android:layout_marginBottom="5dp">-->
+        <RadioGroup
+            android:id="@+id/radio_group_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <RadioButton
+                android:id="@+id/radio_taipei"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -103,6 +110,7 @@
                 android:background="@color/morandi_Soft_Amber"
                 android:text="@string/taipei"/>
             <RadioButton
+                android:id="@+id/radio_new_taipei"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -110,6 +118,7 @@
                 android:background="@color/morandi_Soft_Amber"
                 android:text="@string/newTaipei"/>
             <RadioButton
+                android:id="@+id/radio_taoyuan"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -117,18 +126,21 @@
                 android:background="@color/morandi_Soft_Amber"
                 android:text="@string/taoyuan"/>
             <RadioButton
+                android:id="@+id/radio_hsinchu_city"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:textColor="@color/morandi_Armadillo"
                 android:background="@color/morandi_Soft_Amber"
                 android:text="@string/hsinchu"/>
-        </LinearLayout>
-        <LinearLayout
+        </RadioGroup>
+        <RadioGroup
+            android:id="@+id/radio_group_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <RadioButton
+                android:id="@+id/radio_hsinchu_county"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -136,6 +148,7 @@
                 android:background="@color/morandi_Soft_Amber"
                 android:text="@string/chubei"/>
             <RadioButton
+                android:id="@+id/radio_miaoli"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -143,6 +156,7 @@
                 android:background="@color/morandi_Soft_Amber"
                 android:text="@string/miaoli"/>
             <RadioButton
+                android:id="@+id/radio_taichung"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -150,13 +164,15 @@
                 android:background="@color/morandi_Soft_Amber"
                 android:text="@string/taichung"/>
             <RadioButton
+                android:id="@+id/radio_others"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:textColor="@color/morandi_Armadillo"
                 android:background="@color/morandi_Soft_Amber"
                 android:text="@string/other"/>
-        </LinearLayout>
+        </RadioGroup>
+    </RadioGroup>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -169,7 +185,8 @@
                 android:background="@color/morandi_bone"/>
         </LinearLayout>
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
+
     <ListView
         android:id="@+id/list_search"
         android:layout_width="match_parent"

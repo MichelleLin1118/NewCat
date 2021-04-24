@@ -97,7 +97,7 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
         });
 
         dataBaseUtils.showAdopDataBaseResult();
-
+        pager.setCurrentItem(data.size()-1, false);
     }
 
     @Override

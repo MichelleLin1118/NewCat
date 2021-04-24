@@ -95,7 +95,7 @@ public class DataBaseCat {
         this.adopterName = "";
     }
 
-    public DataBaseCat(int color, String birth) {
+    public DataBaseCat(int color, String birth, String adopterName) {
         this.mixed = false;
         this.vac = false;
         this.lig = false;
@@ -117,7 +117,7 @@ public class DataBaseCat {
         this.birth = birth;
         this.adoption = "adopt";
         this.weight = "w:0";
-        this.adopterName = "name";
+        this.adopterName = adopterName;
     }
 
     public DataBaseCat() {

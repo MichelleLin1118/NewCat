@@ -72,11 +72,25 @@ public class DataBaseUtils {
         while (cursor.moveToNext()) {
             int color = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.COLOR)));
             String birth = cursor.getString(cursor.getColumnIndex(DataBaseCat.BIRTH));
-            Log.i(TAG, "+++++++++++++++++++++_______________ birth = " + cursor.getString(cursor.getColumnIndex(DataBaseCat.BIRTH)));
-            DataBaseCat catColorDb = new DataBaseCat(color, birth);
+            String name = cursor.getString(cursor.getColumnIndex(DataBaseCat.ADOPTER_NAME));
+            Log.i(TAG, "+++++++++++++++++++++_______________ name = " + cursor.getString(cursor.getColumnIndex(DataBaseCat.ADOPTER_NAME)));
+            DataBaseCat catColorDb = new DataBaseCat(color, birth, name);
             catData.add(catColorDb);
         }
         return catData;
+    }
+
+    public ArrayList<DataBaseAdopter> getAdopterDataWithCityfromDB (int cityIndex) {
+        ArrayList<DataBaseAdopter> adopData = new ArrayList<DataBaseAdopter>();
+        Cursor cursor = context.getContentResolver().query(DataBaseAdopter.CONTENT_URI_ADOPTER,null, DataBaseAdopter.CITY + " = " + cityIndex, null, null);
+        while (cursor.moveToNext()) {
+            int city = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseAdopter.CITY)));
+            String name = cursor.getString(cursor.getColumnIndex(DataBaseAdopter.NAME));
+            Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>get adopter data with city from DB" + name + " and " + city);
+            DataBaseAdopter adoptCityDb = new DataBaseAdopter(name, city);
+            adopData.add(adoptCityDb);
+        }
+        return adopData;
     }
 
     public ArrayList<DataBaseCat> getCatDataFromDB () {

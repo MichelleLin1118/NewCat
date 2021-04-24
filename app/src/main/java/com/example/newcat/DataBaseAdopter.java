@@ -70,7 +70,7 @@ public class DataBaseAdopter {
         this.catImg = R.drawable.b_cat_white;
     }
 
-    public DataBaseAdopter(String name, boolean sexuality) {
+    public DataBaseAdopter(String name, int city) {
         this.name = name;
         this.addr = null;
         this.city = 0;
