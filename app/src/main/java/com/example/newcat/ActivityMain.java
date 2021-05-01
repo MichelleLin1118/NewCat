@@ -140,6 +140,8 @@ public class ActivityMain extends Activity implements View.OnClickListener{
 
             getContentResolver().insert(DataBaseAdopter.CONTENT_URI_ADOPTER, dataBaseUtils.createAdopterData(new DataBaseAdopter()));
             getContentResolver().insert(DataBaseAdopter.CONTENT_URI_ADOPTER, dataBaseUtils.createAdopterData(new DataBaseAdopter()));
+            getContentResolver().insert(DataBaseAdopter.CONTENT_URI_ADOPTER, dataBaseUtils.createAdopterData(new DataBaseAdopter()));
+            getContentResolver().insert(DataBaseAdopter.CONTENT_URI_ADOPTER, dataBaseUtils.createAdopterData(new DataBaseAdopter()));
 
             DataBaseCat cat = new DataBaseCat();
             DataBaseAdopter adop = new DataBaseAdopter();

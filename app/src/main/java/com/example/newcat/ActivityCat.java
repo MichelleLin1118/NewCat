@@ -1,12 +1,19 @@
 package com.example.newcat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +26,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -39,11 +48,15 @@ public class ActivityCat extends Activity implements View.OnClickListener {
     ToggleButton sexuality;
     Spinner color;
     ViewPager pager;
+    Uri uri;
     String[] checkbox = new String[]{"vaccine", "deworm", "bloodTest","ligation", "antiparasite", "nailsCutted", "earsCleaned", "allCheck", "mixed"};
     ArrayList<View> catPageArrayList = new ArrayList<>();
     DataBaseUtils dataBaseUtils;
     ArrayList<DataBaseCat> data;
-    int location, globalPosition, i;
+    int location, globalPosition;
+    int REQUEST_IMAGE_SELECT = 100;
+    int PERMISSION_REQUEST_CODE = 100;
+    Uri selectedImage;
     CatActivityAdapter mCatActivityAdapter = new CatActivityAdapter(this);
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -107,9 +120,61 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             }
         }
     }
+//    private void checkPermission() {
+//        //int result = ContextCompat.checkSelfPermission(ActivityCat.this, Manifest.permission.READ_EXTERNAL_STORAGE);
+//        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//            if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+//
+//            }
+//        }
+//        ActivityCompat.requestPermissions(ActivityCat.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+//    }
+
+    private void requestPermission(int PERMISSION_REQUEST_CODE) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(ActivityCat.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            Toast.makeText(ActivityCat.this, "Need permission!", Toast.LENGTH_LONG).show();
+        } else {
+            ActivityCompat.requestPermissions(ActivityCat.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, this.PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    public void openPicByUri() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, REQUEST_IMAGE_SELECT);
+    }
 
 
-    class CatActivityAdapter extends PagerAdapter implements View.OnClickListener {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_SELECT && requestCode == RESULT_OK) {
+            Log.i(TAG, "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+            selectedImage = data.getData();
+            ContentResolver resolver = getApplicationContext().getContentResolver();
+            String[] mProjection = {
+                    MediaStore.Images.Media._ID,
+                    MediaStore.Images.Media.DATA,
+                    MediaStore.Images.Media.DISPLAY_NAME
+            };
+            Cursor cursor = resolver.query(selectedImage, mProjection, null, null, null);
+            int idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID);
+            int nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME);
+
+            if (cursor != null && cursor.moveToFirst()) {
+                long id = cursor.getLong(idColumn);
+                String imgPath = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+                String fileName = cursor.getString(nameColumn);
+                ((ImageView)(pager.findViewWithTag("ActivityCat" + location + "catImg"))).setImageURI(data.getData());
+                Log.i(TAG, "-------------------------------------" + data.getData());
+                mCatActivityAdapter.notifyDataSetChanged();
+                uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
+            }
+        }
+    }
+
+
+
+    class CatActivityAdapter extends PagerAdapter implements View.OnClickListener, View.OnLongClickListener {
 
         Context context;
         int pictureIndex;
@@ -208,6 +273,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
 
             findTagFunction(position + "saveButton").setOnClickListener(this);
             findTagFunction(position + "catImg").setOnClickListener(this);
+            findTagFunction(position + "catImg").setOnLongClickListener(this);
             for (int i=0; i< checkbox.length; i++){
                 findTagFunction(position + checkbox[i]).setOnClickListener(this);
             }
@@ -229,7 +295,13 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             ((EditText)findTagFunction(position + "adoptionDate")).setText(data.get(position).getAdoption());
             ((EditText)findTagFunction(position + "adopterName")).setText(data.get(position).getAdopterName());
             ((Spinner)findTagFunction(position + "color")).setSelection(data.get(position).getColor());
-            ((ImageView)findTagFunction(position + "catImg")).setImageResource(data.get(position).getCatPic().get(0));
+            if (selectedImage!=null) {
+                Log.i(TAG, "........................................" + selectedImage);
+                ((ImageView)findTagFunction(position + "catImg")).setImageURI(selectedImage);
+            } else {
+                Log.i(TAG, "........................................");
+                ((ImageView) findTagFunction(position + "catImg")).setImageResource(data.get(position).getCatPic().get(0));
+            }
             ((ToggleButton)findTagFunction(position + "sexuality")).setText(getSexuality(data.get(position).getSexuality()));
 
             mixedCheck(data.get(position).getMixed(), position);
@@ -342,6 +414,15 @@ public class ActivityCat extends Activity implements View.OnClickListener {
                     ((CheckBox)findTagFunction(location + tag)).setChecked(false); allCheckFalse();
             } else {((CheckBox)findTagFunction(location + tag)).setChecked(true);
             }
+        }@Override
+        public boolean onLongClick(View v) {
+            if (v == findTagFunction(location + "catImg")) {
+                openPicByUri();
+            }
+            return false;
         }
+
     }
+
+
 }

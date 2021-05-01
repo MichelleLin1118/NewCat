@@ -73,11 +73,34 @@ public class DataBaseUtils {
             int color = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.COLOR)));
             String birth = cursor.getString(cursor.getColumnIndex(DataBaseCat.BIRTH));
             String name = cursor.getString(cursor.getColumnIndex(DataBaseCat.ADOPTER_NAME));
-            Log.i(TAG, "+++++++++++++++++++++_______________ name = " + cursor.getString(cursor.getColumnIndex(DataBaseCat.ADOPTER_NAME)));
             DataBaseCat catColorDb = new DataBaseCat(color, birth, name);
             catData.add(catColorDb);
         }
         return catData;
+    }
+    public DataBaseCat getCatDataWithAdopterNameFromDB (String adopterName) {
+        DataBaseCat catData = null;
+        Cursor cursor = context.getContentResolver().query(DataBaseCat.CONTENT_URI_CAT, null, DataBaseCat.ADOPTER_NAME + " =?", new String[]{adopterName}, null);
+        while (cursor.moveToNext()) {
+            int color = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.COLOR)));
+            int catImg = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.CAT_IMG)));
+            String birth = cursor.getString(cursor.getColumnIndex(DataBaseCat.BIRTH));
+            catData = new DataBaseCat(color, birth, catImg);
+        }
+        return catData;
+    }
+
+    public DataBaseAdopter getAdopterDataWithAdopterNameFromDB (String adopterName) {
+        DataBaseAdopter adoptCityDb = null;
+        Log.i(TAG, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ adopter name = " + adopterName);
+        Cursor cursor = context.getContentResolver().query(DataBaseAdopter.CONTENT_URI_ADOPTER, null, DataBaseAdopter.NAME + " =?", new String[]{adopterName}, null);
+        while (cursor.moveToNext()) {
+            int city = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseAdopter.CITY)));
+            String name = cursor.getString(cursor.getColumnIndex(DataBaseAdopter.NAME));
+            Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>++get adopter data with city from DB = " + city);
+            adoptCityDb = new DataBaseAdopter(name, city);
+        }
+        return adoptCityDb;
     }
 
     public ArrayList<DataBaseAdopter> getAdopterDataWithCityfromDB (int cityIndex) {

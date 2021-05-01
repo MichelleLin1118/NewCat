@@ -46,6 +46,7 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
     ArrayList<View> adopterPageArrayList = new ArrayList<>();
     DataBaseUtils dataBaseUtils;
     ArrayList<DataBaseAdopter> data;
+    //ArrayList<DataBaseCat> dataCat;
     int location, globalPosition;
     AdopterActivityAdapter mAdopterActivityAdapter = new AdopterActivityAdapter(this);
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -63,6 +64,7 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
 
         dataBaseUtils = new DataBaseUtils(this);
         data = dataBaseUtils.getAdopterDataFromDB();
+        //dataCat = dataBaseUtils.getCatDataFromDB();
 
         home = (ImageButton) findViewById((R.id.home_button));
         home.setScaleType(ImageView.ScaleType.CENTER_INSIDE);

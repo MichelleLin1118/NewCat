@@ -94,6 +94,30 @@ public class DataBaseCat {
         this.weight = "0";
         this.adopterName = "";
     }
+    public DataBaseCat(int color, String birth, int catImg) {
+        this.mixed = false;
+        this.vac = false;
+        this.lig = false;
+        this.blood = false;
+        this.dew = false;
+        this.earsCleaned = false;
+        this.nailsCutted = false;
+        this.antiparasite = false;
+        this.allCheck = false;
+        this.color = color;
+        this.vaccineName = "vacName";
+        this.about = "about";
+        this.sexuality = false;
+        this.other = "other";
+        this.catImg = catImg;
+//        this.catImg2 = R.drawable.b_cat_black;
+//        this.catImg3 = R.drawable.b_cat_calico;
+        this.catPic = null;
+        this.birth = birth;
+        this.adoption = "adopt";
+        this.weight = "w:0";
+        this.adopterName = "adopterName";
+    }
 
     public DataBaseCat(int color, String birth, String adopterName) {
         this.mixed = false;

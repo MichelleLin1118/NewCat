@@ -73,7 +73,7 @@ public class DataBaseAdopter {
     public DataBaseAdopter(String name, int city) {
         this.name = name;
         this.addr = null;
-        this.city = 0;
+        this.city = city;
         this.familyMembers = null;
         this.environment = null;
         this.adopterId = "A000000000";
@@ -83,7 +83,7 @@ public class DataBaseAdopter {
         this.predictedExpense = "";
         this.catsAtHome = "";
         this.familyAgree = false;
-        this.sexuality = sexuality;
+        this.sexuality = true;
         this.catImg = R.drawable.b_cat_white;
     }
 

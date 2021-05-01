@@ -108,112 +108,122 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v == home){
-            Log.i(TAG, "searchList home button pressed >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.");
             Intent homeIntent = new Intent();
             ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityMain");
             homeIntent.setComponent(cn);
             startActivity(homeIntent);
         }
         if(v == black){
+            searchAdopterArray = new ArrayList<DataBaseAdopter>();
             searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(1);
-            searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(1);
+            for (int i = 0; i < searchCatArray.size(); i ++) {
+                searchAdopterArray.add(dataBaseUtils.getAdopterDataWithAdopterNameFromDB(searchCatArray.get(i).getAdopterName()));
+            }
             searchListCount = searchCatArray.size();
             adapter.notifyDataSetChanged();
         }
         if(v == white) {
+            searchAdopterArray = new ArrayList<DataBaseAdopter>();
             searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(2);
-            searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(2);
+            for (int i = 0; i < searchCatArray.size(); i ++) {
+                searchAdopterArray.add(dataBaseUtils.getAdopterDataWithAdopterNameFromDB(searchCatArray.get(i).getAdopterName()));
+            }
             searchListCount = searchCatArray.size();
             adapter.notifyDataSetChanged();
         }
-        if(v == orange) {
-            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(3);
-            searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(3);
-            searchListCount = searchCatArray.size();
-            adapter.notifyDataSetChanged();
-        }
-        if(v == calico) {
-            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(4);
-            searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(4);
-            searchListCount = searchCatArray.size();
-            adapter.notifyDataSetChanged();
-        }
-        if(v == tuxedo) {
-            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(5);
-            searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(5);
-            searchListCount = searchCatArray.size();
-            adapter.notifyDataSetChanged();
-        }
-        if(v == tabby) {
-            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(6);
-            searchListCount = searchCatArray.size();
-            adapter.notifyDataSetChanged();
-        }
-        if(v == otherColor) {
-            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(7);
-            searchListCount = searchCatArray.size();
-            adapter.notifyDataSetChanged();
-        }
+//        if(v == orange) {
+//            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(3);
+//            searchAdopterArray = dataBaseUtils.getAdopterDataWithAdopterNameFromDB(searchAdopterArray.get(globalPosition).getName());
+//            searchListCount = searchCatArray.size();
+//            adapter.notifyDataSetChanged();
+//        }
+//        if(v == calico) {
+//            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(4);
+//            searchAdopterArray = dataBaseUtils.getAdopterDataWithAdopterNameFromDB(searchAdopterArray.get(globalPosition).getName());
+//            searchListCount = searchCatArray.size();
+//            adapter.notifyDataSetChanged();
+//        }
+//        if(v == tuxedo) {
+//            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(5);
+//            searchAdopterArray = dataBaseUtils.getAdopterDataWithAdopterNameFromDB(searchAdopterArray.get(globalPosition).getName());
+//            searchListCount = searchCatArray.size();
+//            adapter.notifyDataSetChanged();
+//        }
+//        if(v == tabby) {
+//            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(6);
+//            searchAdopterArray = dataBaseUtils.getAdopterDataWithAdopterNameFromDB(searchAdopterArray.get(globalPosition).getName());
+//            searchListCount = searchCatArray.size();
+//            adapter.notifyDataSetChanged();
+//        }
+//        if(v == otherColor) {
+//            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(7);
+//            searchAdopterArray = dataBaseUtils.getAdopterDataWithAdopterNameFromDB(searchAdopterArray.get(globalPosition).getName());
+//            searchListCount = searchCatArray.size();
+//            adapter.notifyDataSetChanged();
+//        }
         if(v == taipei || v == newTaipei || v == taoyuan || v == hsinchuCity || v == hsinchuCounty || v == miaoli || v == taichung || v == otherCity) {
             boolean checked = ((RadioButton)v).isChecked();
             switch (v.getId()) {
                 case R.id.radio_taipei:
                     Log.i(TAG, "------------------ radio taipei");
                     searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(1);
-                    groupTwo.clearCheck();
-                    searchListCount = searchAdopterArray.size();
-                    adapter.notifyDataSetChanged();
-                    Log.i(TAG, "+++++++++++++++++++++++++++++++++++++ array size = " + searchAdopterArray.size());
-                    break;
-                case R.id.radio_new_taipei:
-                    Log.i(TAG, "------------------ radio new_taipei");
-                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(2);
+                    searchCatArray = new ArrayList<DataBaseCat>();
+                    for (int i = 0; i < searchAdopterArray.size(); i ++) {
+                        searchCatArray.add(dataBaseUtils.getCatDataWithAdopterNameFromDB(searchAdopterArray.get(i).getName()));
+                    }
                     groupTwo.clearCheck();
                     searchListCount = searchAdopterArray.size();
                     adapter.notifyDataSetChanged();
                     break;
-                case R.id.radio_taoyuan:
-                    Log.i(TAG, "------------------ radio taoyuan");
-                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(3);
-                    groupTwo.clearCheck();
-                    searchListCount = searchAdopterArray.size();
-                    adapter.notifyDataSetChanged();
-                    break;
-                case R.id.radio_hsinchu_city:
-                    Log.i(TAG, "------------------ radio hsinchu_city");
-                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(4);
-                    groupTwo.clearCheck();
-                    searchListCount = searchAdopterArray.size();
-                    adapter.notifyDataSetChanged();
-                    break;
-                case R.id.radio_hsinchu_county:
-                    Log.i(TAG, "------------------ radio hsinchu_county");
-                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(5);
-                    groupOne.clearCheck();
-                    searchListCount = searchAdopterArray.size();
-                    adapter.notifyDataSetChanged();
-                    break;
-                case R.id.radio_miaoli:
-                    Log.i(TAG, "------------------ radio miaoli");
-                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(6);
-                    groupOne.clearCheck();
-                    searchListCount = searchAdopterArray.size();
-                    adapter.notifyDataSetChanged();
-                    break;
-                case R.id.radio_taichung:
-                    Log.i(TAG, "------------------ radio taichung");
-                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(7);
-                    groupOne.clearCheck();
-                    searchListCount = searchAdopterArray.size();
-                    adapter.notifyDataSetChanged();
-                    break;
-                case R.id.radio_others:
-                    Log.i(TAG, "------------------ radio others");
-                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(8);
-                    groupOne.clearCheck();
-                    searchListCount = searchAdopterArray.size();
-                    adapter.notifyDataSetChanged();
-                    break;
+//                case R.id.radio_new_taipei:
+//                    Log.i(TAG, "------------------ radio new_taipei");
+//                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(2);
+//                    groupTwo.clearCheck();
+//                    searchListCount = searchAdopterArray.size();
+//                    adapter.notifyDataSetChanged();
+//                    break;
+//                case R.id.radio_taoyuan:
+//                    Log.i(TAG, "------------------ radio taoyuan");
+//                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(3);
+//                    groupTwo.clearCheck();
+//                    searchListCount = searchAdopterArray.size();
+//                    adapter.notifyDataSetChanged();
+//                    break;
+//                case R.id.radio_hsinchu_city:
+//                    Log.i(TAG, "------------------ radio hsinchu_city");
+//                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(4);
+//                    groupTwo.clearCheck();
+//                    searchListCount = searchAdopterArray.size();
+//                    adapter.notifyDataSetChanged();
+//                    break;
+//                case R.id.radio_hsinchu_county:
+//                    Log.i(TAG, "------------------ radio hsinchu_county");
+//                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(5);
+//                    groupOne.clearCheck();
+//                    searchListCount = searchAdopterArray.size();
+//                    adapter.notifyDataSetChanged();
+//                    break;
+//                case R.id.radio_miaoli:
+//                    Log.i(TAG, "------------------ radio miaoli");
+//                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(6);
+//                    groupOne.clearCheck();
+//                    searchListCount = searchAdopterArray.size();
+//                    adapter.notifyDataSetChanged();
+//                    break;
+//                case R.id.radio_taichung:
+//                    Log.i(TAG, "------------------ radio taichung");
+//                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(7);
+//                    groupOne.clearCheck();
+//                    searchListCount = searchAdopterArray.size();
+//                    adapter.notifyDataSetChanged();
+//                    break;
+//                case R.id.radio_others:
+//                    Log.i(TAG, "------------------ radio others");
+//                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(8);
+//                    groupOne.clearCheck();
+//                    searchListCount = searchAdopterArray.size();
+//                    adapter.notifyDataSetChanged();
+//                    break;
 
             }
         }
@@ -261,12 +271,11 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
             adopterCity = (TextView) view.findViewById(R.id.adopter_city);
             adopterName = (TextView) view.findViewById(R.id.adopter_name);
 
-            catImg.setImageResource(searchCatArray.get(position).getCatImg3());
-            catColor.setText(catColorFunction());
+            catImg.setImageResource(searchCatArray.get(position).getCatImg());
+            catColor.setText(catColorFunction(searchCatArray.get(position).getColor()));
             catBirth.setText(searchCatArray.get(position).getBirth());
-            adopterCity.setText(adopterCityFunction());
-            adopterName.setText(searchAdopterArray.get(position).getName());
-            Log.i(TAG, "adopter name ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + searchAdopterArray.get(position).getName());
+            adopterCity.setText(adopterCityFunction(searchAdopterArray.get(position).getCity()));
+            adopterName.setText(searchCatArray.get(position).getAdopterName());
 
             search_cat.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -296,49 +305,50 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
         }
     }
 
-    public String catColorFunction() {
-        if ((searchCatArray.get(globalPosition).getColor()) == 1) {
+    public String catColorFunction(int colorIndex) {
+        if (colorIndex == 1) {
             return "Black";
         }
-        if ((searchCatArray.get(globalPosition).getColor()) == 2) {
+        if (colorIndex == 2) {
             return "White";
         }
-        if ((searchCatArray.get(globalPosition).getColor()) == 3) {
+        if (colorIndex == 3) {
             return "Orange";
         }
-        if ((searchCatArray.get(globalPosition).getColor()) == 4) {
+        if (colorIndex == 4) {
             return "Calico";
         }
-        if ((searchCatArray.get(globalPosition).getColor()) == 5) {
+        if (colorIndex == 5) {
             return "Tuxedo";
         }
-        if ((searchCatArray.get(globalPosition).getColor()) == 6) {
+        if (colorIndex == 6) {
             return "Tabby";
         }
         else {
             return "others";
         }
     }
-     public String adopterCityFunction() {
-         if ((searchAdopterArray.get(globalPosition).getCity()) == 1) {
+     public String adopterCityFunction(int cityIndex) {
+        Log.i(TAG, "'''''''''''''''''''''''''''''''''''''''''''''''''''''" + cityIndex);
+         if (cityIndex == 1) {
              return "Taipei";
          }
-         if ((searchAdopterArray.get(globalPosition).getCity()) == 2) {
+         if (cityIndex == 2) {
              return "New Taipei";
          }
-         if ((searchAdopterArray.get(globalPosition).getCity()) == 3) {
+         if (cityIndex == 3) {
              return "Taoyuan";
          }
-         if ((searchAdopterArray.get(globalPosition).getCity()) == 4) {
+         if (cityIndex == 4) {
              return "Hsinchu City";
          }
-         if ((searchAdopterArray.get(globalPosition).getCity()) == 5) {
+         if (cityIndex == 5) {
              return "Hsinchu County";
          }
-         if ((searchAdopterArray.get(globalPosition).getCity()) == 6) {
+         if (cityIndex == 6) {
              return "Miaoli";
          }
-         if ((searchAdopterArray.get(globalPosition).getCity()) == 7) {
+         if (cityIndex == 7) {
              return "Taichung";
          }
          else {
