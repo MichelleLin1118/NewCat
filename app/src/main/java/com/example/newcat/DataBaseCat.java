@@ -40,11 +40,12 @@ public class DataBaseCat {
 
     private long id;
     private String weight, birth, adoption, vaccineName, about, other, adopterName;
-    private int color, catImg, catImg2, catImg3;
+    private int color;
+    private long catImg, catImg2, catImg3;
     private boolean vac, lig, blood, dew, earsCleaned, nailsCutted, antiparasite, allCheck, mixed, sexuality;
-    private ArrayList<Integer> catPic;
+    private long[] catPic = new long[3];
 
-    public DataBaseCat(long id, String weight, String birth, String adoption, int color, String vaccineName, String about, String other, boolean vac, boolean lig, boolean blood, boolean dew, boolean earsCleaned, boolean nailsCutted, boolean antiparasite, boolean allCheck, boolean mixed, boolean sexuality, int catImg, int catImg2, int catImg3, ArrayList<Integer> catPic, String adopterName) {
+    public DataBaseCat(long id, String weight, String birth, String adoption, int color, String vaccineName, String about, String other, boolean vac, boolean lig, boolean blood, boolean dew, boolean earsCleaned, boolean nailsCutted, boolean antiparasite, boolean allCheck, boolean mixed, boolean sexuality, long catImg, long catImg2, long catImg3, long[] catPic, String adopterName) {
         this.id = id;
         this.weight = weight;
         this.birth = birth;
@@ -86,15 +87,15 @@ public class DataBaseCat {
         this.about = "";
         this.sexuality = sexuality;
         this.other = "";
-        this.catImg = R.drawable.b_cat_orange;
-        this.catImg2 = R.drawable.b_cat_black;
-        this.catImg3 = R.drawable.b_cat_calico;
+        this.catImg = 0;
+        this.catImg2 = 0;
+        this.catImg3 = 0;
         this.birth = "151515";
         this.adoption = "151515";
         this.weight = "0";
         this.adopterName = "";
     }
-    public DataBaseCat(int color, String birth, int catImg) {
+    public DataBaseCat(int color, String birth, long catImg) {
         this.mixed = false;
         this.vac = false;
         this.lig = false;
@@ -109,17 +110,18 @@ public class DataBaseCat {
         this.about = "about";
         this.sexuality = false;
         this.other = "other";
-        this.catImg = catImg;
-//        this.catImg2 = R.drawable.b_cat_black;
-//        this.catImg3 = R.drawable.b_cat_calico;
-        this.catPic = null;
+        this.catImg = 0;
+        this.catImg2 = 0;
+        this.catImg3 = 0;
+        //this.catPic = null;
         this.birth = birth;
         this.adoption = "adopt";
         this.weight = "w:0";
         this.adopterName = "adopterName";
     }
 
-    public DataBaseCat(int color, String birth, String adopterName) {
+    public DataBaseCat(long id, int color, String birth, String adopterName) {
+        this.id = id;
         this.mixed = false;
         this.vac = false;
         this.lig = false;
@@ -134,9 +136,9 @@ public class DataBaseCat {
         this.about = "about";
         this.sexuality = false;
         this.other = "other";
-        this.catImg = R.drawable.b_cat_orange;
-        this.catImg2 = R.drawable.b_cat_black;
-        this.catImg3 = R.drawable.b_cat_calico;
+        this.catImg = 0;
+        this.catImg2 = 0;
+        this.catImg3 = 0;
         this.catPic = null;
         this.birth = birth;
         this.adoption = "adopt";
@@ -159,9 +161,9 @@ public class DataBaseCat {
         this.about = "about";
         this.sexuality = false;
         this.other = "other";
-        this.catImg = R.drawable.b_cat_orange;
-        this.catImg2 = R.drawable.b_cat_black;
-        this.catImg3 = R.drawable.b_cat_calico;
+        this.catImg = 0;
+        this.catImg2 = 0;
+        this.catImg3 = 0;
         this.catPic = null;
         this.birth = "bDay";
         this.adoption = "adopt";
@@ -169,7 +171,8 @@ public class DataBaseCat {
         this.adopterName = "name";
     }
 
-
+    public long getId() {return id;}
+    public void setId(long id) {this.id = id;}
     public String getVaccineName() {
         return vaccineName;
     }
@@ -252,8 +255,8 @@ public class DataBaseCat {
     public void setSexuality(boolean sexuality) {
         this.sexuality = sexuality;
     }
-    public ArrayList<Integer> getCatPic() {return catPic;}
-    public void setCatPic (ArrayList<Integer> catPic) {this.catPic = catPic;}
+    public long[] getCatPic() {return catPic;}
+    public void setCatPic (long[]catPic) {this.catPic = catPic;}
     public String getBirth() {
         return birth;
     }
@@ -272,12 +275,12 @@ public class DataBaseCat {
     public void setWeight(String weight) {
         this.weight = weight;
     }
-    public int getCatImg() {return catImg;}
-    public void setCatImg(int catImg) {this.catImg = catImg;}
-    public int getCatImg2() {return catImg2;}
-    public void setCatImg2(int catImg) {this.catImg2 = catImg2;}
-    public int getCatImg3() {return catImg3;}
-    public void setCatImg3(int catImg) {this.catImg3 = catImg3;}
+    public long getCatImg() {return catImg;}
+    public void setCatImg(long catImg) {this.catImg = catImg;}
+    public long getCatImg2() {return catImg2;}
+    public void setCatImg2(long catImg) {this.catImg2 = catImg2;}
+    public long getCatImg3() {return catImg3;}
+    public void setCatImg3(long catImg) {this.catImg3 = catImg3;}
     public String getAdopterName() { return adopterName;}
     public void setAdopterName(String adopterName) { this.adopterName = adopterName;}
 

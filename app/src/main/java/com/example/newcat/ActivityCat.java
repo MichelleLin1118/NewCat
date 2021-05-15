@@ -31,9 +31,11 @@ import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,6 +58,8 @@ public class ActivityCat extends Activity implements View.OnClickListener {
     int location, globalPosition;
     int REQUEST_IMAGE_SELECT = 100;
     int PERMISSION_REQUEST_CODE = 100;
+    int pictureIndex = 0;
+    long[] pictureId = new long[3];
     Uri selectedImage;
     CatActivityAdapter mCatActivityAdapter = new CatActivityAdapter(this);
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -93,6 +97,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
                 location = position;
                 Log.i(TAG, "location = " + location);
                 data = dataBaseUtils.getCatDataFromDB();
+                //pictureId[0] = data.get(0).getCatPic();
                 mCatActivityAdapter.notifyDataSetChanged();
             }
             @Override
@@ -101,7 +106,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             }
         });
         dataBaseUtils.showCatDataBaseResult();
-        pager.setCurrentItem(data.size()-1, false);
+        openSpecificPage();
     }
 
     @Override
@@ -120,15 +125,14 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             }
         }
     }
-//    private void checkPermission() {
-//        //int result = ContextCompat.checkSelfPermission(ActivityCat.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-//        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//            if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-//
-//            }
-//        }
-//        ActivityCompat.requestPermissions(ActivityCat.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
-//    }
+    private void checkPermission() {
+        //int result = ContextCompat.checkSelfPermission(ActivityCat.this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (ContextCompat.checkSelfPermission(ActivityCat.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+
+        }else {
+            ActivityCompat.requestPermissions(ActivityCat.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+        }
+    }
 
     private void requestPermission(int PERMISSION_REQUEST_CODE) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(ActivityCat.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
@@ -147,8 +151,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_SELECT && requestCode == RESULT_OK) {
-            Log.i(TAG, "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+        if (requestCode == REQUEST_IMAGE_SELECT && resultCode == RESULT_OK) {
             selectedImage = data.getData();
             ContentResolver resolver = getApplicationContext().getContentResolver();
             String[] mProjection = {
@@ -165,19 +168,35 @@ public class ActivityCat extends Activity implements View.OnClickListener {
                 String imgPath = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
                 String fileName = cursor.getString(nameColumn);
                 ((ImageView)(pager.findViewWithTag("ActivityCat" + location + "catImg"))).setImageURI(data.getData());
-                Log.i(TAG, "-------------------------------------" + data.getData());
-                mCatActivityAdapter.notifyDataSetChanged();
                 uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
+                Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>++++++++++ pictureIndex = " + pictureIndex);
+                if (pictureIndex%3 == 0) {
+                    pictureId[0] = id;
+                }
+                else if (pictureIndex%3 == 1) {
+                    pictureId[1] = id;
+                }
+                else if (pictureIndex%3 == 2) {
+                    pictureId[2] = id;
+                }
+                mCatActivityAdapter.notifyDataSetChanged();
             }
         }
     }
-
+    public void openSpecificPage() {
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null) {
+            int page = bundle.getInt("page");
+            pager.setCurrentItem(page-1, false);
+        } else {
+            pager.setCurrentItem(data.size()-1, false);
+        }
+    }
 
 
     class CatActivityAdapter extends PagerAdapter implements View.OnClickListener, View.OnLongClickListener {
 
         Context context;
-        int pictureIndex;
 
         public CatActivityAdapter(Context context){
             this.context = context;
@@ -214,7 +233,6 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             Log.i(TAG,"instantiateItem");
             Log.i(TAG, "location = " + location);
             globalPosition = position;
-            pictureIndex = 0;
             ((ViewPager) container).addView(catPageArrayList.get(position));
 
             vaccine = (CheckBox) catPageArrayList.get(position).findViewById(R.id.vaccine);
@@ -295,12 +313,14 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             ((EditText)findTagFunction(position + "adoptionDate")).setText(data.get(position).getAdoption());
             ((EditText)findTagFunction(position + "adopterName")).setText(data.get(position).getAdopterName());
             ((Spinner)findTagFunction(position + "color")).setSelection(data.get(position).getColor());
-            if (selectedImage!=null) {
-                Log.i(TAG, "........................................" + selectedImage);
-                ((ImageView)findTagFunction(position + "catImg")).setImageURI(selectedImage);
+
+            if (data.get(position).getCatPic()[pictureIndex%3] == 0) {
+                Log.i(TAG, "------------------------------------------");
+                ((ImageView)findTagFunction(position + "catImg")).setImageResource(R.drawable.b_cat_calico);
             } else {
                 Log.i(TAG, "........................................");
-                ((ImageView) findTagFunction(position + "catImg")).setImageResource(data.get(position).getCatPic().get(0));
+                Uri uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, data.get(position).getCatPic()[pictureIndex%3]);
+                ((ImageView) findTagFunction(position + "catImg")).setImageURI(uri);
             }
             ((ToggleButton)findTagFunction(position + "sexuality")).setText(getSexuality(data.get(position).getSexuality()));
 
@@ -315,9 +335,16 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             Log.i(TAG, "v.getTag() = " + v.getTag());
 
             if (v == findTagFunction(location + "catImg")){
-                int co = (pictureIndex+1)%3;
-                ((ImageView)(findTagFunction(location + "catImg"))).setImageResource(data.get(location).getCatPic().get((pictureIndex+1)%3));
+                if (data.get(location).getCatPic()[(pictureIndex+1)%3] == 0) {
+                    Log.i(TAG, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~null");
+                    ((ImageView)findTagFunction(location + "catImg")).setImageResource(R.drawable.b_cat_calico);
+                } else {
+                    Log.i(TAG, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~else");
+                    Uri uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, data.get(location).getCatPic()[(pictureIndex+1)%3]);
+                    ((ImageView) findTagFunction(location + "catImg")).setImageURI(uri);
+                }
                 pictureIndex = pictureIndex + 1;
+                Log.i(TAG, ">>>>>>>>>>>>>>>>>>> pictureIndex = " + pictureIndex);
             }
             if (v == findTagFunction(location + "allCheck")) {
                 if (((CheckBox) findTagFunction( location + "allCheck")).isChecked() == true) {
@@ -359,6 +386,9 @@ public class ActivityCat extends Activity implements View.OnClickListener {
                 values.put(DataBaseCat.MIXED, (((CheckBox)(findTagFunction( location + "mixed"))).isChecked()));
                 values.put(DataBaseCat.SEXUALITY, (((ToggleButton)(findTagFunction( location + "sexuality"))).isChecked()));
                 values.put(DataBaseCat.ALL_CHECK, (((CheckBox)(findTagFunction( location + "allCheck"))).isChecked()));
+                values.put(DataBaseCat.CAT_IMG, pictureId[0]);
+                values.put(DataBaseCat.CAT_IMG2, pictureId[1]);
+                values.put(DataBaseCat.CAT_IMG3, pictureId[2]);
                 getContentResolver().update(DataBaseCat.CONTENT_URI_CAT, values, DataBaseCat._ID + " = " + id, null);
                 dataBaseUtils.showCatDataBaseResult();
             }
@@ -417,6 +447,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
         }@Override
         public boolean onLongClick(View v) {
             if (v == findTagFunction(location + "catImg")) {
+                checkPermission();
                 openPicByUri();
             }
             return false;

@@ -32,10 +32,11 @@ public class DataBaseAdopter {
 
     private long id;
     private String name, addr, familyMembers, environment, adopterId, birthday, adoptDate, contactNumber, predictedExpense, catsAtHome;
-    private int city, catImg;
+    private int city;
+    private long catImg;
     private boolean familyAgree, sexuality;
 
-    public DataBaseAdopter(long id, String name, int city, String addr, String familyMembers, String environment, String adopterId, String birthday, String adoptDate, String contactNumber, String predictedExpense, String catsAtHome, boolean familyAgree, boolean sexuality, int catImg) {
+    public DataBaseAdopter(long id, String name, int city, String addr, String familyMembers, String environment, String adopterId, String birthday, String adoptDate, String contactNumber, String predictedExpense, String catsAtHome, boolean familyAgree, boolean sexuality, long catImg) {
         this.id = id;
         this.name = name;
         this.addr = addr;
@@ -209,8 +210,8 @@ public class DataBaseAdopter {
     public int getCity() {return city;}
     public void setCity(int city) {this.city = city;}
 
-    public int getCatImg() {return catImg;}
-    public void setCatImg(int catImg) {this.catImg = catImg;}
+    public long getCatImg() {return catImg;}
+    public void setCatImg(long catImg) {this.catImg = catImg;}
 
     @Override
     public String toString() {

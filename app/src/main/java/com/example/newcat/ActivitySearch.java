@@ -114,117 +114,88 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
             startActivity(homeIntent);
         }
         if(v == black){
-            searchAdopterArray = new ArrayList<DataBaseAdopter>();
             searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(1);
-            for (int i = 0; i < searchCatArray.size(); i ++) {
-                searchAdopterArray.add(dataBaseUtils.getAdopterDataWithAdopterNameFromDB(searchCatArray.get(i).getAdopterName()));
-            }
-            searchListCount = searchCatArray.size();
-            adapter.notifyDataSetChanged();
+            colorOnClickFunction();
         }
         if(v == white) {
-            searchAdopterArray = new ArrayList<DataBaseAdopter>();
             searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(2);
-            for (int i = 0; i < searchCatArray.size(); i ++) {
-                searchAdopterArray.add(dataBaseUtils.getAdopterDataWithAdopterNameFromDB(searchCatArray.get(i).getAdopterName()));
-            }
-            searchListCount = searchCatArray.size();
-            adapter.notifyDataSetChanged();
+            colorOnClickFunction();
         }
-//        if(v == orange) {
-//            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(3);
-//            searchAdopterArray = dataBaseUtils.getAdopterDataWithAdopterNameFromDB(searchAdopterArray.get(globalPosition).getName());
-//            searchListCount = searchCatArray.size();
-//            adapter.notifyDataSetChanged();
-//        }
-//        if(v == calico) {
-//            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(4);
-//            searchAdopterArray = dataBaseUtils.getAdopterDataWithAdopterNameFromDB(searchAdopterArray.get(globalPosition).getName());
-//            searchListCount = searchCatArray.size();
-//            adapter.notifyDataSetChanged();
-//        }
-//        if(v == tuxedo) {
-//            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(5);
-//            searchAdopterArray = dataBaseUtils.getAdopterDataWithAdopterNameFromDB(searchAdopterArray.get(globalPosition).getName());
-//            searchListCount = searchCatArray.size();
-//            adapter.notifyDataSetChanged();
-//        }
-//        if(v == tabby) {
-//            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(6);
-//            searchAdopterArray = dataBaseUtils.getAdopterDataWithAdopterNameFromDB(searchAdopterArray.get(globalPosition).getName());
-//            searchListCount = searchCatArray.size();
-//            adapter.notifyDataSetChanged();
-//        }
-//        if(v == otherColor) {
-//            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(7);
-//            searchAdopterArray = dataBaseUtils.getAdopterDataWithAdopterNameFromDB(searchAdopterArray.get(globalPosition).getName());
-//            searchListCount = searchCatArray.size();
-//            adapter.notifyDataSetChanged();
-//        }
+        if(v == orange) {
+            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(3);
+            colorOnClickFunction();
+        }
+        if(v == calico) {
+            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(4);
+            colorOnClickFunction();
+        }
+        if(v == tuxedo) {
+            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(5);
+            colorOnClickFunction();
+        }
+        if(v == tabby) {
+            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(6);
+            colorOnClickFunction();
+        }
+        if(v == otherColor) {
+            searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(7);
+            colorOnClickFunction();
+        }
         if(v == taipei || v == newTaipei || v == taoyuan || v == hsinchuCity || v == hsinchuCounty || v == miaoli || v == taichung || v == otherCity) {
             boolean checked = ((RadioButton)v).isChecked();
             switch (v.getId()) {
                 case R.id.radio_taipei:
-                    Log.i(TAG, "------------------ radio taipei");
                     searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(1);
-                    searchCatArray = new ArrayList<DataBaseCat>();
-                    for (int i = 0; i < searchAdopterArray.size(); i ++) {
-                        searchCatArray.add(dataBaseUtils.getCatDataWithAdopterNameFromDB(searchAdopterArray.get(i).getName()));
-                    }
                     groupTwo.clearCheck();
-                    searchListCount = searchAdopterArray.size();
-                    adapter.notifyDataSetChanged();
+                    cityOnClickFunction();
                     break;
-//                case R.id.radio_new_taipei:
-//                    Log.i(TAG, "------------------ radio new_taipei");
-//                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(2);
-//                    groupTwo.clearCheck();
-//                    searchListCount = searchAdopterArray.size();
-//                    adapter.notifyDataSetChanged();
-//                    break;
-//                case R.id.radio_taoyuan:
-//                    Log.i(TAG, "------------------ radio taoyuan");
-//                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(3);
-//                    groupTwo.clearCheck();
-//                    searchListCount = searchAdopterArray.size();
-//                    adapter.notifyDataSetChanged();
-//                    break;
-//                case R.id.radio_hsinchu_city:
-//                    Log.i(TAG, "------------------ radio hsinchu_city");
-//                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(4);
-//                    groupTwo.clearCheck();
-//                    searchListCount = searchAdopterArray.size();
-//                    adapter.notifyDataSetChanged();
-//                    break;
-//                case R.id.radio_hsinchu_county:
-//                    Log.i(TAG, "------------------ radio hsinchu_county");
-//                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(5);
-//                    groupOne.clearCheck();
-//                    searchListCount = searchAdopterArray.size();
-//                    adapter.notifyDataSetChanged();
-//                    break;
-//                case R.id.radio_miaoli:
-//                    Log.i(TAG, "------------------ radio miaoli");
-//                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(6);
-//                    groupOne.clearCheck();
-//                    searchListCount = searchAdopterArray.size();
-//                    adapter.notifyDataSetChanged();
-//                    break;
-//                case R.id.radio_taichung:
-//                    Log.i(TAG, "------------------ radio taichung");
-//                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(7);
-//                    groupOne.clearCheck();
-//                    searchListCount = searchAdopterArray.size();
-//                    adapter.notifyDataSetChanged();
-//                    break;
-//                case R.id.radio_others:
-//                    Log.i(TAG, "------------------ radio others");
-//                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(8);
-//                    groupOne.clearCheck();
-//                    searchListCount = searchAdopterArray.size();
-//                    adapter.notifyDataSetChanged();
-//                    break;
-
+                case R.id.radio_new_taipei:
+                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(2);
+                    groupTwo.clearCheck();
+                    cityOnClickFunction();
+                    break;
+                case R.id.radio_taoyuan:
+                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(3);
+                    groupTwo.clearCheck();
+                    cityOnClickFunction();
+                    break;
+                case R.id.radio_hsinchu_city:
+                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(4);
+                    groupTwo.clearCheck();
+                    cityOnClickFunction();
+                    break;
+                case R.id.radio_hsinchu_county:
+                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(5);
+                    groupOne.clearCheck();
+                    cityOnClickFunction();
+                    break;
+                case R.id.radio_miaoli:
+                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(6);
+                    groupOne.clearCheck();
+                    cityOnClickFunction();
+                    break;
+                case R.id.radio_taichung:
+                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(7);
+                    groupOne.clearCheck();
+                    cityOnClickFunction();
+                    break;
+                case R.id.radio_others:
+                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(8);
+                    groupOne.clearCheck();
+                    cityOnClickFunction();
+                    break;
+            }
+        }
+        if (v == clear) {
+            for (int i=0; i<7; i++) {
+                searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(i);
+                colorOnClickFunction();
+            }
+            for (int j=0; j<8; j++) {
+                searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(j);
+                groupOne.clearCheck();
+                groupTwo.clearCheck();
+                cityOnClickFunction();
             }
         }
     }
@@ -263,7 +234,9 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
             globalPosition = position;
             view = inflater.inflate(R.layout.z_list_search, parent, false);
             search_cat = (View) view.findViewById(R.id.search_cat);
+            search_cat.setTag(position);
             search_adop = (View) view.findViewById(R.id.search_adopter);
+            search_adop.setTag(position);
 
             catImg = (ImageView) view.findViewById(R.id.cat_img);
             catColor = (TextView) view.findViewById(R.id.cat_color);
@@ -271,7 +244,7 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
             adopterCity = (TextView) view.findViewById(R.id.adopter_city);
             adopterName = (TextView) view.findViewById(R.id.adopter_name);
 
-            catImg.setImageResource(searchCatArray.get(position).getCatImg());
+            //catImg.setImageResource(searchCatArray.get(position).getCatImg());
             catColor.setText(catColorFunction(searchCatArray.get(position).getColor()));
             catBirth.setText(searchCatArray.get(position).getBirth());
             adopterCity.setText(adopterCityFunction(searchAdopterArray.get(position).getCity()));
@@ -282,6 +255,11 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
                 public void onClick(View v) {
                     Intent intent = new Intent();
                     ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityCat");
+                    Bundle bundle = new Bundle();
+                    long id = searchCatArray.get(Integer.valueOf((v.getTag()).toString())).getId();
+                    int page = (int)id;
+                    bundle.putInt("page", page);
+                    intent.putExtras(bundle);
                     intent.setComponent(cn);
                     startActivity(intent);
                     // open to specific cat page
@@ -298,8 +276,6 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
                     // open to specific adopter page
                 }
             });
-
-
 
             return view;
         }
@@ -325,11 +301,10 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
             return "Tabby";
         }
         else {
-            return "others";
+            return "other colors";
         }
     }
      public String adopterCityFunction(int cityIndex) {
-        Log.i(TAG, "'''''''''''''''''''''''''''''''''''''''''''''''''''''" + cityIndex);
          if (cityIndex == 1) {
              return "Taipei";
          }
@@ -352,9 +327,26 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
              return "Taichung";
          }
          else {
-             return "others";
+             return "other cities";
          }
+     }
 
+     public void colorOnClickFunction() {
+         searchAdopterArray = new ArrayList<DataBaseAdopter>();
+         for (int i = 0; i < searchCatArray.size(); i ++) {
+             searchAdopterArray.add(dataBaseUtils.getAdopterDataWithAdopterNameFromDB(searchCatArray.get(i).getAdopterName()));
+         }
+         searchListCount = searchCatArray.size();
+         adapter.notifyDataSetChanged();
+     }
+
+     public void cityOnClickFunction() {
+         searchCatArray = new ArrayList<DataBaseCat>();
+         for (int i = 0; i < searchAdopterArray.size(); i ++) {
+             searchCatArray.add(dataBaseUtils.getCatDataWithAdopterNameFromDB(searchAdopterArray.get(i).getName()));
+         }
+         searchListCount = searchAdopterArray.size();
+         adapter.notifyDataSetChanged();
      }
 
 

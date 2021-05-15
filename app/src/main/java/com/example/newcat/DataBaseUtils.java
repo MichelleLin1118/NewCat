@@ -23,6 +23,9 @@ public class DataBaseUtils {
     public void showCatDataBaseResult() {
         Cursor cursor = context.getContentResolver().query(DataBaseCat.CONTENT_URI_CAT, null, null, null, null);
         while (cursor.moveToNext()) {
+            Log.i(TAG, ">>>>>>>>>>>>>>>>>> img1 = " + cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG)));
+            Log.i(TAG, ">>>>>>>>>>>>>>>>>> img2 = " + cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG2)));
+            Log.i(TAG, ">>>>>>>>>>>>>>>>>> img3 = " + cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG3)));
             /*Log.i(TAG, "db " + cursor.getString(0));
             Log.i(TAG, "db" + cursor.getString(1));
             Log.i(TAG, "db" + cursor.getString(2));
@@ -73,7 +76,8 @@ public class DataBaseUtils {
             int color = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.COLOR)));
             String birth = cursor.getString(cursor.getColumnIndex(DataBaseCat.BIRTH));
             String name = cursor.getString(cursor.getColumnIndex(DataBaseCat.ADOPTER_NAME));
-            DataBaseCat catColorDb = new DataBaseCat(color, birth, name);
+            long id = cursor.getLong(cursor.getColumnIndex(DataBaseCat._ID));
+            DataBaseCat catColorDb = new DataBaseCat(id, color, birth, name);
             catData.add(catColorDb);
         }
         return catData;
@@ -83,7 +87,7 @@ public class DataBaseUtils {
         Cursor cursor = context.getContentResolver().query(DataBaseCat.CONTENT_URI_CAT, null, DataBaseCat.ADOPTER_NAME + " =?", new String[]{adopterName}, null);
         while (cursor.moveToNext()) {
             int color = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.COLOR)));
-            int catImg = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.CAT_IMG)));
+            long catImg = cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG));
             String birth = cursor.getString(cursor.getColumnIndex(DataBaseCat.BIRTH));
             catData = new DataBaseCat(color, birth, catImg);
         }
@@ -139,14 +143,17 @@ public class DataBaseUtils {
              boolean allCheck = getBooleanFromDB(cursor, DataBaseCat.ALL_CHECK);
              boolean mixed = getBooleanFromDB(cursor, DataBaseCat.MIXED);
              boolean sexuality = getBooleanFromDB(cursor, DataBaseCat.SEXUALITY);
-             int catImg = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.CAT_IMG)));
-             int catImg2 = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.CAT_IMG2)));
-             int catImg3 = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.CAT_IMG3)));
-             ArrayList<Integer> catPic = new ArrayList<Integer>();
-             catPic.add(catImg);
-             catPic.add(catImg2);
-             catPic.add(catImg3);
-
+             long catImg = cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG));
+             long catImg2 = cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG2));
+             long catImg3 = cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG3));
+             //ArrayList<Integer> catPic = new ArrayList<Integer>();
+//             catPic.add(catImg);
+//             catPic.add(catImg2);
+//             catPic.add(catImg3);
+             long[] catPic = new long[3];
+             catPic[0] = catImg;
+             catPic[1] = catImg2;
+             catPic[2] = catImg3;
              DataBaseCat catdb = new DataBaseCat(id, weight, birth, adoption, color, vaccineName, about, other, vaccine, ligation, bloodTest, deworm, earsCleaned, nailsCutted, antiparasite, allCheck, mixed, sexuality, catImg,catImg2, catImg3, catPic, adopterName);
              catData.add(catdb);
          }
@@ -179,7 +186,7 @@ public class DataBaseUtils {
             String catsAtHome = cursor.getString(cursor.getColumnIndex(DataBaseAdopter.CATS_AT_HOME));
             boolean familyAgree = getBooleanFromDB(cursor,DataBaseAdopter.FAMILY_AGREE);
             boolean sexuality = getBooleanFromDB(cursor,DataBaseAdopter.ADOPTER_SEXUALITY);
-            int catImg = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseAdopter.CAT_IMG)));
+            long catImg = cursor.getLong(cursor.getColumnIndex(DataBaseAdopter.CAT_IMG));
 
 
             DataBaseAdopter adopdb = new DataBaseAdopter(id, name, city, address, familyMembers, environment, adopterId, birthday, adoptDate, contactNumber, predictedExpense, catsAtHome, familyAgree, sexuality, catImg);

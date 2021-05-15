@@ -232,7 +232,7 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
             ((EditText)findTagFunction(position + "predictedExpense")).setText(data.get(position).getPredictedExpense());
             ((EditText)findTagFunction(position + "catsAtHome")).setText(data.get(position).getCatsAtHome());
             ((Spinner)findTagFunction(position + "city")).setSelection(data.get(position).getCity());
-            ((ImageView)findTagFunction(position + "catImg")).setImageResource(data.get(position).getCatImg());
+            //((ImageView)findTagFunction(position + "catImg")).setImageResource(data.get(position).getCatImg());
 
             return adopterPageArrayList.get(position);
         }
