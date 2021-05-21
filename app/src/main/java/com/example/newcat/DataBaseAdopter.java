@@ -70,6 +70,23 @@ public class DataBaseAdopter {
         this.sexuality = sexuality;
         this.catImg = R.drawable.b_cat_white;
     }
+    public DataBaseAdopter(long id, String name, int city) {
+        this.id = id;
+        this.name = name;
+        this.addr = null;
+        this.city = city;
+        this.familyMembers = null;
+        this.environment = null;
+        this.adopterId = "A000000000";
+        this.birthday = "";
+        this.adoptDate = "";
+        this.contactNumber = "";
+        this.predictedExpense = "";
+        this.catsAtHome = "";
+        this.familyAgree = false;
+        this.sexuality = true;
+        this.catImg = R.drawable.b_cat_white;
+    }
 
     public DataBaseAdopter(String name, int city) {
         this.name = name;

@@ -145,42 +145,42 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
             boolean checked = ((RadioButton)v).isChecked();
             switch (v.getId()) {
                 case R.id.radio_taipei:
-                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(1);
+                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityFromDB(1);
                     groupTwo.clearCheck();
                     cityOnClickFunction();
                     break;
                 case R.id.radio_new_taipei:
-                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(2);
+                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityFromDB(2);
                     groupTwo.clearCheck();
                     cityOnClickFunction();
                     break;
                 case R.id.radio_taoyuan:
-                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(3);
+                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityFromDB(3);
                     groupTwo.clearCheck();
                     cityOnClickFunction();
                     break;
                 case R.id.radio_hsinchu_city:
-                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(4);
+                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityFromDB(4);
                     groupTwo.clearCheck();
                     cityOnClickFunction();
                     break;
                 case R.id.radio_hsinchu_county:
-                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(5);
+                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityFromDB(5);
                     groupOne.clearCheck();
                     cityOnClickFunction();
                     break;
                 case R.id.radio_miaoli:
-                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(6);
+                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityFromDB(6);
                     groupOne.clearCheck();
                     cityOnClickFunction();
                     break;
                 case R.id.radio_taichung:
-                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(7);
+                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityFromDB(7);
                     groupOne.clearCheck();
                     cityOnClickFunction();
                     break;
                 case R.id.radio_others:
-                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(8);
+                    searchAdopterArray = dataBaseUtils.getAdopterDataWithCityFromDB(8);
                     groupOne.clearCheck();
                     cityOnClickFunction();
                     break;
@@ -192,7 +192,7 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
                 colorOnClickFunction();
             }
             for (int j=0; j<8; j++) {
-                searchAdopterArray = dataBaseUtils.getAdopterDataWithCityfromDB(j);
+                searchAdopterArray = dataBaseUtils.getAdopterDataWithCityFromDB(j);
                 groupOne.clearCheck();
                 groupTwo.clearCheck();
                 cityOnClickFunction();
@@ -262,18 +262,23 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
                     intent.putExtras(bundle);
                     intent.setComponent(cn);
                     startActivity(intent);
-                    // open to specific cat page
                 }
             });
 
             search_adop.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Log.i(TAG, "------------------------------------ on click search adopter");
                     Intent intent = new Intent();
                     ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityAdopter");
+                    Bundle bundle = new Bundle();
+                    long id = searchAdopterArray.get(Integer.valueOf((v.getTag()).toString())).getId();
+                    int page = (int)id;
+                    Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>> id / page =" + page);
+                    bundle.putInt("page", page);
+                    intent.putExtras(bundle);
                     intent.setComponent(cn);
                     startActivity(intent);
-                    // open to specific adopter page
                 }
             });
 
@@ -284,49 +289,36 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
     public String catColorFunction(int colorIndex) {
         if (colorIndex == 1) {
             return "Black";
-        }
-        if (colorIndex == 2) {
+        }else if (colorIndex == 2) {
             return "White";
-        }
-        if (colorIndex == 3) {
+        }else if (colorIndex == 3) {
             return "Orange";
-        }
-        if (colorIndex == 4) {
+        }else if (colorIndex == 4) {
             return "Calico";
-        }
-        if (colorIndex == 5) {
+        }else if (colorIndex == 5) {
             return "Tuxedo";
-        }
-        if (colorIndex == 6) {
+        }else if (colorIndex == 6) {
             return "Tabby";
-        }
-        else {
+        }else {
             return "other colors";
         }
     }
      public String adopterCityFunction(int cityIndex) {
          if (cityIndex == 1) {
              return "Taipei";
-         }
-         if (cityIndex == 2) {
+         }else if (cityIndex == 2) {
              return "New Taipei";
-         }
-         if (cityIndex == 3) {
+         }else if (cityIndex == 3) {
              return "Taoyuan";
-         }
-         if (cityIndex == 4) {
+         }else if (cityIndex == 4) {
              return "Hsinchu City";
-         }
-         if (cityIndex == 5) {
+         }else if (cityIndex == 5) {
              return "Hsinchu County";
-         }
-         if (cityIndex == 6) {
+         }else if (cityIndex == 6) {
              return "Miaoli";
-         }
-         if (cityIndex == 7) {
+         }else if (cityIndex == 7) {
              return "Taichung";
-         }
-         else {
+         }else {
              return "other cities";
          }
      }
@@ -347,6 +339,18 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
          }
          searchListCount = searchAdopterArray.size();
          adapter.notifyDataSetChanged();
+         if (searchCatArray == null) {
+             for (int i=0; i<7; i++) {
+                 searchCatArray = dataBaseUtils.getCatDataWithColorFromDB(i);
+                 colorOnClickFunction();
+             }
+             for (int j=0; j<8; j++) {
+                 searchAdopterArray = dataBaseUtils.getAdopterDataWithCityFromDB(j);
+                 groupOne.clearCheck();
+                 groupTwo.clearCheck();
+                 cityOnClickFunction();
+             }
+         }
      }
 
 

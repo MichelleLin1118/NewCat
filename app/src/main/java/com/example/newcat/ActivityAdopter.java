@@ -34,7 +34,7 @@ import java.util.Date;
 
 public class ActivityAdopter extends Activity implements View.OnClickListener {
     String TAG = "homework";
-    Button saveButton;
+    Button saveButton, adoptionContract;
     ImageButton messenger, fb, home, addPageButton;
     EditText adopterName, address, familyMembers, environment, adopterId, birthday, adoptDate, contactNumber, predictedExpense, catsAtHome;
     CheckBox familyAgree;
@@ -67,7 +67,6 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
         //dataCat = dataBaseUtils.getCatDataFromDB();
 
         home = (ImageButton) findViewById((R.id.home_button));
-        home.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         home.setOnClickListener(this);
 
         addPageButton = (ImageButton) findViewById(R.id.add_page_button);
@@ -99,7 +98,7 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
         });
 
         dataBaseUtils.showAdopDataBaseResult();
-        pager.setCurrentItem(data.size()-1, false);
+        openSpecificPage();
     }
 
     @Override
@@ -116,6 +115,17 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
             for (int i = 0; i < data.size() ; i++) {
                 adopterPageArrayList.add(LayoutInflater.from(this).inflate(R.layout.view_pager_adopter, null));
             }
+        }
+    }
+    public void openSpecificPage() {
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null) {
+            Log.i(TAG, "--------------------------------- not null --> open Specific page = " + bundle.getInt("page"));
+            int page = bundle.getInt("page");
+            pager.setCurrentItem(page-1, false);
+        } else {
+            Log.i(TAG, "++++++++++++++++++++++++++++++++ null --> open last page = ");
+            pager.setCurrentItem(data.size()-1, false);
         }
     }
 
@@ -157,18 +167,10 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
             globalPosition = position;
             ((ViewPager) container).addView(adopterPageArrayList.get(position));
 
-//            messenger = (ImageButton) adopterPageArrayList.get(position).findViewById(R.id.adopter_messenger_button);
-//            messenger.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-//            messenger.setTag("ActivityAdopter" +position + "messenger");
-//            pager.findViewWithTag("ActivityAdopter" +position + "messenger").setOnClickListener(this);
-//            fb = (ImageButton) adopterPageArrayList.get(position).findViewById((R.id.adopter_fb_button));
-//            fb.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-//            fb.setTag("ActivityAdopter" +position + "fb");
-//            pager.findViewWithTag("ActivityAdopter" +position + "fb").setOnClickListener(this);
-
             sexuality = (ToggleButton) adopterPageArrayList.get(position).findViewById(R.id.sexuality_button);
             familyAgree = (CheckBox) adopterPageArrayList.get(position).findViewById(R.id.adopter_familyAgree);
             saveButton = (Button) adopterPageArrayList.get(position).findViewById(R.id.save_button);
+            adoptionContract = (Button) adopterPageArrayList.get(position).findViewById(R.id.adoption_contract);
             city = (Spinner) adopterPageArrayList.get(position).findViewById(R.id.spinner_address);
             catImg = (ImageView) adopterPageArrayList.get(position).findViewById(R.id.adopter_cat_img);
 
@@ -196,6 +198,7 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
             sexuality.setTag("ActivityAdopter" +position + "sexuality");
             familyAgree.setTag("ActivityAdopter" +position + "familyAgree");
             saveButton.setTag("ActivityAdopter" +position + "saveButton");
+            adoptionContract.setTag("ActivityAdopter" +position + "adoptionContract");
             adopterName.setTag("ActivityAdopter" +position + "adopterName");
             address.setTag("ActivityAdopter" +position + "address");
             familyMembers.setTag("ActivityAdopter" +position + "familyMembers");
@@ -210,6 +213,7 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
             catImg.setTag("ActivityAdopter" +position + "catImg");
             findTagFunction(position + "familyAgree").setOnClickListener(this);
             findTagFunction(position + "saveButton").setOnClickListener(this);
+            findTagFunction(position + "adoptionContract").setOnClickListener(this);
             findTagFunction(position + "catImg").setOnClickListener(this);
 
             ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(context, R.array.address_array, android.R.layout.simple_spinner_item);
@@ -239,10 +243,25 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             if(v == findTagFunction(location + "catImg")){
-                // link to the cat's page
+//                Intent intent = new Intent();
+//                ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityCat");
+//                Bundle bundle = new Bundle();
+//                long id = searchCatArray.get(Integer.valueOf((v.getTag()).toString())).getId();
+//                int page = (int)id;
+//                bundle.putInt("page", page);
+//                intent.putExtras(bundle);
+//                intent.setComponent(cn);
+//                startActivity(intent);
             }
             if (v ==  findTagFunction(location + "familyAgree")) {
                 ((CheckBox)pager.findViewWithTag("ActivityAdopter" +location + "familyAgree")).setChecked(true);
+            }
+            if (v == findTagFunction(location + "adoptionContract")) {
+                Log.i(TAG, "-------adoption Contract clicked");
+                Intent intent = new Intent();
+                ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityContract");
+                intent.setComponent(cn);
+                startActivity(intent);
             }
             if(v == findTagFunction(location + "saveButton")) {
                 Log.i(TAG, "--------------------save button clicked");
@@ -266,14 +285,6 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
                 getContentResolver().update(DataBaseAdopter.CONTENT_URI_ADOPTER, values, DataBaseAdopter._ID + " = " + id, null);
                 dataBaseUtils.showAdopDataBaseResult();
             }
-//            if(v == pager.findViewWithTag("ActivityAdopter" +location + "messenger" )){
-//                Intent messengerIntent = new Intent(Intent.ACTION_VIEW);
-//                messengerIntent.setData(Uri.parse("fb://"));
-//            }
-//            if (v == pager.findViewWithTag("ActivityAdopter" +location + "fb" )) {
-//                Intent fbIntent = new Intent(Intent.ACTION_VIEW);
-//                fbIntent.setData(Uri.parse("https://www.facebook.com/")); //+getFbId() in adopter db
-//            }
         }
         public View findTagFunction(String tag) {
             return pager.findViewWithTag("ActivityAdopter"+tag);

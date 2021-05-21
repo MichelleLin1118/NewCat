@@ -220,7 +220,7 @@
                 android:layout_height="match_parent"
                 android:text="@string/save_button"
                 android:textColor="@color/morandi_Armadillo"
-                android:background="@color/morandi_Soft_Amber"
+                android:background="@drawable/a_save_button"
                 android:layout_weight="1"/>
         </LinearLayout>
 

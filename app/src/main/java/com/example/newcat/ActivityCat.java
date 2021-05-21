@@ -97,7 +97,6 @@ public class ActivityCat extends Activity implements View.OnClickListener {
                 location = position;
                 Log.i(TAG, "location = " + location);
                 data = dataBaseUtils.getCatDataFromDB();
-                //pictureId[0] = data.get(0).getCatPic();
                 mCatActivityAdapter.notifyDataSetChanged();
             }
             @Override
