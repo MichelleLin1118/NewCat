@@ -7,6 +7,7 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -49,22 +50,6 @@ public class DataBaseUtils {
     public void showAdopDataBaseResult() {
         Cursor cursor = context.getContentResolver().query(DataBaseAdopter.CONTENT_URI_ADOPTER, null, null, null, null);
         while (cursor.moveToNext()) {
-//            Log.i(TAG, "adopter db >>>>>>>>>>>>>>>>>>>" + cursor.getString(cursor.getColumnIndex(DataBaseAdopter.NAME)));
-//            Log.i(TAG, "db " + cursor.getString(0));
-//            Log.i(TAG, "db" + cursor.getString(1));
-//            Log.i(TAG, "db" + cursor.getString(2));
-//            Log.i(TAG, "db" + cursor.getString(3));
-//            Log.i(TAG, "db" + cursor.getString(4));
-//            Log.i(TAG, "db" + cursor.getString(5));
-//            Log.i(TAG, "db" + cursor.getString(6));
-//            Log.i(TAG, "db" + cursor.getString(7));
-//            Log.i(TAG, "db" + cursor.getString(8));
-//            Log.i(TAG, "db" + cursor.getString(9));
-//            Log.i(TAG, "db" + cursor.getString(10));
-//            Log.i(TAG, "db" + cursor.getString(11));
-//            Log.i(TAG, "db" + cursor.getString(12));
-//            Log.i(TAG, "db" + cursor.getString(13));
-//            Log.i(TAG, "db" + cursor.getString(14));
             Log.i(TAG, "------------ adopter" );
         }
     }
@@ -77,7 +62,8 @@ public class DataBaseUtils {
             String birth = cursor.getString(cursor.getColumnIndex(DataBaseCat.BIRTH));
             String name = cursor.getString(cursor.getColumnIndex(DataBaseCat.ADOPTER_NAME));
             long id = cursor.getLong(cursor.getColumnIndex(DataBaseCat._ID));
-            DataBaseCat catColorDb = new DataBaseCat(id, color, birth, name);
+            long catImg = cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG));
+            DataBaseCat catColorDb = new DataBaseCat(id, color, birth, name, catImg);
             catData.add(catColorDb);
         }
         return catData;
@@ -93,6 +79,18 @@ public class DataBaseUtils {
         }
         return catData;
     }
+    public DataBaseCat getCatImgWithAdopterNameFromDB (String adopterName) {
+        DataBaseCat catData = null;
+        Cursor cursor = context.getContentResolver().query(DataBaseCat.CONTENT_URI_CAT, null, DataBaseCat.ADOPTER_NAME + " =?", new String[]{adopterName}, null);
+        while (cursor != null && cursor.getCount() > 0 && cursor.moveToNext()) {
+            long catImg = cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG));
+            long catImg2 = cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG2));
+            long catImg3 = cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG3));
+            catData = new DataBaseCat(catImg,catImg2,catImg3);
+        }
+        return catData;
+    }
+
 
     public DataBaseAdopter getAdopterDataWithAdopterNameFromDB (String adopterName) {
         DataBaseAdopter adoptCityDb = null;
@@ -101,6 +99,7 @@ public class DataBaseUtils {
             int city = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseAdopter.CITY)));
             String name = cursor.getString(cursor.getColumnIndex(DataBaseAdopter.NAME));
             long id = cursor.getLong(cursor.getColumnIndex(DataBaseAdopter._ID));
+            //long catImg = cursor.getLong(cursor.getColumnIndex(DataBaseAdopter.CAT_IMG));
             adoptCityDb = new DataBaseAdopter(id, name, city);
         }
         return adoptCityDb;
@@ -145,10 +144,6 @@ public class DataBaseUtils {
              long catImg = cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG));
              long catImg2 = cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG2));
              long catImg3 = cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG3));
-             //ArrayList<Integer> catPic = new ArrayList<Integer>();
-//             catPic.add(catImg);
-//             catPic.add(catImg2);
-//             catPic.add(catImg3);
              long[] catPic = new long[3];
              catPic[0] = catImg;
              catPic[1] = catImg2;
@@ -186,9 +181,10 @@ public class DataBaseUtils {
             boolean familyAgree = getBooleanFromDB(cursor,DataBaseAdopter.FAMILY_AGREE);
             boolean sexuality = getBooleanFromDB(cursor,DataBaseAdopter.ADOPTER_SEXUALITY);
             long catImg = cursor.getLong(cursor.getColumnIndex(DataBaseAdopter.CAT_IMG));
+            long catImg2 = cursor.getLong(cursor.getColumnIndex(DataBaseAdopter.CAT_IMG2));
+            long catImg3 = cursor.getLong(cursor.getColumnIndex(DataBaseAdopter.CAT_IMG3));
 
-
-            DataBaseAdopter adopdb = new DataBaseAdopter(id, name, city, address, familyMembers, environment, adopterId, birthday, adoptDate, contactNumber, predictedExpense, catsAtHome, familyAgree, sexuality, catImg);
+            DataBaseAdopter adopdb = new DataBaseAdopter(id, name, city, address, familyMembers, environment, adopterId, birthday, adoptDate, contactNumber, predictedExpense, catsAtHome, familyAgree, sexuality, catImg, catImg2, catImg3);
             adopterData.add(adopdb);
         }
         return adopterData;
@@ -236,6 +232,8 @@ public class DataBaseUtils {
         values.put(DataBaseAdopter.FAMILY_AGREE, adop.getFamilyAgree());
         values.put(DataBaseAdopter.ADOPTER_SEXUALITY, adop.getSexuality());
         values.put(DataBaseAdopter.CAT_IMG, adop.getCatImg());
+        values.put(DataBaseAdopter.CAT_IMG2, adop.getCatImg2());
+        values.put(DataBaseAdopter.CAT_IMG3, adop.getCatImg3());
 
         return values;
     }

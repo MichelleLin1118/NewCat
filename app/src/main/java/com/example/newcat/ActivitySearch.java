@@ -2,9 +2,11 @@ package com.example.newcat;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Layout;
@@ -77,7 +79,7 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
         tabby.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         tabby.setOnClickListener(this);
 
-        otherColor = (ImageButton) findViewById(R.id.cat_tabby_button);
+        otherColor = (ImageButton) findViewById(R.id.cat_other_button);
         otherColor.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         otherColor.setOnClickListener(this);
 
@@ -244,11 +246,17 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
             adopterCity = (TextView) view.findViewById(R.id.adopter_city);
             adopterName = (TextView) view.findViewById(R.id.adopter_name);
 
-            //catImg.setImageResource(searchCatArray.get(position).getCatImg());
             catColor.setText(catColorFunction(searchCatArray.get(position).getColor()));
             catBirth.setText(searchCatArray.get(position).getBirth());
             adopterCity.setText(adopterCityFunction(searchAdopterArray.get(position).getCity()));
             adopterName.setText(searchCatArray.get(position).getAdopterName());
+
+            if (searchAdopterArray.get(position).getCatImg() == 0) {
+                catImg.setImageResource(R.drawable.b_cat_calico);
+            } else {
+                Uri uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, searchCatArray.get(position).getCatImg());
+                catImg.setImageURI(uri);
+            }
 
             search_cat.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -268,13 +276,11 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
             search_adop.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.i(TAG, "------------------------------------ on click search adopter");
                     Intent intent = new Intent();
                     ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityAdopter");
                     Bundle bundle = new Bundle();
                     long id = searchAdopterArray.get(Integer.valueOf((v.getTag()).toString())).getId();
                     int page = (int)id;
-                    Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>> id / page =" + page);
                     bundle.putInt("page", page);
                     intent.putExtras(bundle);
                     intent.setComponent(cn);
@@ -327,6 +333,7 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
          searchAdopterArray = new ArrayList<DataBaseAdopter>();
          for (int i = 0; i < searchCatArray.size(); i ++) {
              searchAdopterArray.add(dataBaseUtils.getAdopterDataWithAdopterNameFromDB(searchCatArray.get(i).getAdopterName()));
+             searchAdopterArray.get(i).setCatImg(dataBaseUtils.getCatDataWithAdopterNameFromDB(searchCatArray.get(i).getAdopterName()).getCatImg());
          }
          searchListCount = searchCatArray.size();
          adapter.notifyDataSetChanged();

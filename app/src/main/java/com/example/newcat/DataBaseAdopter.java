@@ -25,6 +25,8 @@ public class DataBaseAdopter {
     public static String FAMILY_AGREE = "family_agree";
     public static String ADOPTER_SEXUALITY = "sexuality";
     public static String CAT_IMG = "catImg";
+    public static String CAT_IMG2 = "catImg2";
+    public static String CAT_IMG3 = "catImg3";
     public static String CITY = "city";
 
     public static final String AUTHORITY = "com.example.newcat";
@@ -33,10 +35,10 @@ public class DataBaseAdopter {
     private long id;
     private String name, addr, familyMembers, environment, adopterId, birthday, adoptDate, contactNumber, predictedExpense, catsAtHome;
     private int city;
-    private long catImg;
+    private long catImg,catImg2,catImg3;
     private boolean familyAgree, sexuality;
 
-    public DataBaseAdopter(long id, String name, int city, String addr, String familyMembers, String environment, String adopterId, String birthday, String adoptDate, String contactNumber, String predictedExpense, String catsAtHome, boolean familyAgree, boolean sexuality, long catImg) {
+    public DataBaseAdopter(long id, String name, int city, String addr, String familyMembers, String environment, String adopterId, String birthday, String adoptDate, String contactNumber, String predictedExpense, String catsAtHome, boolean familyAgree, boolean sexuality, long catImg, long catImg2, long catImg3) {
         this.id = id;
         this.name = name;
         this.addr = addr;
@@ -52,6 +54,8 @@ public class DataBaseAdopter {
         this.familyAgree = familyAgree;
         this.sexuality = sexuality;
         this.catImg = catImg;
+        this.catImg2 = catImg2;
+        this.catImg3 = catImg3;
     }
 
     public DataBaseAdopter(String name, String adoptDate, boolean familyAgree, boolean sexuality) {
@@ -69,7 +73,29 @@ public class DataBaseAdopter {
         this.familyAgree = familyAgree;
         this.sexuality = sexuality;
         this.catImg = R.drawable.b_cat_white;
+        this.catImg2 = 0;
+        this.catImg3 = 0;
     }
+    public DataBaseAdopter(long id, String name, int city, long catImg, long catImg2, long catImg3) {
+        this.id = id;
+        this.name = name;
+        this.addr = null;
+        this.city = city;
+        this.familyMembers = null;
+        this.environment = null;
+        this.adopterId = "A000000000";
+        this.birthday = "";
+        this.adoptDate = "";
+        this.contactNumber = "";
+        this.predictedExpense = "";
+        this.catsAtHome = "";
+        this.familyAgree = false;
+        this.sexuality = true;
+        this.catImg = catImg;
+        this.catImg2 = catImg2;
+        this.catImg3 = catImg3;
+    }
+
     public DataBaseAdopter(long id, String name, int city) {
         this.id = id;
         this.name = name;
@@ -86,23 +112,8 @@ public class DataBaseAdopter {
         this.familyAgree = false;
         this.sexuality = true;
         this.catImg = R.drawable.b_cat_white;
-    }
-
-    public DataBaseAdopter(String name, int city) {
-        this.name = name;
-        this.addr = null;
-        this.city = city;
-        this.familyMembers = null;
-        this.environment = null;
-        this.adopterId = "A000000000";
-        this.birthday = "";
-        this.adoptDate = "";
-        this.contactNumber = "";
-        this.predictedExpense = "";
-        this.catsAtHome = "";
-        this.familyAgree = false;
-        this.sexuality = true;
-        this.catImg = R.drawable.b_cat_white;
+        this.catImg2 = 0;
+        this.catImg3 = 0;
     }
 
     public DataBaseAdopter() {
@@ -123,6 +134,8 @@ public class DataBaseAdopter {
         this.predictedExpense = "pre-ex";
         this.catsAtHome = "cats";
         this.catImg = R.drawable.b_cat_white;
+        this.catImg2 = 0;
+        this.catImg3 = 0;
     }
 
 
@@ -229,7 +242,10 @@ public class DataBaseAdopter {
 
     public long getCatImg() {return catImg;}
     public void setCatImg(long catImg) {this.catImg = catImg;}
-
+    public long getCatImg2() {return catImg2;}
+    public void setCatImg2(long catImg2) {this.catImg2 = catImg2;}
+    public long getCatImg3() {return catImg3;}
+    public void setCatImg3(long catImg3) {this.catImg3 = catImg3;}
     @Override
     public String toString() {
         return "DataBaseAdopter id = " + id +

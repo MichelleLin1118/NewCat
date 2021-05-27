@@ -71,7 +71,6 @@ public class DataBaseCat {
         this.adopterName = adopterName;
     }
 
-
     public DataBaseCat(boolean vac, boolean lig, boolean blood, boolean dew, int color, boolean sexuality, boolean mixed) {
         this.mixed = mixed;
         this.vac = vac;
@@ -95,6 +94,7 @@ public class DataBaseCat {
         this.weight = "0";
         this.adopterName = "";
     }
+
     public DataBaseCat(int color, String birth, long catImg) {
         this.mixed = false;
         this.vac = false;
@@ -113,14 +113,65 @@ public class DataBaseCat {
         this.catImg = 0;
         this.catImg2 = 0;
         this.catImg3 = 0;
-        //this.catPic = null;
         this.birth = birth;
         this.adoption = "adopt";
         this.weight = "w:0";
         this.adopterName = "adopterName";
+        this.catImg = catImg;
+    }
+    public DataBaseCat(long catImg, long catImg2, long catImg3) {
+        this.mixed = false;
+        this.vac = false;
+        this.lig = false;
+        this.blood = false;
+        this.dew = false;
+        this.earsCleaned = false;
+        this.nailsCutted = false;
+        this.antiparasite = false;
+        this.allCheck = false;
+        this.color = 0;
+        this.vaccineName = "vacName";
+        this.about = "about";
+        this.sexuality = false;
+        this.other = "other";
+        this.catImg = 0;
+        this.catImg2 = 0;
+        this.catImg3 = 0;
+        this.birth = "birth";
+        this.adoption = "adopt";
+        this.weight = "w:0";
+        this.adopterName = "adopterName";
+        this.catImg = catImg;
+        this.catImg2 = catImg2;
+        this.catImg3 = catImg3;
+    }
+    public DataBaseCat(long id, long catImg) {
+        this.id = id;
+        this.mixed = false;
+        this.vac = false;
+        this.lig = false;
+        this.blood = false;
+        this.dew = false;
+        this.earsCleaned = false;
+        this.nailsCutted = false;
+        this.antiparasite = false;
+        this.allCheck = false;
+        this.color = 0;
+        this.vaccineName = "vacName";
+        this.about = "about";
+        this.sexuality = false;
+        this.other = "other";
+        this.catImg = 0;
+        this.catImg2 = 0;
+        this.catImg3 = 0;
+        this.birth = "birth";
+        this.adoption = "adopt";
+        this.weight = "w:0";
+        this.adopterName = "adopterName";
+        this.catImg = catImg;
     }
 
-    public DataBaseCat(long id, int color, String birth, String adopterName) {
+    public DataBaseCat(long id, int color, String birth, String adopterName, long catImg) {
         this.id = id;
         this.mixed = false;
         this.vac = false;
@@ -136,7 +187,7 @@ public class DataBaseCat {
         this.about = "about";
         this.sexuality = false;
         this.other = "other";
-        this.catImg = 0;
+        this.catImg = catImg;
         this.catImg2 = 0;
         this.catImg3 = 0;
         this.catPic = null;

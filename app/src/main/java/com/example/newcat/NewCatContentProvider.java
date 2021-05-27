@@ -167,6 +167,8 @@ public class NewCatContentProvider extends ContentProvider {
                     DataBaseAdopter.FAMILY_AGREE + " boolean DEFAULT 0, " +
                     DataBaseAdopter.ADOPTER_SEXUALITY + " boolean DEFAULT 0, " +
                     DataBaseAdopter.CAT_IMG + " INTEGER, " +
+                    DataBaseAdopter.CAT_IMG2 + " INTEGER, " +
+                    DataBaseAdopter.CAT_IMG3 + " INTEGER, " +
                     "UNIQUE(" + DataBaseAdopter._ID + ")" + ");" );
         }
 

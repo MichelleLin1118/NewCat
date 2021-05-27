@@ -172,13 +172,21 @@
             android:id="@+id/adopter_cat_img"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+        <ImageView
+            android:id="@+id/adopter_cat_img2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:id="@+id/adopter_cat_img3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
         <Button
             android:id="@+id/adoption_contract"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/adoptionContract"
             android:textColor="@color/morandi_Armadillo"
-            android:background="@color/morandi_Soft_Amber"/>
+            android:background="@drawable/a_button"/>
 
 <!--        <LinearLayout-->
 <!--            android:layout_width="match_parent"-->
@@ -211,7 +219,7 @@
             android:layout_height="match_parent"
             android:text="@string/save_button"
             android:textColor="@color/morandi_Armadillo"
-            android:background="@color/morandi_Soft_Amber"
+            android:background="@drawable/a_button"
             android:layout_weight="1"/>
     </LinearLayout>
 </ScrollView>
