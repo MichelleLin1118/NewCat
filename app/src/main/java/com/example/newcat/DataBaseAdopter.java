@@ -60,35 +60,34 @@ public class DataBaseAdopter {
 
     public DataBaseAdopter(String name, String adoptDate, boolean familyAgree, boolean sexuality) {
         this.name = name;
-        this.addr = null;
+        this.addr = "0";
         this.city = 0;
-        this.familyMembers = null;
-        this.environment = null;
-        this.adopterId = "A000000000";
-        this.birthday = "";
+        this.familyMembers = "0";
+        this.environment = "0";
+        this.adopterId = "0";
+        this.birthday = "0";
         this.adoptDate = adoptDate;
-        this.contactNumber = "";
-        this.predictedExpense = "";
-        this.catsAtHome = "";
+        this.contactNumber = "0";
+        this.predictedExpense = "0";
+        this.catsAtHome = "0";
         this.familyAgree = familyAgree;
         this.sexuality = sexuality;
         this.catImg = R.drawable.b_cat_white;
         this.catImg2 = 0;
         this.catImg3 = 0;
     }
-    public DataBaseAdopter(long id, String name, int city, long catImg, long catImg2, long catImg3) {
-        this.id = id;
+    public DataBaseAdopter( String name, int city, long catImg, long catImg2, long catImg3) {
         this.name = name;
-        this.addr = null;
+        this.addr = "0";
         this.city = city;
-        this.familyMembers = null;
-        this.environment = null;
-        this.adopterId = "A000000000";
-        this.birthday = "";
-        this.adoptDate = "";
-        this.contactNumber = "";
-        this.predictedExpense = "";
-        this.catsAtHome = "";
+        this.familyMembers = "0";
+        this.environment = "0";
+        this.adopterId = "0";
+        this.birthday = "0";
+        this.adoptDate = "0";
+        this.contactNumber = "0";
+        this.predictedExpense = "0";
+        this.catsAtHome = "0";
         this.familyAgree = false;
         this.sexuality = true;
         this.catImg = catImg;
@@ -99,18 +98,42 @@ public class DataBaseAdopter {
     public DataBaseAdopter(long id, String name, int city) {
         this.id = id;
         this.name = name;
-        this.addr = null;
+        this.addr = "0";
         this.city = city;
-        this.familyMembers = null;
-        this.environment = null;
-        this.adopterId = "A000000000";
-        this.birthday = "";
-        this.adoptDate = "";
-        this.contactNumber = "";
-        this.predictedExpense = "";
-        this.catsAtHome = "";
-        this.familyAgree = false;
+        this.familyMembers = "0";
+        this.environment = "0";
+        this.adopterId = "0";
+
+        this.familyAgree = true;
         this.sexuality = true;
+
+        this.birthday = "0";
+        this.adoptDate = "0";
+
+        this.contactNumber = "0";
+        this.predictedExpense = "0";
+        this.catsAtHome = "0";
+        this.catImg = R.drawable.b_cat_white;
+        this.catImg2 = 0;
+        this.catImg3 = 0;
+    }
+    public DataBaseAdopter(String name) {
+        this.name = name;
+        this.addr = "0";
+        this.city = 0;
+        this.familyMembers = "0";
+        this.environment = "0";
+        this.adopterId = "0";
+
+        this.familyAgree = true;
+        this.sexuality = true;
+
+        this.birthday = "0";
+        this.adoptDate = "0";
+
+        this.contactNumber = "0";
+        this.predictedExpense = "0";
+        this.catsAtHome = "0";
         this.catImg = R.drawable.b_cat_white;
         this.catImg2 = 0;
         this.catImg3 = 0;
@@ -118,21 +141,21 @@ public class DataBaseAdopter {
 
     public DataBaseAdopter() {
         this.name = "name";
-        this.addr = "addr";
+        this.addr = "0";
         this.city = 0;
-        this.familyMembers = "fam";
-        this.environment = "env";
-        this.adopterId = "adopId";
+        this.familyMembers = "0";
+        this.environment = "0";
+        this.adopterId = "0";
 
         this.familyAgree = true;
         this.sexuality = true;
 
-        this.birthday = "birth";
-        this.adoptDate = "date";
+        this.birthday = "0";
+        this.adoptDate = "0";
 
-        this.contactNumber = "cont";
-        this.predictedExpense = "pre-ex";
-        this.catsAtHome = "cats";
+        this.contactNumber = "0";
+        this.predictedExpense = "0";
+        this.catsAtHome = "0";
         this.catImg = R.drawable.b_cat_white;
         this.catImg2 = 0;
         this.catImg3 = 0;

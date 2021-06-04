@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.database.CursorIndexOutOfBoundsException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -35,15 +34,13 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ActivityCat extends Activity implements View.OnClickListener {
     String TAG = "homework";
     Button saveButton;
-    ImageButton home, addPageButton;
+    ImageButton home, addPageButton, deletePageButton;
     CheckBox vaccine, deworm, bloodTest,ligation, antiparasite, nailsCutted, earsCleaned, allCheck, mixed;
     EditText weight, birth, adoptionDate, vaccineName, about,others, colorEdit, adopterName;
     ImageView catImg;
@@ -55,6 +52,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
     ArrayList<View> catPageArrayList = new ArrayList<>();
     DataBaseUtils dataBaseUtils;
     ArrayList<DataBaseCat> data;
+    //ArrayList<DataBaseAdopter> adopData;
     int location, globalPosition;
     int REQUEST_IMAGE_SELECT = 100;
     int PERMISSION_REQUEST_CODE = 100;
@@ -73,12 +71,16 @@ public class ActivityCat extends Activity implements View.OnClickListener {
 
         dataBaseUtils = new DataBaseUtils(this);
         data = dataBaseUtils.getCatDataFromDB();
+        //adopData = dataBaseUtils.getAdopterDataFromDB();
 
         home = (ImageButton) findViewById((R.id.home_button));
         home.setOnClickListener(this);
 
         addPageButton = (ImageButton) findViewById(R.id.add_page_button);
         addPageButton.setOnClickListener(this);
+
+        deletePageButton = (ImageButton) findViewById(R.id.delete_button);
+        deletePageButton.setOnClickListener(this);
 
         pager= (ViewPager) findViewById(R.id.view_pager_cat);
         for (int i = 0; i < data.size() ; i++) {
@@ -118,14 +120,17 @@ public class ActivityCat extends Activity implements View.OnClickListener {
         }
         if (v == addPageButton) {
             getContentResolver().insert(DataBaseCat.CONTENT_URI_CAT, dataBaseUtils.createCatData(new DataBaseCat()));
+            data = dataBaseUtils.getCatDataFromDB();
+            catPageArrayList.add(LayoutInflater.from(this).inflate(R.layout.view_pager_cat, null));
             mCatActivityAdapter.notifyDataSetChanged();
-            for (int i = 0; i < data.size() ; i++) {
-                catPageArrayList.add(LayoutInflater.from(this).inflate(R.layout.view_pager_cat, null));
-            }
+        }
+        if (v == deletePageButton) {
+            dataBaseUtils.deleteCheckFunctionForCat();
+            data = dataBaseUtils.getCatDataFromDB();
+            mCatActivityAdapter.notifyDataSetChanged();
         }
     }
     private void checkPermission() {
-        //int result = ContextCompat.checkSelfPermission(ActivityCat.this, Manifest.permission.READ_EXTERNAL_STORAGE);
         if (ContextCompat.checkSelfPermission(ActivityCat.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
 
         }else {
@@ -196,36 +201,45 @@ public class ActivityCat extends Activity implements View.OnClickListener {
     public void saveFunction() {
         int id = location +1;
         ContentValues values = new ContentValues();
-        values.put(DataBaseCat.WEIGHT, (((EditText)(findTagFunction( location + "weight"))).getText().toString()));
-        values.put(DataBaseCat.BIRTH, (((EditText)(findTagFunction( location + "birth"))).getText().toString()));
-        values.put(DataBaseCat.ADOPTION, (((EditText)(findTagFunction( location + "adoptionDate"))).getText().toString()));
-        values.put(DataBaseCat.COLOR, (((Spinner)(findTagFunction( location + "color"))).getSelectedItemPosition()));
-        values.put(DataBaseCat.VACCINE_NAME, (((EditText)(findTagFunction( location + "vaccineName"))).getText().toString()));
-        values.put(DataBaseCat.ABOUT,(((EditText)(findTagFunction( location + "about"))).getText().toString()));
-        values.put(DataBaseCat.OTHER, (((EditText)(findTagFunction( location + "others"))).getText().toString()));
-        values.put(DataBaseCat.ADOPTER_NAME, (((EditText)(findTagFunction(location + "adopterName"))).getText().toString()));
-        values.put(DataBaseCat.VACCINE, (((CheckBox)(findTagFunction( location + "vaccine"))).isChecked()));
-        values.put(DataBaseCat.LIGATION, (((CheckBox)(findTagFunction( location + "ligation"))).isChecked()));
-        values.put(DataBaseCat.DEWORM, (((CheckBox)(findTagFunction( location + "deworm"))).isChecked()));
-        values.put(DataBaseCat.BLOOD_TEST,(((CheckBox)(findTagFunction( location + "bloodTest"))).isChecked()));
-        values.put(DataBaseCat.EARS_CLEANED, (((CheckBox)(findTagFunction( location + "earsCleaned"))).isChecked()));
-        values.put(DataBaseCat.NAILS_CUTTED,(((CheckBox)(findTagFunction( location + "nailsCutted"))).isChecked()));
-        values.put(DataBaseCat.ANTIPARASITE,(((CheckBox)(findTagFunction( location + "antiparasite"))).isChecked()));
-        values.put(DataBaseCat.MIXED, (((CheckBox)(findTagFunction( location + "mixed"))).isChecked()));
-        values.put(DataBaseCat.SEXUALITY, (((ToggleButton)(findTagFunction( location + "sexuality"))).isChecked()));
-        values.put(DataBaseCat.ALL_CHECK, (((CheckBox)(findTagFunction( location + "allCheck"))).isChecked()));
+        values.put(DataBaseCat.WEIGHT, (((EditText)(tagFunction( location + "weight"))).getText().toString()));
+        values.put(DataBaseCat.BIRTH, (((EditText)(tagFunction( location + "birth"))).getText().toString()));
+        values.put(DataBaseCat.ADOPTION, (((EditText)(tagFunction( location + "adoptionDate"))).getText().toString()));
+        values.put(DataBaseCat.COLOR, (((Spinner)(tagFunction( location + "color"))).getSelectedItemPosition()));
+        values.put(DataBaseCat.VACCINE_NAME, (((EditText)(tagFunction( location + "vaccineName"))).getText().toString()));
+        values.put(DataBaseCat.ABOUT,(((EditText)(tagFunction( location + "about"))).getText().toString()));
+        values.put(DataBaseCat.OTHER, (((EditText)(tagFunction( location + "others"))).getText().toString()));
+        values.put(DataBaseCat.ADOPTER_NAME, (((EditText)(tagFunction(location + "adopterName"))).getText().toString().trim()));
+        values.put(DataBaseCat.VACCINE, (((CheckBox)(tagFunction( location + "vaccine"))).isChecked()));
+        values.put(DataBaseCat.LIGATION, (((CheckBox)(tagFunction( location + "ligation"))).isChecked()));
+        values.put(DataBaseCat.DEWORM, (((CheckBox)(tagFunction( location + "deworm"))).isChecked()));
+        values.put(DataBaseCat.BLOOD_TEST,(((CheckBox)(tagFunction( location + "bloodTest"))).isChecked()));
+        values.put(DataBaseCat.EARS_CLEANED, (((CheckBox)(tagFunction( location + "earsCleaned"))).isChecked()));
+        values.put(DataBaseCat.NAILS_CUTTED,(((CheckBox)(tagFunction( location + "nailsCutted"))).isChecked()));
+        values.put(DataBaseCat.ANTIPARASITE,(((CheckBox)(tagFunction( location + "antiparasite"))).isChecked()));
+        values.put(DataBaseCat.MIXED, (((CheckBox)(tagFunction( location + "mixed"))).isChecked()));
+        values.put(DataBaseCat.SEXUALITY, (((ToggleButton)(tagFunction( location + "sexuality"))).isChecked()));
+        values.put(DataBaseCat.ALL_CHECK, (((CheckBox)(tagFunction( location + "allCheck"))).isChecked()));
         values.put(DataBaseCat.CAT_IMG, pictureId[0]);
         values.put(DataBaseCat.CAT_IMG2, pictureId[1]);
         values.put(DataBaseCat.CAT_IMG3, pictureId[2]);
+        nameFunction(((EditText) tagFunction(location + "adopterName")).getText().toString());
         getContentResolver().update(DataBaseCat.CONTENT_URI_CAT, values, DataBaseCat._ID + " = " + id, null);
-        Log.i(TAG, "?????????????????????????????????????" + id);
         dataBaseUtils.showCatDataBaseResult();
     }
 
-    public View findTagFunction(String tag) {
+    public View tagFunction(String tag) {
         return pager.findViewWithTag("ActivityCat"+tag);
     }
 
+    public void nameFunction(String adopterName) {
+        if (dataBaseUtils.getAdopterDataWithAdopterNameFromDB(adopterName).getName().equals("name")) {
+            getContentResolver().insert(DataBaseAdopter.CONTENT_URI_ADOPTER, dataBaseUtils.createAdopterData(new DataBaseAdopter(adopterName)));
+        } else {
+            Uri uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, data.get(globalPosition).getCatImg());
+            //dataBaseUtils.getAdopterDataWithAdopterNameFromDB(adopterName).setCatImg().setImageURI(uri);
+            // send the first cat img to adopter file (catImg go adopter's first, if it is default --> set img; if not --> set img2
+        }
+    }
 
 
     class CatActivityAdapter extends PagerAdapter implements View.OnClickListener, View.OnLongClickListener {
@@ -238,7 +252,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
 
         @Override
         public int getCount() {
-            return catPageArrayList.size();
+            return data.size();
         }
 
         @Override
@@ -323,40 +337,38 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             color.setSelection(0, false);
             color.setOnItemSelectedListener(mSpinSelectedListener);
 
-            findTagFunction(position + "saveButton").setOnClickListener(this);
-            findTagFunction(position + "catImg").setOnClickListener(this);
-            findTagFunction(position + "catImg").setOnLongClickListener(this);
+            tagFunction(position + "saveButton").setOnClickListener(this);
+            tagFunction(position + "catImg").setOnClickListener(this);
+            tagFunction(position + "catImg").setOnLongClickListener(this);
             for (int i=0; i< checkbox.length; i++){
-                findTagFunction(position + checkbox[i]).setOnClickListener(this);
+                tagFunction(position + checkbox[i]).setOnClickListener(this);
             }
 
-            ((CheckBox)findTagFunction(position + "vaccine")).setChecked(data.get(position).getVac());
-            ((CheckBox)findTagFunction(position + "deworm")).setChecked(data.get(position).getDew());
-            ((CheckBox)findTagFunction(position + "bloodTest")).setChecked(data.get(position).getBlood());
-            ((CheckBox)findTagFunction(position + "ligation")).setChecked(data.get(position).getLig());
-            ((CheckBox)findTagFunction(position + "antiparasite")).setChecked(data.get(position).getAntiparasite());
-            ((CheckBox)findTagFunction(position + "nailsCutted")).setChecked(data.get(position).getnailsCutted());
-            ((CheckBox)findTagFunction(position + "earsCleaned")).setChecked(data.get(position).getearsCleaned());
-            ((CheckBox)findTagFunction(position + "allCheck")).setChecked(data.get(position).getAllCheck());
-            ((CheckBox)findTagFunction(position + "mixed")).setChecked(data.get(position).getMixed());
-            ((EditText)findTagFunction(position + "weight")).setText(data.get(position).getWeight());
-            ((EditText)findTagFunction(position + "birth")).setText(data.get(position).getBirth());
-            ((EditText)findTagFunction(position + "vaccineName")).setText(data.get(position).getVaccineName());
-            ((EditText)findTagFunction(position + "about")).setText(data.get(position).getAbout());
-            ((EditText)findTagFunction(position + "others")).setText(data.get(position).getOther());
-            ((EditText)findTagFunction(position + "adoptionDate")).setText(data.get(position).getAdoption());
-            ((EditText)findTagFunction(position + "adopterName")).setText(data.get(position).getAdopterName());
-            ((Spinner)findTagFunction(position + "color")).setSelection(data.get(position).getColor());
+            ((CheckBox) tagFunction(position + "vaccine")).setChecked(data.get(position).getVac());
+            ((CheckBox) tagFunction(position + "deworm")).setChecked(data.get(position).getDew());
+            ((CheckBox) tagFunction(position + "bloodTest")).setChecked(data.get(position).getBlood());
+            ((CheckBox) tagFunction(position + "ligation")).setChecked(data.get(position).getLig());
+            ((CheckBox) tagFunction(position + "antiparasite")).setChecked(data.get(position).getAntiparasite());
+            ((CheckBox) tagFunction(position + "nailsCutted")).setChecked(data.get(position).getnailsCutted());
+            ((CheckBox) tagFunction(position + "earsCleaned")).setChecked(data.get(position).getearsCleaned());
+            ((CheckBox) tagFunction(position + "allCheck")).setChecked(data.get(position).getAllCheck());
+            ((CheckBox) tagFunction(position + "mixed")).setChecked(data.get(position).getMixed());
+            ((EditText) tagFunction(position + "weight")).setText(data.get(position).getWeight());
+            ((EditText) tagFunction(position + "birth")).setText(data.get(position).getBirth());
+            ((EditText) tagFunction(position + "vaccineName")).setText(data.get(position).getVaccineName());
+            ((EditText) tagFunction(position + "about")).setText(data.get(position).getAbout());
+            ((EditText) tagFunction(position + "others")).setText(data.get(position).getOther());
+            ((EditText) tagFunction(position + "adoptionDate")).setText(data.get(position).getAdoption());
+            ((EditText) tagFunction(position + "adopterName")).setText(data.get(position).getAdopterName());
+            ((Spinner) tagFunction(position + "color")).setSelection(data.get(position).getColor());
 
             if (data.get(position).getCatPic()[pictureIndex%3] == 0) {
-                Log.i(TAG, "------------------------------------------");
-                ((ImageView)findTagFunction(position + "catImg")).setImageResource(R.drawable.b_cat_calico);
+                ((ImageView) tagFunction(position + "catImg")).setImageResource(R.drawable.b_cat_calico);
             } else {
-                Log.i(TAG, "........................................");
                 Uri uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, data.get(position).getCatPic()[pictureIndex%3]);
-                ((ImageView) findTagFunction(position + "catImg")).setImageURI(uri);
+                ((ImageView) tagFunction(position + "catImg")).setImageURI(uri);
             }
-            ((ToggleButton)findTagFunction(position + "sexuality")).setText(getSexuality(data.get(position).getSexuality()));
+            ((ToggleButton) tagFunction(position + "sexuality")).setText(getSexuality(data.get(position).getSexuality()));
 
             mixedCheck(data.get(position).getMixed(), position);
             return catPageArrayList.get(position);
@@ -368,37 +380,35 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             Log.i(TAG, "onClick");
             Log.i(TAG, "v.getTag() = " + v.getTag());
 
-            if (v == findTagFunction(location + "catImg")){
+            if (v == tagFunction(location + "catImg")){
                 if (data.get(location).getCatPic()[(pictureIndex+1)%3] == 0) {
-                    Log.i(TAG, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~null");
-                    ((ImageView)findTagFunction(location + "catImg")).setImageResource(R.drawable.b_cat_calico);
+                    ((ImageView) tagFunction(location + "catImg")).setImageResource(R.drawable.b_cat_calico);
                 } else {
-                    Log.i(TAG, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~else");
                     Uri uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, data.get(location).getCatPic()[(pictureIndex+1)%3]);
-                    ((ImageView) findTagFunction(location + "catImg")).setImageURI(uri);
+                    ((ImageView) tagFunction(location + "catImg")).setImageURI(uri);
                 }
                 pictureIndex = pictureIndex + 1;
                 Log.i(TAG, ">>>>>>>>>>>>>>>>>>> pictureIndex = " + pictureIndex);
             }
-            if (v == findTagFunction(location + "allCheck")) {
-                if (((CheckBox) findTagFunction( location + "allCheck")).isChecked() == true) {
+            if (v == tagFunction(location + "allCheck")) {
+                if (((CheckBox) tagFunction( location + "allCheck")).isChecked() == true) {
                     allCheckedClick(true);} else { allCheckedClick(false);
                 }
             }
-            if(v == findTagFunction(location + "vaccine")) {checkboxFunction("vaccine");}
-            if(v == findTagFunction(location + "deworm")) {checkboxFunction("deworm");}
-            if(v == findTagFunction(location + "bloodTest")) {checkboxFunction("bloodTest");}
-            if(v == findTagFunction(location + "ligation")) {checkboxFunction("ligation");}
-            if(v == findTagFunction(location + "antiparasite")) {checkboxFunction("antiparasite");}
-            if(v == findTagFunction(location + "earsCleaned")) {checkboxFunction("earsCleaned");}
-            if(v == findTagFunction(location + "nailsCutted")) {checkboxFunction("nailsCutted");}
+            if(v == tagFunction(location + "vaccine")) {checkboxFunction("vaccine");}
+            if(v == tagFunction(location + "deworm")) {checkboxFunction("deworm");}
+            if(v == tagFunction(location + "bloodTest")) {checkboxFunction("bloodTest");}
+            if(v == tagFunction(location + "ligation")) {checkboxFunction("ligation");}
+            if(v == tagFunction(location + "antiparasite")) {checkboxFunction("antiparasite");}
+            if(v == tagFunction(location + "earsCleaned")) {checkboxFunction("earsCleaned");}
+            if(v == tagFunction(location + "nailsCutted")) {checkboxFunction("nailsCutted");}
 
-            if(v == findTagFunction( location + "mixed")) {
-                if (((CheckBox) findTagFunction( location + "mixed")).isChecked() == true) {
+            if(v == tagFunction( location + "mixed")) {
+                if (((CheckBox) tagFunction( location + "mixed")).isChecked() == true) {
                     mixedCheck(true, location); } else { mixedCheck(false, location);
                 }
             }
-            if(v == findTagFunction( location + "saveButton")) {
+            if(v == tagFunction( location + "saveButton")) {
                 Log.i(TAG, "--------------------save button clicked");
                 saveFunction();
             }
@@ -406,37 +416,37 @@ public class ActivityCat extends Activity implements View.OnClickListener {
         }
         public void mixedCheck(boolean mixedCalled, int index) {
             if (mixedCalled == true) {
-                ((CheckBox)findTagFunction(index + "mixed")).setChecked(true);
-                ((EditText)findTagFunction(index + "colorEdit")).setVisibility(View.GONE);
-                ((Spinner)findTagFunction(index +"color")).setVisibility(View.VISIBLE);
-                ((Spinner)findTagFunction(index +"color")).setSelection(data.get(index).getColor());
+                ((CheckBox) tagFunction(index + "mixed")).setChecked(true);
+                ((EditText) tagFunction(index + "colorEdit")).setVisibility(View.GONE);
+                ((Spinner) tagFunction(index +"color")).setVisibility(View.VISIBLE);
+                ((Spinner) tagFunction(index +"color")).setSelection(data.get(index).getColor());
             } else {
-                ((CheckBox)findTagFunction(index + "mixed")).setChecked(false);
-                ((EditText)findTagFunction(index + "colorEdit")).setVisibility(View.VISIBLE);
-                ((Spinner)findTagFunction(index +"color")).setVisibility(View.GONE);
-                ((Spinner)findTagFunction(index +"color")).setSelection(data.get(index).getColor());
+                ((CheckBox) tagFunction(index + "mixed")).setChecked(false);
+                ((EditText) tagFunction(index + "colorEdit")).setVisibility(View.VISIBLE);
+                ((Spinner) tagFunction(index +"color")).setVisibility(View.GONE);
+                ((Spinner) tagFunction(index +"color")).setSelection(data.get(index).getColor());
                 allCheckFalse();
             }
         }
         public void allCheckFalse () {
-            ((CheckBox)findTagFunction(location + "allCheck")).setChecked(false);
+            ((CheckBox) tagFunction(location + "allCheck")).setChecked(false);
         }
         public void allCheckedInit(boolean allCalled) {
             if (allCalled == true) {
                 for (int i=0; i < checkbox.length; i ++) {
-                    ((CheckBox) findTagFunction(globalPosition + checkbox[i])).setChecked(true); }
+                    ((CheckBox) tagFunction(globalPosition + checkbox[i])).setChecked(true); }
                 mixedCheck(true, globalPosition);
             } else {
-                ((CheckBox) findTagFunction(globalPosition + "allCheck")).setChecked(false); }
+                ((CheckBox) tagFunction(globalPosition + "allCheck")).setChecked(false); }
         }
         public void allCheckedClick(boolean allCalled) {
             if (allCalled == true) {
                 for (int i = 0; i < checkbox.length; i++) {
-                    ((CheckBox) findTagFunction(location + checkbox[i])).setChecked(true); }
+                    ((CheckBox) tagFunction(location + checkbox[i])).setChecked(true); }
                 mixedCheck(true, location);
             } else {
                 for (int i = 0; i < checkbox.length; i++) {
-                    ((CheckBox) findTagFunction(location + checkbox[i])).setChecked(false); }
+                    ((CheckBox) tagFunction(location + checkbox[i])).setChecked(false); }
                 mixedCheck(false, location);
             }
         }
@@ -446,13 +456,13 @@ public class ActivityCat extends Activity implements View.OnClickListener {
         }
 
         public void checkboxFunction (String tag) {
-            if (((CheckBox)findTagFunction(location + tag)).isChecked() == false) {
-                    ((CheckBox)findTagFunction(location + tag)).setChecked(false); allCheckFalse();
-            } else {((CheckBox)findTagFunction(location + tag)).setChecked(true);
+            if (((CheckBox) tagFunction(location + tag)).isChecked() == false) {
+                    ((CheckBox) tagFunction(location + tag)).setChecked(false); allCheckFalse();
+            } else {((CheckBox) tagFunction(location + tag)).setChecked(true);
             }
         }@Override
         public boolean onLongClick(View v) {
-            if (v == findTagFunction(location + "catImg")) {
+            if (v == tagFunction(location + "catImg")) {
                 checkPermission();
                 openPicByUri();
             }

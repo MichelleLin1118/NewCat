@@ -249,7 +249,7 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
             catColor.setText(catColorFunction(searchCatArray.get(position).getColor()));
             catBirth.setText(searchCatArray.get(position).getBirth());
             adopterCity.setText(adopterCityFunction(searchAdopterArray.get(position).getCity()));
-            adopterName.setText(searchCatArray.get(position).getAdopterName());
+            adopterName.setText(searchAdopterArray.get(position).getName());
 
             if (searchAdopterArray.get(position).getCatImg() == 0) {
                 catImg.setImageResource(R.drawable.b_cat_calico);

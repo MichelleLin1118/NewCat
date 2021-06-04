@@ -23,7 +23,7 @@ public class DataBaseUtils {
 
     public void showCatDataBaseResult() {
         Cursor cursor = context.getContentResolver().query(DataBaseCat.CONTENT_URI_CAT, null, null, null, null);
-        while (cursor.moveToNext()) {
+        while (cursor != null && cursor.getCount() > 0 && cursor.moveToNext()) {
             Log.i(TAG, ">>>>>>>>>>>>>>>>>> img1 = " + cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG)));
             Log.i(TAG, ">>>>>>>>>>>>>>>>>> img2 = " + cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG2)));
             Log.i(TAG, ">>>>>>>>>>>>>>>>>> img3 = " + cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG3)));
@@ -49,7 +49,7 @@ public class DataBaseUtils {
 
     public void showAdopDataBaseResult() {
         Cursor cursor = context.getContentResolver().query(DataBaseAdopter.CONTENT_URI_ADOPTER, null, null, null, null);
-        while (cursor.moveToNext()) {
+        while (cursor != null && cursor.getCount() > 0 && cursor.moveToNext()) {
             Log.i(TAG, "------------ adopter" );
         }
     }
@@ -57,7 +57,7 @@ public class DataBaseUtils {
     public ArrayList<DataBaseCat> getCatDataWithColorFromDB (int colorIndex) {
         ArrayList<DataBaseCat> catData = new ArrayList<DataBaseCat>();
         Cursor cursor = context.getContentResolver().query(DataBaseCat.CONTENT_URI_CAT, null, DataBaseCat.COLOR + " = " + colorIndex, null, null);
-        while (cursor.moveToNext()) {
+        while (cursor != null && cursor.getCount() > 0 && cursor.moveToNext()) {
             int color = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.COLOR)));
             String birth = cursor.getString(cursor.getColumnIndex(DataBaseCat.BIRTH));
             String name = cursor.getString(cursor.getColumnIndex(DataBaseCat.ADOPTER_NAME));
@@ -68,47 +68,10 @@ public class DataBaseUtils {
         }
         return catData;
     }
-    public DataBaseCat getCatDataWithAdopterNameFromDB (String adopterName) {
-        DataBaseCat catData = null;
-        Cursor cursor = context.getContentResolver().query(DataBaseCat.CONTENT_URI_CAT, null, DataBaseCat.ADOPTER_NAME + " =?", new String[]{adopterName}, null);
-        while (cursor.moveToNext()) {
-            int color = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.COLOR)));
-            long catImg = cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG));
-            String birth = cursor.getString(cursor.getColumnIndex(DataBaseCat.BIRTH));
-            catData = new DataBaseCat(color, birth, catImg);
-        }
-        return catData;
-    }
-    public DataBaseCat getCatImgWithAdopterNameFromDB (String adopterName) {
-        DataBaseCat catData = null;
-        Cursor cursor = context.getContentResolver().query(DataBaseCat.CONTENT_URI_CAT, null, DataBaseCat.ADOPTER_NAME + " =?", new String[]{adopterName}, null);
-        while (cursor != null && cursor.getCount() > 0 && cursor.moveToNext()) {
-            long catImg = cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG));
-            long catImg2 = cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG2));
-            long catImg3 = cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG3));
-            catData = new DataBaseCat(catImg,catImg2,catImg3);
-        }
-        return catData;
-    }
-
-
-    public DataBaseAdopter getAdopterDataWithAdopterNameFromDB (String adopterName) {
-        DataBaseAdopter adoptCityDb = null;
-        Cursor cursor = context.getContentResolver().query(DataBaseAdopter.CONTENT_URI_ADOPTER, null, DataBaseAdopter.NAME + " =?", new String[]{adopterName}, null);
-        while (cursor.moveToNext()) {
-            int city = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseAdopter.CITY)));
-            String name = cursor.getString(cursor.getColumnIndex(DataBaseAdopter.NAME));
-            long id = cursor.getLong(cursor.getColumnIndex(DataBaseAdopter._ID));
-            //long catImg = cursor.getLong(cursor.getColumnIndex(DataBaseAdopter.CAT_IMG));
-            adoptCityDb = new DataBaseAdopter(id, name, city);
-        }
-        return adoptCityDb;
-    }
-
     public ArrayList<DataBaseAdopter> getAdopterDataWithCityFromDB (int cityIndex) {
         ArrayList<DataBaseAdopter> adopData = new ArrayList<DataBaseAdopter>();
         Cursor cursor = context.getContentResolver().query(DataBaseAdopter.CONTENT_URI_ADOPTER,null, DataBaseAdopter.CITY + " = " + cityIndex, null, null);
-        while (cursor.moveToNext()) {
+        while (cursor != null && cursor.getCount() > 0 && cursor.moveToNext()) {
             int city = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseAdopter.CITY)));
             String name = cursor.getString(cursor.getColumnIndex(DataBaseAdopter.NAME));
             long id = cursor.getLong(cursor.getColumnIndex(DataBaseAdopter._ID));
@@ -118,10 +81,68 @@ public class DataBaseUtils {
         return adopData;
     }
 
+    public DataBaseCat getCatDataWithAdopterNameFromDB (String adopterName) {
+        DataBaseCat catData;
+        Cursor cursor = context.getContentResolver().query(DataBaseCat.CONTENT_URI_CAT, null, DataBaseCat.ADOPTER_NAME + " =?", new String[]{adopterName}, null);
+        while (cursor != null && cursor.getCount() > 0 && cursor.moveToNext()) {
+            String name = cursor.getString(cursor.getColumnIndex(DataBaseCat.ADOPTER_NAME));
+            int color = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.COLOR)));
+            long catImg = cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG));
+            long catImg2 = cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG2));
+            long catImg3 = cursor.getLong(cursor.getColumnIndex(DataBaseCat.CAT_IMG3));
+            String birth = cursor.getString(cursor.getColumnIndex(DataBaseCat.BIRTH));
+            catData = new DataBaseCat(color, birth, catImg, catImg2, catImg3);
+            return catData;
+        }
+        catData = new DataBaseCat();
+        return catData;
+    }
+    public DataBaseAdopter getAdopterDataWithAdopterNameFromDB (String adopterName) {
+        DataBaseAdopter adoptDb;
+        Cursor cursor = context.getContentResolver().query(DataBaseAdopter.CONTENT_URI_ADOPTER, null, DataBaseAdopter.NAME + " =?", new String[]{adopterName}, null);
+        while (cursor != null && cursor.getCount() > 0 && cursor.moveToNext()) {
+            int city = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseAdopter.CITY)));
+            String name = cursor.getString(cursor.getColumnIndex(DataBaseAdopter.NAME));
+            long id = cursor.getLong(cursor.getColumnIndex(DataBaseAdopter._ID));
+            adoptDb = new DataBaseAdopter(id, name, city);
+            return adoptDb;
+        }
+        adoptDb = new DataBaseAdopter();
+        return adoptDb;
+    }
+
+    public void deleteCheckFunctionForCat() {
+        Log.i(TAG,"delete check function for cat");
+        Cursor cursor = context.getContentResolver().query(DataBaseCat.CONTENT_URI_CAT, null, null, null, null);
+        while (cursor != null && cursor.getCount() > 0 && cursor.moveToNext()) {
+            int color = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.COLOR)));
+            String birth = cursor.getString(cursor.getColumnIndex(DataBaseCat.BIRTH));
+            String name = cursor.getString(cursor.getColumnIndex(DataBaseCat.ADOPTER_NAME));
+            long id = cursor.getLong(cursor.getColumnIndex(DataBaseCat._ID));
+            if (color == 0 && birth.equals("0") && name.equals("name")) {
+                context.getContentResolver().delete(DataBaseCat.CONTENT_URI_CAT, DataBaseCat._ID + "=" + id, null );
+            }
+        }
+    }
+    public void deleteCheckFunctionForAdopter() {
+        Log.i(TAG, "delete check function for Adopter");
+        Cursor cursor = context.getContentResolver().query(DataBaseAdopter.CONTENT_URI_ADOPTER, null, null, null, null);
+        while (cursor != null && cursor.getCount() > 0 && cursor.moveToNext()) {
+            int city = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseAdopter.CITY)));
+            String name = cursor.getString(cursor.getColumnIndex(DataBaseAdopter.NAME));
+            long id = cursor.getLong(cursor.getColumnIndex(DataBaseAdopter._ID));
+            if (city == 0 && name.equals("name")) {
+                context.getContentResolver().delete(DataBaseAdopter.CONTENT_URI_ADOPTER, DataBaseAdopter._ID + "=" + id, null );
+            }
+        }
+    }
+
+
+
     public ArrayList<DataBaseCat> getCatDataFromDB () {
         ArrayList<DataBaseCat> catData = new ArrayList<DataBaseCat>();
          Cursor cursor = context.getContentResolver().query(DataBaseCat.CONTENT_URI_CAT, null, null, null, null);
-         while (cursor.moveToNext()) {
+         while (cursor != null && cursor.getCount() > 0 && cursor.moveToNext()) {
              long id = Long.parseLong(cursor.getString(cursor.getColumnIndex(DataBaseCat._ID)));
              String weight = cursor.getString(cursor.getColumnIndex(DataBaseCat.WEIGHT));
              String birth = cursor.getString(cursor.getColumnIndex(DataBaseCat.BIRTH));
@@ -165,7 +186,7 @@ public class DataBaseUtils {
     public ArrayList<DataBaseAdopter> getAdopterDataFromDB () {
         ArrayList<DataBaseAdopter> adopterData = new ArrayList<DataBaseAdopter>();
         Cursor cursor = context.getContentResolver().query(DataBaseAdopter.CONTENT_URI_ADOPTER, null, null, null, null);
-        while (cursor.moveToNext()) {
+        while (cursor != null && cursor.getCount() > 0 && cursor.moveToNext()) {
             long id = Long.parseLong(cursor.getString(cursor.getColumnIndex(DataBaseAdopter._ID)));
             String name = cursor.getString(cursor.getColumnIndex(DataBaseAdopter.NAME));
             int city = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseAdopter.CITY)));

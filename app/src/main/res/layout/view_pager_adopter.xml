@@ -25,7 +25,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="textPersonName"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:singleLine="true"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -58,7 +59,8 @@
             android:id="@+id/adopter_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/morandi_Armadillo"/>
+            android:textColor="@color/morandi_Armadillo"
+            android:singleLine="true"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -170,16 +172,19 @@
             android:textColor="@color/morandi_Armadillo"/>
         <ImageView
             android:id="@+id/adopter_cat_img"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_gravity="center"/>
         <ImageView
             android:id="@+id/adopter_cat_img2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_gravity="center"/>
         <ImageView
             android:id="@+id/adopter_cat_img3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_gravity="center"/>
         <Button
             android:id="@+id/adoption_contract"
             android:layout_width="match_parent"

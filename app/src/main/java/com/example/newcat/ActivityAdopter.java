@@ -6,7 +6,6 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -29,15 +27,13 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ActivityAdopter extends Activity implements View.OnClickListener {
     String TAG = "homework";
     Button saveButton, adoptionContract;
-    ImageButton messenger, fb, home, addPageButton;
+    ImageButton messenger, fb, home, addPageButton, deletePageButton;
     EditText adopterName, address, familyMembers, environment, adopterId, birthday, adoptDate, contactNumber, predictedExpense, catsAtHome;
     CheckBox familyAgree;
     ToggleButton sexuality;
@@ -66,6 +62,7 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
 
         dataBaseUtils = new DataBaseUtils(this);
         data = dataBaseUtils.getAdopterDataFromDB();
+        Log.i(TAG, "------------- data " + data.size());
         dataCat = dataBaseUtils.getCatDataFromDB();
 
         home = (ImageButton) findViewById((R.id.home_button));
@@ -73,6 +70,9 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
 
         addPageButton = (ImageButton) findViewById(R.id.add_page_button);
         addPageButton.setOnClickListener(this);
+
+        deletePageButton = (ImageButton) findViewById(R.id.delete_button);
+        deletePageButton.setOnClickListener(this);
 
         pager= (ViewPager) findViewById(R.id.view_pager_adopter);
         for (int i = 0; i < data.size() ; i++) {
@@ -112,10 +112,14 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
         }
         if (v == addPageButton) {
             getContentResolver().insert(DataBaseAdopter.CONTENT_URI_ADOPTER, dataBaseUtils.createAdopterData(new DataBaseAdopter()));
+            data = dataBaseUtils.getAdopterDataFromDB();
+            adopterPageArrayList.add(LayoutInflater.from(this).inflate(R.layout.view_pager_adopter, null));
             mAdopterActivityAdapter.notifyDataSetChanged();
-            for (int i = 0; i < data.size() ; i++) {
-                adopterPageArrayList.add(LayoutInflater.from(this).inflate(R.layout.view_pager_adopter, null));
-            }
+        }
+        if (v == deletePageButton) {
+            dataBaseUtils.deleteCheckFunctionForAdopter();
+            data = dataBaseUtils.getAdopterDataFromDB();
+            mAdopterActivityAdapter.notifyDataSetChanged();
         }
     }
     public void openSpecificPage() {
@@ -137,7 +141,7 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
 
         @Override
         public int getCount() {
-            return adopterPageArrayList.size();
+            return dataCat.size();
         }
 
         @Override
@@ -175,12 +179,10 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
             catImg = (ImageView) adopterPageArrayList.get(position).findViewById(R.id.adopter_cat_img);
             catImg2 = (ImageView) adopterPageArrayList.get(position).findViewById(R.id.adopter_cat_img2);
             catImg3 = (ImageView) adopterPageArrayList.get(position).findViewById(R.id.adopter_cat_img3);
-            data.get(position).setCatImg(dataBaseUtils.getCatImgWithAdopterNameFromDB(data.get(position).getName()).getCatImg());
-            data.get(position).setCatImg2(dataBaseUtils.getCatImgWithAdopterNameFromDB(data.get(position).getName()).getCatImg2());
-            data.get(position).setCatImg3(dataBaseUtils.getCatImgWithAdopterNameFromDB(data.get(position).getName()).getCatImg3());
 
             adopterName = (EditText) adopterPageArrayList.get(position).findViewById((R.id.adopter_name));
-            if (data.get(position).getName() == null) { adopterName.setText(dataCat.get(position).getAdopterName());
+            if (data.get(position).getName() == null && dataCat.get(position).getAdopterName() != null) {
+                adopterName.setText(dataCat.get(position).getAdopterName());
             } else { adopterName.setText(data.get(position).getName()); }
             address = (EditText) adopterPageArrayList.get(position).findViewById((R.id.adopter_address));
             address.setText(data.get(position).getAddr());
@@ -219,12 +221,12 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
             catImg.setTag("ActivityAdopter" +position + "catImg");
             catImg2.setTag("ActivityAdopter" +position + "catImg2");
             catImg3.setTag("ActivityAdopter" +position + "catImg3");
-            findTagFunction(position + "familyAgree").setOnClickListener(this);
-            findTagFunction(position + "saveButton").setOnClickListener(this);
-            findTagFunction(position + "adoptionContract").setOnClickListener(this);
-            findTagFunction(position + "catImg").setOnClickListener(this);
-            findTagFunction(position + "catImg2").setOnClickListener(this);
-            findTagFunction(position + "catImg3").setOnClickListener(this);
+            tagFunction(position + "familyAgree").setOnClickListener(this);
+            tagFunction(position + "saveButton").setOnClickListener(this);
+            tagFunction(position + "adoptionContract").setOnClickListener(this);
+            tagFunction(position + "catImg").setOnClickListener(this);
+            tagFunction(position + "catImg2").setOnClickListener(this);
+            tagFunction(position + "catImg3").setOnClickListener(this);
 
             ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(context, R.array.address_array, android.R.layout.simple_spinner_item);
             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -233,18 +235,22 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
             city.setOnItemSelectedListener(mSpinSelectedListener);
             sexuality.setTextOff("male");
             sexuality.setTextOn("female");
+            ((ToggleButton) tagFunction(position + "sexuality")).setText(getSexuality(data.get(position).getSexuality()));
 
-            if (data.get(position).getCatImg() == 0) {
-                Log.i(TAG, "------------------------------------------ get cat img (activity adopter)");
+            data.get(position).setCatImg(dataBaseUtils.getCatDataWithAdopterNameFromDB(data.get(position).getName()).getCatImg());
+            data.get(position).setCatImg2(dataBaseUtils.getCatDataWithAdopterNameFromDB(data.get(position).getName()).getCatImg2());
+            data.get(position).setCatImg3(dataBaseUtils.getCatDataWithAdopterNameFromDB(data.get(position).getName()).getCatImg3());
+
+            if (dataCat.get(position).getCatImg() == 0) {
                 catImg.setVisibility(View.GONE);//1.gone 2.invisible(leaves a space) 3.visible
                 catImg2.setVisibility(View.GONE);
                 catImg3.setVisibility(View.GONE);
-            } else if (data.get(position).getCatImg() != 0 && data.get(position).getCatImg2() == 0) {
+            } else if (dataCat.get(position).getCatImg() != 0 && dataCat.get(position).getCatImg2() == 0) {
                 Uri uri1 = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, data.get(position).getCatImg());
                 catImg2.setVisibility(View.GONE);
                 catImg3.setVisibility(View.GONE);
                 catImg.setImageURI(uri1);
-            } else if (data.get(position).getCatImg() != 0 && data.get(position).getCatImg2() != 0 && data.get(position).getCatImg3() == 0) {
+            } else if (dataCat.get(position).getCatImg() != 0 && dataCat.get(position).getCatImg2() != 0 && dataCat.get(position).getCatImg3() == 0) {
                 Uri uri1 = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, data.get(position).getCatImg());
                 Uri uri2 = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, data.get(position).getCatImg2());                catImg3.setVisibility(View.GONE);
                 catImg3.setVisibility(View.GONE);
@@ -260,25 +266,26 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
                 catImg3.setImageURI(uri3);
             }
 
-            ((CheckBox)findTagFunction(position + "familyAgree")).setChecked(data.get(position).getFamilyAgree());
-            if (data.get(position).getName() == null){ ((EditText)findTagFunction(position + "adopterName")).setText(dataCat.get(position).getAdopterName());
-            } else { ((EditText)findTagFunction(position + "adopterName")).setText(data.get(position).getName());}
-            ((EditText)findTagFunction(position + "address")).setText(data.get(position).getAddr());
-            ((EditText)findTagFunction(position + "familyMembers")).setText(data.get(position).getFamilyMembers());
-            ((EditText)findTagFunction(position + "environment")).setText(data.get(position).getEnvironment());
-            ((EditText)findTagFunction(position + "adopterId")).setText(data.get(position).getAdopterId());
-            ((EditText)findTagFunction(position + "birthday")).setText(data.get(position).getBirthday());
-            ((EditText)findTagFunction(position + "adopDate")).setText(data.get(position).getAdoptDate());
-            ((EditText)findTagFunction(position + "contactNumber")).setText(data.get(position).getContactNumber());
-            ((EditText)findTagFunction(position + "predictedExpense")).setText(data.get(position).getPredictedExpense());
-            ((EditText)findTagFunction(position + "catsAtHome")).setText(data.get(position).getCatsAtHome());
-            ((Spinner)findTagFunction(position + "city")).setSelection(data.get(position).getCity());
+            ((CheckBox) tagFunction(position + "familyAgree")).setChecked(data.get(position).getFamilyAgree());
+            if (data.get(position).getName() == null && dataCat.get(position).getAdopterName() != null){
+                ((EditText) tagFunction(position + "adopterName")).setText(dataCat.get(position).getAdopterName());
+            } else { ((EditText) tagFunction(position + "adopterName")).setText(data.get(position).getName());}
+            ((EditText) tagFunction(position + "address")).setText(data.get(position).getAddr());
+            ((EditText) tagFunction(position + "familyMembers")).setText(data.get(position).getFamilyMembers());
+            ((EditText) tagFunction(position + "environment")).setText(data.get(position).getEnvironment());
+            ((EditText) tagFunction(position + "adopterId")).setText(data.get(position).getAdopterId());
+            ((EditText) tagFunction(position + "birthday")).setText(data.get(position).getBirthday());
+            ((EditText) tagFunction(position + "adopDate")).setText(data.get(position).getAdoptDate());
+            ((EditText) tagFunction(position + "contactNumber")).setText(data.get(position).getContactNumber());
+            ((EditText) tagFunction(position + "predictedExpense")).setText(data.get(position).getPredictedExpense());
+            ((EditText) tagFunction(position + "catsAtHome")).setText(data.get(position).getCatsAtHome());
+            ((Spinner) tagFunction(position + "city")).setSelection(data.get(position).getCity());
 
             return adopterPageArrayList.get(position);
         }
         @Override
         public void onClick(View v) {
-            if(v == findTagFunction(location + "catImg")){
+            if(v == tagFunction(location + "catImg")){
                 Intent intent = new Intent();
                 ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityCat");
                 Bundle bundle = new Bundle();
@@ -288,7 +295,7 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
                 intent.putExtras(bundle);
                 intent.setComponent(cn);
                 startActivity(intent);
-            }if(v == findTagFunction(location + "catImg2")){
+            }if(v == tagFunction(location + "catImg2")){
                 Intent intent = new Intent();
                 ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityCat");
                 Bundle bundle = new Bundle();
@@ -298,7 +305,7 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
                 intent.putExtras(bundle);
                 intent.setComponent(cn);
                 startActivity(intent);
-            }if(v == findTagFunction(location + "catImg3")){
+            }if(v == tagFunction(location + "catImg3")){
                 Intent intent = new Intent();
                 ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityCat");
                 Bundle bundle = new Bundle();
@@ -309,41 +316,45 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
                 intent.setComponent(cn);
                 startActivity(intent);
             }
-            if (v ==  findTagFunction(location + "familyAgree")) {
+            if (v ==  tagFunction(location + "familyAgree")) {
                 ((CheckBox)pager.findViewWithTag("ActivityAdopter" +location + "familyAgree")).setChecked(true);
             }
-            if (v == findTagFunction(location + "adoptionContract")) {
+            if (v == tagFunction(location + "adoptionContract")) {
                 Intent intent = new Intent();
                 ComponentName cn = new ComponentName("com.example.newcat", "com.example.newcat.ActivityContract");
                 intent.setComponent(cn);
                 startActivity(intent);
             }
-            if(v == findTagFunction(location + "saveButton")) {
+            if(v == tagFunction(location + "saveButton")) {
                 Log.i(TAG, "--------------------save button clicked");
                 int id = location + 1;
                 ContentValues values = new ContentValues();
 
-                values.put(DataBaseAdopter.NAME, ((EditText)findTagFunction( location + "adopterName")).getText().toString());
-                values.put(DataBaseAdopter.ADDRESS, ((EditText)findTagFunction( location + "address")).getText().toString());
-                values.put(DataBaseAdopter.FAMILY_MEMBERS, ((EditText)findTagFunction( location + "familyMembers")).getText().toString());
-                values.put(DataBaseAdopter.ENVIRONMENT, ((EditText)findTagFunction( location + "environment")).getText().toString());
-                values.put(DataBaseAdopter.ADOPTER_ID, ((EditText)findTagFunction( location + "adopterId")).getText().toString());
-                values.put(DataBaseAdopter.ADOPTER_BIRTHDAY, ((EditText)findTagFunction( location + "birthday")).getText().toString());
-                values.put(DataBaseAdopter.ADOPTION_DATE, ((EditText)findTagFunction( location + "adopDate")).getText().toString());
-                values.put(DataBaseAdopter.CONTACT_NUMBER, ((EditText)findTagFunction(location + "contactNumber")).getText().toString());
-                values.put(DataBaseAdopter.PREDICTED_EXPENSE, ((EditText)findTagFunction( location + "predictedExpense")).getText().toString());
-                values.put(DataBaseAdopter.CATS_AT_HOME, ((EditText)findTagFunction( location + "catsAtHome")).getText().toString());
-                values.put(DataBaseAdopter.FAMILY_AGREE, ((CheckBox)findTagFunction( location + "familyAgree")).isChecked());
-                values.put(DataBaseAdopter.ADOPTER_SEXUALITY, ((ToggleButton)findTagFunction(location + "sexuality")).isChecked());
-                values.put(DataBaseAdopter.CITY, ((Spinner)findTagFunction(location + "city")).getSelectedItemPosition());
+                values.put(DataBaseAdopter.NAME, ((EditText) tagFunction( location + "adopterName")).getText().toString());
+                values.put(DataBaseAdopter.ADDRESS, ((EditText) tagFunction( location + "address")).getText().toString());
+                values.put(DataBaseAdopter.FAMILY_MEMBERS, ((EditText) tagFunction( location + "familyMembers")).getText().toString());
+                values.put(DataBaseAdopter.ENVIRONMENT, ((EditText) tagFunction( location + "environment")).getText().toString());
+                values.put(DataBaseAdopter.ADOPTER_ID, ((EditText) tagFunction( location + "adopterId")).getText().toString());
+                values.put(DataBaseAdopter.ADOPTER_BIRTHDAY, ((EditText) tagFunction( location + "birthday")).getText().toString());
+                values.put(DataBaseAdopter.ADOPTION_DATE, ((EditText) tagFunction( location + "adopDate")).getText().toString());
+                values.put(DataBaseAdopter.CONTACT_NUMBER, ((EditText) tagFunction(location + "contactNumber")).getText().toString());
+                values.put(DataBaseAdopter.PREDICTED_EXPENSE, ((EditText) tagFunction( location + "predictedExpense")).getText().toString());
+                values.put(DataBaseAdopter.CATS_AT_HOME, ((EditText) tagFunction( location + "catsAtHome")).getText().toString());
+                values.put(DataBaseAdopter.FAMILY_AGREE, ((CheckBox) tagFunction( location + "familyAgree")).isChecked());
+                values.put(DataBaseAdopter.ADOPTER_SEXUALITY, ((ToggleButton) tagFunction(location + "sexuality")).isChecked());
+                values.put(DataBaseAdopter.CITY, ((Spinner) tagFunction(location + "city")).getSelectedItemPosition());
                 //values.put(DataBaseAdopter.CAT_IMG, (findTagFunction(location + "catImg")).);
 
                 getContentResolver().update(DataBaseAdopter.CONTENT_URI_ADOPTER, values, DataBaseAdopter._ID + " = " + id, null);
                 dataBaseUtils.showAdopDataBaseResult();
             }
         }
-        public View findTagFunction(String tag) {
+        public View tagFunction(String tag) {
             return pager.findViewWithTag("ActivityAdopter"+tag);
         }
+        public String getSexuality (boolean sexuality) {
+            return sexuality ? "FEMALE" : "MALE";
+        }
+
     }
 }

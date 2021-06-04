@@ -82,20 +82,20 @@ public class DataBaseCat {
         this.antiparasite = false;
         this.allCheck = false;
         this.color = color;
-        this.vaccineName = "";
-        this.about = "";
+        this.vaccineName = "0";
+        this.about = "0";
         this.sexuality = sexuality;
-        this.other = "";
+        this.other = "0";
         this.catImg = 0;
         this.catImg2 = 0;
         this.catImg3 = 0;
-        this.birth = "151515";
-        this.adoption = "151515";
+        this.birth = "0";
+        this.adoption = "0";
         this.weight = "0";
-        this.adopterName = "";
+        this.adopterName = "name";
     }
 
-    public DataBaseCat(int color, String birth, long catImg) {
+    public DataBaseCat(int color, String birth, long catImg, long catImg2, long catImg3) {
         this.mixed = false;
         this.vac = false;
         this.lig = false;
@@ -106,45 +106,47 @@ public class DataBaseCat {
         this.antiparasite = false;
         this.allCheck = false;
         this.color = color;
-        this.vaccineName = "vacName";
-        this.about = "about";
+        this.vaccineName = "0";
+        this.about = "0";
         this.sexuality = false;
-        this.other = "other";
+        this.other = "0";
         this.catImg = 0;
         this.catImg2 = 0;
         this.catImg3 = 0;
         this.birth = birth;
-        this.adoption = "adopt";
-        this.weight = "w:0";
-        this.adopterName = "adopterName";
-        this.catImg = catImg;
-    }
-    public DataBaseCat(long catImg, long catImg2, long catImg3) {
-        this.mixed = false;
-        this.vac = false;
-        this.lig = false;
-        this.blood = false;
-        this.dew = false;
-        this.earsCleaned = false;
-        this.nailsCutted = false;
-        this.antiparasite = false;
-        this.allCheck = false;
-        this.color = 0;
-        this.vaccineName = "vacName";
-        this.about = "about";
-        this.sexuality = false;
-        this.other = "other";
-        this.catImg = 0;
-        this.catImg2 = 0;
-        this.catImg3 = 0;
-        this.birth = "birth";
-        this.adoption = "adopt";
-        this.weight = "w:0";
-        this.adopterName = "adopterName";
+        this.adoption = "0";
+        this.weight = "0";
+        this.adopterName = "0";
         this.catImg = catImg;
         this.catImg2 = catImg2;
         this.catImg3 = catImg3;
     }
+//    public DataBaseCat(long catImg, long catImg2, long catImg3) {
+//        this.mixed = false;
+//        this.vac = false;
+//        this.lig = false;
+//        this.blood = false;
+//        this.dew = false;
+//        this.earsCleaned = false;
+//        this.nailsCutted = false;
+//        this.antiparasite = false;
+//        this.allCheck = false;
+//        this.color = 0;
+//        this.vaccineName = "vacName";
+//        this.about = "about";
+//        this.sexuality = false;
+//        this.other = "other";
+//        this.catImg = 0;
+//        this.catImg2 = 0;
+//        this.catImg3 = 0;
+//        this.birth = "birth";
+//        this.adoption = "adopt";
+//        this.weight = "w:0";
+//        this.adopterName = "adopterName";
+//        this.catImg = catImg;
+//        this.catImg2 = catImg2;
+//        this.catImg3 = catImg3;
+//    }
     public DataBaseCat(long id, long catImg) {
         this.id = id;
         this.mixed = false;
@@ -157,17 +159,17 @@ public class DataBaseCat {
         this.antiparasite = false;
         this.allCheck = false;
         this.color = 0;
-        this.vaccineName = "vacName";
-        this.about = "about";
+        this.vaccineName = "0";
+        this.about = "0";
         this.sexuality = false;
-        this.other = "other";
+        this.other = "0";
         this.catImg = 0;
         this.catImg2 = 0;
         this.catImg3 = 0;
-        this.birth = "birth";
-        this.adoption = "adopt";
-        this.weight = "w:0";
-        this.adopterName = "adopterName";
+        this.birth = "0";
+        this.adoption = "0";
+        this.weight = "0";
+        this.adopterName = "name";
         this.catImg = catImg;
     }
 
@@ -183,17 +185,17 @@ public class DataBaseCat {
         this.antiparasite = false;
         this.allCheck = false;
         this.color = color;
-        this.vaccineName = "vacName";
-        this.about = "about";
+        this.vaccineName = "0";
+        this.about = "0";
         this.sexuality = false;
-        this.other = "other";
+        this.other = "0";
         this.catImg = catImg;
         this.catImg2 = 0;
         this.catImg3 = 0;
         this.catPic = null;
         this.birth = birth;
-        this.adoption = "adopt";
-        this.weight = "w:0";
+        this.adoption = "0";
+        this.weight = "0";
         this.adopterName = adopterName;
     }
 
@@ -207,18 +209,18 @@ public class DataBaseCat {
         this.nailsCutted = false;
         this.antiparasite = false;
         this.allCheck = false;
-        this.color = 1;
-        this.vaccineName = "vacName";
-        this.about = "about";
+        this.color = 0;
+        this.vaccineName = "0";
+        this.about = "0";
         this.sexuality = false;
-        this.other = "other";
+        this.other = "0";
         this.catImg = 0;
         this.catImg2 = 0;
         this.catImg3 = 0;
         this.catPic = null;
-        this.birth = "bDay";
-        this.adoption = "adopt";
-        this.weight = "w:0";
+        this.birth = "0";
+        this.adoption = "0";
+        this.weight = "0";
         this.adopterName = "name";
     }
 
