@@ -34,9 +34,10 @@ public class ActivityContract extends Activity implements View.OnClickListener, 
         contractImg.setOnLongClickListener(this);
 
         if (contractImg == null) {
+            Log.i(TAG, "............... null");
             contractImg.setImageResource(R.drawable.b_search);
         } else {
-            Log.i(TAG, "........................................");
+            Log.i(TAG, "........................................ not null");
             //Uri uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, data.get(position).getCatPic()[pictureIndex%3]);
             //contractImg.setImageURI(uri);
         }
@@ -65,14 +66,14 @@ public class ActivityContract extends Activity implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         if (v == contractImg) {
-            // if long click doesn't do, I did button ui for the two 功能
+            //
         }
     }
 
     @Override
     public boolean onLongClick(View v) {
         if (v == contractImg) {
-            // can we have two 功能 here? 1.take picture 2.download
+            //
         }
         return false;
     }

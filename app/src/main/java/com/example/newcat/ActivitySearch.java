@@ -251,9 +251,7 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
             adopterCity.setText(adopterCityFunction(searchAdopterArray.get(position).getCity()));
             adopterName.setText(searchAdopterArray.get(position).getName());
 
-            if (searchAdopterArray.get(position).getCatImg() == 0) {
-                catImg.setImageResource(R.drawable.b_cat_calico);
-            } else {
+            if (searchAdopterArray.get(position).getCatImg() != 0) {
                 Uri uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, searchCatArray.get(position).getCatImg());
                 catImg.setImageURI(uri);
             }
@@ -343,6 +341,7 @@ public class ActivitySearch extends Activity implements View.OnClickListener {
          searchCatArray = new ArrayList<DataBaseCat>();
          for (int i = 0; i < searchAdopterArray.size(); i ++) {
              searchCatArray.add(dataBaseUtils.getCatDataWithAdopterNameFromDB(searchAdopterArray.get(i).getName()));
+             searchAdopterArray.get(i).setCatImg(dataBaseUtils.getCatDataWithAdopterNameFromDB(searchAdopterArray.get(i).getName()).getCatImg());
          }
          searchListCount = searchAdopterArray.size();
          adapter.notifyDataSetChanged();

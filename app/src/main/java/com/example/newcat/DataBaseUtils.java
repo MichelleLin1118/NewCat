@@ -111,32 +111,28 @@ public class DataBaseUtils {
         return adoptDb;
     }
 
-    public void deleteCheckFunctionForCat() {
-        Log.i(TAG,"delete check function for cat");
+    public void deleteCheckFunction() {
+        Log.i(TAG,"delete check function");
         Cursor cursor = context.getContentResolver().query(DataBaseCat.CONTENT_URI_CAT, null, null, null, null);
         while (cursor != null && cursor.getCount() > 0 && cursor.moveToNext()) {
             int color = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseCat.COLOR)));
             String birth = cursor.getString(cursor.getColumnIndex(DataBaseCat.BIRTH));
-            String name = cursor.getString(cursor.getColumnIndex(DataBaseCat.ADOPTER_NAME));
-            long id = cursor.getLong(cursor.getColumnIndex(DataBaseCat._ID));
-            if (color == 0 && birth.equals("0") && name.equals("name")) {
-                context.getContentResolver().delete(DataBaseCat.CONTENT_URI_CAT, DataBaseCat._ID + "=" + id, null );
+            String catname = cursor.getString(cursor.getColumnIndex(DataBaseCat.ADOPTER_NAME));
+            long catId = cursor.getLong(cursor.getColumnIndex(DataBaseCat._ID));
+            if (color == 0 && birth.equals("0") && catname.equals("name")) {
+                context.getContentResolver().delete(DataBaseCat.CONTENT_URI_CAT, DataBaseCat._ID + "=" + catId, null );
+            }
+        }
+        Cursor cursor1 = context.getContentResolver().query(DataBaseAdopter.CONTENT_URI_ADOPTER, null, null, null,null);
+        while (cursor1 != null && cursor1.getCount() > 0 && cursor1.moveToNext()) {
+            int city = Integer.valueOf(cursor1.getString(cursor1.getColumnIndex(DataBaseAdopter.CITY)));
+            String adopname = cursor1.getString(cursor1.getColumnIndex(DataBaseAdopter.NAME));
+            long adopId = cursor1.getLong(cursor1.getColumnIndex(DataBaseAdopter._ID));
+            if (city == 0 && adopname.equals("name")) {
+                context.getContentResolver().delete(DataBaseAdopter.CONTENT_URI_ADOPTER, DataBaseAdopter._ID + "=" + adopId, null);
             }
         }
     }
-    public void deleteCheckFunctionForAdopter() {
-        Log.i(TAG, "delete check function for Adopter");
-        Cursor cursor = context.getContentResolver().query(DataBaseAdopter.CONTENT_URI_ADOPTER, null, null, null, null);
-        while (cursor != null && cursor.getCount() > 0 && cursor.moveToNext()) {
-            int city = Integer.valueOf(cursor.getString(cursor.getColumnIndex(DataBaseAdopter.CITY)));
-            String name = cursor.getString(cursor.getColumnIndex(DataBaseAdopter.NAME));
-            long id = cursor.getLong(cursor.getColumnIndex(DataBaseAdopter._ID));
-            if (city == 0 && name.equals("name")) {
-                context.getContentResolver().delete(DataBaseAdopter.CONTENT_URI_ADOPTER, DataBaseAdopter._ID + "=" + id, null );
-            }
-        }
-    }
-
 
 
     public ArrayList<DataBaseCat> getCatDataFromDB () {

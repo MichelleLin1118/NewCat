@@ -58,43 +58,6 @@ public class DataBaseAdopter {
         this.catImg3 = catImg3;
     }
 
-    public DataBaseAdopter(String name, String adoptDate, boolean familyAgree, boolean sexuality) {
-        this.name = name;
-        this.addr = "0";
-        this.city = 0;
-        this.familyMembers = "0";
-        this.environment = "0";
-        this.adopterId = "0";
-        this.birthday = "0";
-        this.adoptDate = adoptDate;
-        this.contactNumber = "0";
-        this.predictedExpense = "0";
-        this.catsAtHome = "0";
-        this.familyAgree = familyAgree;
-        this.sexuality = sexuality;
-        this.catImg = R.drawable.b_cat_white;
-        this.catImg2 = 0;
-        this.catImg3 = 0;
-    }
-    public DataBaseAdopter( String name, int city, long catImg, long catImg2, long catImg3) {
-        this.name = name;
-        this.addr = "0";
-        this.city = city;
-        this.familyMembers = "0";
-        this.environment = "0";
-        this.adopterId = "0";
-        this.birthday = "0";
-        this.adoptDate = "0";
-        this.contactNumber = "0";
-        this.predictedExpense = "0";
-        this.catsAtHome = "0";
-        this.familyAgree = false;
-        this.sexuality = true;
-        this.catImg = catImg;
-        this.catImg2 = catImg2;
-        this.catImg3 = catImg3;
-    }
-
     public DataBaseAdopter(long id, String name, int city) {
         this.id = id;
         this.name = name;
@@ -113,31 +76,11 @@ public class DataBaseAdopter {
         this.contactNumber = "0";
         this.predictedExpense = "0";
         this.catsAtHome = "0";
-        this.catImg = R.drawable.b_cat_white;
+        this.catImg = 0;
         this.catImg2 = 0;
         this.catImg3 = 0;
     }
-    public DataBaseAdopter(String name) {
-        this.name = name;
-        this.addr = "0";
-        this.city = 0;
-        this.familyMembers = "0";
-        this.environment = "0";
-        this.adopterId = "0";
 
-        this.familyAgree = true;
-        this.sexuality = true;
-
-        this.birthday = "0";
-        this.adoptDate = "0";
-
-        this.contactNumber = "0";
-        this.predictedExpense = "0";
-        this.catsAtHome = "0";
-        this.catImg = R.drawable.b_cat_white;
-        this.catImg2 = 0;
-        this.catImg3 = 0;
-    }
 
     public DataBaseAdopter() {
         this.name = "name";
@@ -156,7 +99,7 @@ public class DataBaseAdopter {
         this.contactNumber = "0";
         this.predictedExpense = "0";
         this.catsAtHome = "0";
-        this.catImg = R.drawable.b_cat_white;
+        this.catImg = 0;
         this.catImg2 = 0;
         this.catImg3 = 0;
     }

@@ -24,6 +24,7 @@
         <activity android:name=".ActivityCalendar"/>
         <activity android:name=".ActivityCat"/>
         <activity android:name=".ActivityInfo"/>
+        <activity android:name=".ActivityContract"/>
         <provider
             android:authorities="com.example.newcat"
             android:name=".NewCatContentProvider"

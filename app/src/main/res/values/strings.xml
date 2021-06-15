@@ -8,6 +8,9 @@
     <string name="fb">Facebook</string>
     <string name="calendar">Calendar</string>
     <string name="adop">Adopter</string>
+    <string name="search">Search</string>
+    <string name="delete">Delete</string>
+
 
     <string name="name">Adopter:</string>
 
@@ -46,8 +49,7 @@
 
     <string name="save_button">Save</string>
     <string name="clear_button">Clear</string>
-    <string name="download_button">Download</string>
-    <string name="open_camera_button">Camera</string>
+
 
 <!--    black, white, orange, calico, tuxedo, tabby-->
     <string-array name="color_array">

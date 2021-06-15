@@ -33,7 +33,7 @@ import java.util.ArrayList;
 public class ActivityAdopter extends Activity implements View.OnClickListener {
     String TAG = "homework";
     Button saveButton, adoptionContract;
-    ImageButton messenger, fb, home, addPageButton, deletePageButton;
+    ImageButton messenger, fb, home, addPageButton;
     EditText adopterName, address, familyMembers, environment, adopterId, birthday, adoptDate, contactNumber, predictedExpense, catsAtHome;
     CheckBox familyAgree;
     ToggleButton sexuality;
@@ -70,9 +70,6 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
 
         addPageButton = (ImageButton) findViewById(R.id.add_page_button);
         addPageButton.setOnClickListener(this);
-
-        deletePageButton = (ImageButton) findViewById(R.id.delete_button);
-        deletePageButton.setOnClickListener(this);
 
         pager= (ViewPager) findViewById(R.id.view_pager_adopter);
         for (int i = 0; i < data.size() ; i++) {
@@ -116,11 +113,6 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
             adopterPageArrayList.add(LayoutInflater.from(this).inflate(R.layout.view_pager_adopter, null));
             mAdopterActivityAdapter.notifyDataSetChanged();
         }
-        if (v == deletePageButton) {
-            dataBaseUtils.deleteCheckFunctionForAdopter();
-            data = dataBaseUtils.getAdopterDataFromDB();
-            mAdopterActivityAdapter.notifyDataSetChanged();
-        }
     }
     public void openSpecificPage() {
         Bundle bundle = getIntent().getExtras();
@@ -141,7 +133,7 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
 
         @Override
         public int getCount() {
-            return dataCat.size();
+            return data.size();
         }
 
         @Override
@@ -240,19 +232,21 @@ public class ActivityAdopter extends Activity implements View.OnClickListener {
             data.get(position).setCatImg(dataBaseUtils.getCatDataWithAdopterNameFromDB(data.get(position).getName()).getCatImg());
             data.get(position).setCatImg2(dataBaseUtils.getCatDataWithAdopterNameFromDB(data.get(position).getName()).getCatImg2());
             data.get(position).setCatImg3(dataBaseUtils.getCatDataWithAdopterNameFromDB(data.get(position).getName()).getCatImg3());
+            // use name to get cat data's cat img and set img into data.get(position)
 
-            if (dataCat.get(position).getCatImg() == 0) {
+            //if the adopter page's cat img is 0, gone all three img spaces and so on.
+            if (data.get(position).getCatImg() == 0) {
                 catImg.setVisibility(View.GONE);//1.gone 2.invisible(leaves a space) 3.visible
                 catImg2.setVisibility(View.GONE);
                 catImg3.setVisibility(View.GONE);
-            } else if (dataCat.get(position).getCatImg() != 0 && dataCat.get(position).getCatImg2() == 0) {
+            } else if (data.get(position).getCatImg() != 0 && data.get(position).getCatImg2() == 0) {
                 Uri uri1 = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, data.get(position).getCatImg());
                 catImg2.setVisibility(View.GONE);
                 catImg3.setVisibility(View.GONE);
                 catImg.setImageURI(uri1);
-            } else if (dataCat.get(position).getCatImg() != 0 && dataCat.get(position).getCatImg2() != 0 && dataCat.get(position).getCatImg3() == 0) {
+            } else if (data.get(position).getCatImg() != 0 && data.get(position).getCatImg2() != 0 && data.get(position).getCatImg3() == 0) {
                 Uri uri1 = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, data.get(position).getCatImg());
-                Uri uri2 = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, data.get(position).getCatImg2());                catImg3.setVisibility(View.GONE);
+                Uri uri2 = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, data.get(position).getCatImg2());
                 catImg3.setVisibility(View.GONE);
                 catImg.setImageURI(uri1);
                 catImg2.setImageURI(uri2);

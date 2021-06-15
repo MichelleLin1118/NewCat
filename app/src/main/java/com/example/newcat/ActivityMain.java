@@ -16,10 +16,12 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+
 public class ActivityMain extends Activity implements View.OnClickListener{
 
     String TAG = "homework";
-    ImageButton cat, information, home, adopter, calendar, search, init;
+    ImageButton cat, information, home, adopter, calendar, search, init, delete;
     DataBaseUtils dataBaseUtils = new DataBaseUtils(this);
 
     @Override
@@ -56,6 +58,10 @@ public class ActivityMain extends Activity implements View.OnClickListener{
         init = (ImageButton) findViewById((R.id.init_button));
         init.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         init.setOnClickListener(this);
+
+        delete = (ImageButton) findViewById(R.id.delete_button);
+        delete.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        delete.setOnClickListener(this);
 
 
 
@@ -132,7 +138,6 @@ public class ActivityMain extends Activity implements View.OnClickListener{
             startActivity(searchIntent);
         }
         if (v == init) {
-            //dataBaseUtils.createCatData(new DataBaseCat());
             getContentResolver().insert(DataBaseCat.CONTENT_URI_CAT, dataBaseUtils.createCatData(new DataBaseCat()));
             getContentResolver().insert(DataBaseCat.CONTENT_URI_CAT, dataBaseUtils.createCatData(new DataBaseCat()));
             getContentResolver().insert(DataBaseCat.CONTENT_URI_CAT, dataBaseUtils.createCatData(new DataBaseCat()));
@@ -147,9 +152,16 @@ public class ActivityMain extends Activity implements View.OnClickListener{
             DataBaseAdopter adop = new DataBaseAdopter();
             dataBaseUtils.showCatDataBaseResult();
             dataBaseUtils.showAdopDataBaseResult();
-            Log.i(TAG, "------------------------------------------");
         }
-
+        if (v == delete) {
+            dataBaseUtils.deleteCheckFunction();
+            //ArrayList<DataBaseCat> catData = new ArrayList<DataBaseCat>();
+            //ArrayList<DataBaseAdopter> adopData = new ArrayList<DataBaseAdopter>();
+            //catData = dataBaseUtils.getCatDataFromDB();
+            //adopData = dataBaseUtils.getAdopterDataFromDB();
+            //ActivityCat.CatActivityAdapter.notifyDataSetChanged();
+            //mAdopterActivityAdapter.notifyDataSetChanged();
+        }
 
     }
 

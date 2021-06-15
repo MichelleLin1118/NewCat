@@ -40,7 +40,7 @@ import java.util.ArrayList;
 public class ActivityCat extends Activity implements View.OnClickListener {
     String TAG = "homework";
     Button saveButton;
-    ImageButton home, addPageButton, deletePageButton;
+    ImageButton home, addPageButton;
     CheckBox vaccine, deworm, bloodTest,ligation, antiparasite, nailsCutted, earsCleaned, allCheck, mixed;
     EditText weight, birth, adoptionDate, vaccineName, about,others, colorEdit, adopterName;
     ImageView catImg;
@@ -79,9 +79,6 @@ public class ActivityCat extends Activity implements View.OnClickListener {
         addPageButton = (ImageButton) findViewById(R.id.add_page_button);
         addPageButton.setOnClickListener(this);
 
-        deletePageButton = (ImageButton) findViewById(R.id.delete_button);
-        deletePageButton.setOnClickListener(this);
-
         pager= (ViewPager) findViewById(R.id.view_pager_cat);
         for (int i = 0; i < data.size() ; i++) {
             catPageArrayList.add(LayoutInflater.from(this).inflate(R.layout.view_pager_cat, null));
@@ -97,6 +94,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             public void onPageSelected ( int position){
                 Log.i(TAG, "onPageSelected = " + position);
                 location = position;
+                pictureIndex = 0; //
                 Log.i(TAG, "location = " + location);
                 data = dataBaseUtils.getCatDataFromDB();
                 mCatActivityAdapter.notifyDataSetChanged();
@@ -122,11 +120,6 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             getContentResolver().insert(DataBaseCat.CONTENT_URI_CAT, dataBaseUtils.createCatData(new DataBaseCat()));
             data = dataBaseUtils.getCatDataFromDB();
             catPageArrayList.add(LayoutInflater.from(this).inflate(R.layout.view_pager_cat, null));
-            mCatActivityAdapter.notifyDataSetChanged();
-        }
-        if (v == deletePageButton) {
-            dataBaseUtils.deleteCheckFunctionForCat();
-            data = dataBaseUtils.getCatDataFromDB();
             mCatActivityAdapter.notifyDataSetChanged();
         }
     }
@@ -222,7 +215,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
         values.put(DataBaseCat.CAT_IMG, pictureId[0]);
         values.put(DataBaseCat.CAT_IMG2, pictureId[1]);
         values.put(DataBaseCat.CAT_IMG3, pictureId[2]);
-        nameFunction(((EditText) tagFunction(location + "adopterName")).getText().toString());
+        //nameFunction(((EditText) tagFunction(location + "adopterName")).getText().toString());
         getContentResolver().update(DataBaseCat.CONTENT_URI_CAT, values, DataBaseCat._ID + " = " + id, null);
         dataBaseUtils.showCatDataBaseResult();
     }
@@ -233,7 +226,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
 
     public void nameFunction(String adopterName) {
         if (dataBaseUtils.getAdopterDataWithAdopterNameFromDB(adopterName).getName().equals("name")) {
-            getContentResolver().insert(DataBaseAdopter.CONTENT_URI_ADOPTER, dataBaseUtils.createAdopterData(new DataBaseAdopter(adopterName)));
+            //getContentResolver().insert(DataBaseAdopter.CONTENT_URI_ADOPTER, dataBaseUtils.createAdopterData(new DataBaseAdopter(adopterName)));
         } else {
             Uri uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, data.get(globalPosition).getCatImg());
             //dataBaseUtils.getAdopterDataWithAdopterNameFromDB(adopterName).setCatImg().setImageURI(uri);
@@ -362,9 +355,7 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             ((EditText) tagFunction(position + "adopterName")).setText(data.get(position).getAdopterName());
             ((Spinner) tagFunction(position + "color")).setSelection(data.get(position).getColor());
 
-            if (data.get(position).getCatPic()[pictureIndex%3] == 0) {
-                ((ImageView) tagFunction(position + "catImg")).setImageResource(R.drawable.b_cat_calico);
-            } else {
+            if (data.get(position).getCatPic()[pictureIndex%3] != 0) {
                 Uri uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, data.get(position).getCatPic()[pictureIndex%3]);
                 ((ImageView) tagFunction(position + "catImg")).setImageURI(uri);
             }
@@ -381,13 +372,12 @@ public class ActivityCat extends Activity implements View.OnClickListener {
             Log.i(TAG, "v.getTag() = " + v.getTag());
 
             if (v == tagFunction(location + "catImg")){
-                if (data.get(location).getCatPic()[(pictureIndex+1)%3] == 0) {
-                    ((ImageView) tagFunction(location + "catImg")).setImageResource(R.drawable.b_cat_calico);
-                } else {
+                Log.i(TAG, "-- picture index = " + pictureIndex);
+                if (data.get(location).getCatPic()[(pictureIndex)%3] != 0) {
                     Uri uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, data.get(location).getCatPic()[(pictureIndex+1)%3]);
                     ((ImageView) tagFunction(location + "catImg")).setImageURI(uri);
+                    pictureIndex = pictureIndex + 1;
                 }
-                pictureIndex = pictureIndex + 1;
                 Log.i(TAG, ">>>>>>>>>>>>>>>>>>> pictureIndex = " + pictureIndex);
             }
             if (v == tagFunction(location + "allCheck")) {
